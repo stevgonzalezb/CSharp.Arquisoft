@@ -2195,6 +2195,7 @@
     <Content Include="Models\DBModel.edmx.diagram">
       <DependentUpon>DBModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2224,7 +2225,6 @@
     <Content Include="Views\Shared\_Layout_Login.cshtml" />
     <Content Include="Views\Login.cshtml" />
     <Content Include="Views\Maintenance\UserMaintenance.cshtml" />
-    <Content Include="Views\User\UserMaintenance2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
