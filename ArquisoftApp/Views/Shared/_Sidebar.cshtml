@@ -1,0 +1,98 @@
+﻿<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="~/Views/Home/Index.cshtml" class="brand-link">
+        <img src="~/Scripts/AdminLTE/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">Arquisoft <sub>v1.0</sub></span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="~/Content/img/profile_avatar.png" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">@ViewBag.UserName</a>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                <!-- Mantenimientos -->
+                <li class="nav-header">Mantenimientos</li>
+
+                <!-- Clientes -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>Clientes</p>
+                    </a>
+                </li>
+
+                <!-- Materiales -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-toolbox"></i>
+                        <p>Materiales</p>
+                    </a>
+                </li>
+
+                <!-- Mantenimientos -->
+                <li class="nav-header">Procesos</li>
+
+                <!-- Proyectos / Presupuestos -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-folder-open"></i>
+                        <p>
+                            Proyectos
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="far fas fa-file-alt"></i>
+                                <p>Consultar presupuestos</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Materiales Proveedor -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-truck-pickup"></i>
+                        <p>Materiales Proveedores</p>
+                    </a>
+                </li>
+
+                <!-- Seguridad -->
+                <li class="nav-header">Seguridad</li>
+
+                <!-- Usuarios -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-user-cog"></i>
+                        <p>Usuarios</p>
+                    </a>
+                </li>
+
+                <!-- Cambiar contraseña -->
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-user-shield"></i>
+                        <p>Cambiar contraseña</p>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>
