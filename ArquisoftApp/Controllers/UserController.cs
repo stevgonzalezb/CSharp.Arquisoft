@@ -13,11 +13,5 @@ namespace ArquisoftApp.Controllers
         {
             return View("~/Views/Maintenance/UserMaintenance.cshtml");
         }
-
-        // GET: User
-        public ActionResult UserMaintenance2()
-        {
-            return View();
-        }
     }
 }
