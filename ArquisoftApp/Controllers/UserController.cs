@@ -9,9 +9,9 @@ namespace ArquisoftApp.Controllers
     public class UserController : Controller
     {
         // GET: User
-        public ActionResult Index()
+        public ActionResult UserMaintenance()
         {
-            return View();
+            return View("~/Views/Maintenance/UserMaintenance.cshtml");
         }
     }
 }
