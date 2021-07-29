@@ -3381,7 +3381,10 @@ input[type="button"].btn-block {
 }
 
 .fade {
-  transition: opacity 0.15s linear;
+    opacity: 0;
+    -webkit-transition: opacity 0.15s linear;
+    -o-transition: opacity 0.15s linear;
+    transition: opacity 0.15s linear;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -6289,31 +6292,42 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   overflow-y: auto;
 }
 
+.modal.in .modal-dialog {
+    -webkit-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+    transform: translate(0, 0);
+}
+
 .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1050;
-  display: none;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  outline: 0;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    display: none;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
 }
 
 .modal-dialog {
-  position: relative;
-  width: auto;
-  margin: 0.5rem;
-  pointer-events: none;
+    position: relative;
+    width: auto;
+    margin: 10px;
 }
 
 .modal.fade .modal-dialog {
-  transition: -webkit-transform 0.3s ease-out;
-  transition: transform 0.3s ease-out;
-  transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
-  -webkit-transform: translate(0, -50px);
-  transform: translate(0, -50px);
+    -webkit-transform: translate(0, -25%);
+    -ms-transform: translate(0, -25%);
+    -o-transform: translate(0, -25%);
+    transform: translate(0, -25%);
+    -webkit-transition: -webkit-transform 0.3s ease-out;
+    -o-transition: -o-transform 0.3s ease-out;
+    transition: -webkit-transform 0.3s ease-out;
+    transition: transform 0.3s ease-out;
+    transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out, -o-transform 0.3s ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -6393,34 +6407,33 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 }
 
 .modal-content {
-  position: relative;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  width: 100%;
-  pointer-events: auto;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 0.3rem;
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.5);
-  outline: 0;
+    position: relative;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #999;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    outline: 0;
 }
 
 .modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1040;
-  width: 100vw;
-  height: 100vh;
-  background-color: #000;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+    background-color: #000;
 }
+    .modal-backdrop.in {
+        filter: alpha(opacity=50);
+        opacity: 0.5;
+    }
 
 .modal-backdrop.fade {
+  filter: alpha(opacity=0);
   opacity: 0;
 }
 
@@ -6429,56 +6442,30 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 }
 
 .modal-header {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: flex-start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  padding: 1rem;
-  border-bottom: 1px solid #e9ecef;
-  border-top-left-radius: calc(0.3rem - 1px);
-  border-top-right-radius: calc(0.3rem - 1px);
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
 }
 
-.modal-header .close, .modal-header .mailbox-attachment-close {
-  padding: 1rem;
-  margin: -1rem -1rem -1rem auto;
-}
+    .modal-header .close, .modal-header .mailbox-attachment-close {
+        padding: 1rem;
+        margin: -1rem -1rem -1rem auto;
+        margin-top: -2px;
+    }
 
 .modal-title {
-  margin-bottom: 0;
-  line-height: 1.5;
+    margin: 0;
+    line-height: 1.42857143;
 }
 
 .modal-body {
-  position: relative;
-  -webkit-flex: 1 1 auto;
-  -ms-flex: 1 1 auto;
-  flex: 1 1 auto;
-  padding: 1rem;
+    position: relative;
+    padding: 15px;
 }
 
 .modal-footer {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-justify-content: flex-end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
-  padding: 0.75rem;
-  border-top: 1px solid #e9ecef;
-  border-bottom-right-radius: calc(0.3rem - 1px);
-  border-bottom-left-radius: calc(0.3rem - 1px);
+    padding: 15px;
+    text-align: right;
+    border-top: 1px solid #e5e5e5;
 }
 
 .modal-footer > * {
@@ -6491,6 +6478,11 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
   width: 50px;
   height: 50px;
   overflow: scroll;
+}
+
+.modal-footer .btn + .btn {
+    margin-bottom: 0;
+    margin-left: 5px;
 }
 
 @media (min-width: 576px) {
