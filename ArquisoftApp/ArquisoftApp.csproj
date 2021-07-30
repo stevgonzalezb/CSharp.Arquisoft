@@ -2222,6 +2222,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\src\scrappers\app.py" />
+    <Content Include="Scripts\src\scrappers\requirements.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -2240,10 +2242,10 @@
     <Content Include="Views\Shared\_Layout_Login.cshtml" />
     <Content Include="Views\Login.cshtml" />
     <Content Include="Views\Maintenance\UserMaintenance.cshtml" />
+    <Content Include="Scripts\src\scrappers\config.ini" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\src\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -2279,7 +2281,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>65374</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44393/</IISUrl>
+          <IISUrl>http://localhost:65374/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
