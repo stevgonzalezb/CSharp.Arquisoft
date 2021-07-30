@@ -15,8 +15,8 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Projects</li>
+                        <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                        <li class="breadcrumb-item active">Seguridad</li>
                     </ol>
                 </div>
             </div>
@@ -24,14 +24,15 @@
     </section>
 
     <!-- Main content -->
+    <!-- Usuarios -->
     <section class="content">
-        <div class="card">
+        <div class="card collapsed-card">
             <div class="card-header">
                 <h3 class="card-title">Usuarios del sistema</h3>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                        <i class="fas fa-minus"></i>
+                        <i class="fas fa-plus"></i>
                     </button>
                 </div>
             </div>
@@ -52,10 +53,66 @@
         </div>
     </section>
 
+    <!-- Roles -->
+    <section class="content">
+        <div class="card collapsed-card">
+            <div class="card-header">
+                <h3 class="card-title">Roles de seguridad</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-body p-2">
+                <table class="display responsive nowrap" id="myTable2" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Last_Name</th>
+                            <th>Email</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Privilegios -->
+    <section class="content">
+        <div class="card collapsed-card">
+            <div class="card-header">
+                <h3 class="card-title">Privilegios del sistema</h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-body p-2">
+                <table class="display responsive nowrap" id="myTable2" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Last_Name</th>
+                            <th>Email</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                </table>
+            </div>
+        </div>
+    </section>
+
 </div>
 <!-- /.content-wrapper -->
-
-
 
 <!-- Modal -->
 <div class="modal" id="FormModal">
@@ -67,25 +124,25 @@
             </div>
             <div class="modal-body">
 
-                <input type="hidden" id="txtIdPersona" />
+                <input type="hidden" id="txtId" />
                 <div class="form-group">
-                    <label for="txtNombre">Nombre:</label>
-                    <input type="text" class="form-control" id="txtNombre">
+                    <label for="txtName">Nombre:</label>
+                    <input type="text" class="form-control" id="txtName">
                 </div>
                 <div class="form-group">
-                    <label for="txtApellidos">Apellido:</label>
-                    <input type="text" class="form-control" id="txtApellidos">
+                    <label for="txtLastName">Apellido:</label>
+                    <input type="text" class="form-control" id="txtLastName">
                 </div>
                 <div class="form-group">
-                    <label for="txtCorreo">Correo:</label>
-                    <input type="text" class="form-control" id="txtCorreo">
+                    <label for="txtEmail">Correo:</label>
+                    <input type="text" class="form-control" id="txtEmail">
                 </div>
 
 
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+                <button type="button" class="btn btn-primary" onclick="Save()">Guardar</button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -98,9 +155,9 @@
 @section scripts{
 
     <script>
-         var tabla_persona;
+         var users_table;
          $(document).ready( function () {
-             tabla_persona = $('#myTable').DataTable({
+             users_table = $('#myTable').DataTable({
                 "ajax": {
                     "url": "@Url.Action("List", "User")",
                     "type": "GET",
@@ -111,8 +168,8 @@
                     { "data": "Last_Name" },
                     { "data": "Email" },
                     { "data": "Id", "render": function (data) {
-                            return "<button class='btn btn-primary btn-sm' type='button' onclick='abrirModal(" + data + ")'><i class='fas fa-pen'></i></button>" +
-                                "<button class='btn btn-danger btn-sm ml-2' type='button' onclick='Eliminar(" + data + ")'><i class='fa fa-trash'></i></button>"
+                        return "<button class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ")'><i class='fas fa-pen'></i></button>" +
+                                "<button class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'><i class='fa fa-trash'></i></button>"
                         },
                         "orderable": false,
                         "searchable": false,
@@ -125,7 +182,7 @@
                         text: 'Agregar Nuevo',
                         attr: { class: 'btn btn-success btn-sm' },
                         action: function (e, dt, node, config) {
-                            abrirModal(0)
+                            openModal(0)
                         }
                     }
                  ],
@@ -136,8 +193,8 @@
             });
          });
 
-        function abrirModal($userId) {
-            $("#txtIdPersona").val($userId);
+        function openModal($userId) {
+            $("#txtId").val($userId);
             if ($userId != 0) {
 
                 jQuery.ajax({
@@ -149,30 +206,30 @@
 
                         if (data != null) {
 
-                            $("#txtNombre").val(data.Name);
-                            $("#txtApellidos").val(data.Last_Name);
-                            $("#txtCorreo").val(data.Email);
+                            $("#txtName").val(data.Name);
+                            $("#txtLastName").val(data.Last_Name);
+                            $("#txtEmail").val(data.Email);
                         }
 
                     }
                 });
             } else {
-                $("#txtNombre").val("");
-                $("#txtApellidos").val("");
-                $("#txtCorreo").val("");
+                $("#txtName").val("");
+                $("#txtLastName").val("");
+                $("#txtEmail").val("");
             }
 
             $('#FormModal').modal('show');
 
         }
 
-        function Guardar() {
+        function Save() {
             var $data = {
                 oUser: {
-                    Id: parseInt($("#txtIdPersona").val()),
-                    Name: $("#txtNombre").val(),
-                    Last_Name: $("#txtApellidos").val(),
-                    Email: $("#txtCorreo").val(),
+                    Id: parseInt($("#txtId").val()),
+                    Name: $("#txtName").val(),
+                    Last_Name: $("#txtLastName").val(),
+                    Email: $("#txtEmail").val(),
                 }
             }
 
@@ -185,7 +242,7 @@
                 success: function (data) {
 
                     if (data.result) {
-                        tabla_persona.ajax.reload();
+                        users_table.ajax.reload();
                         $('#FormModal').modal('hide');
                     } else {
                         alert("No se pudo guardar los cambios");
@@ -201,7 +258,7 @@
 
         }
 
-        function Eliminar($userId) {
+        function Delete($userId) {
             if (confirm("¿Realmente desea eliminar?")) {
 
                 jQuery.ajax({
@@ -212,7 +269,7 @@
                     success: function (data) {
 
                         if (data.result) {
-                            tabla_persona.ajax.reload();
+                            users_table.ajax.reload();
                         }
                     }
                 });
