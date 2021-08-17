@@ -24,7 +24,7 @@ namespace ArquisoftApp.Controllers
             using (ArquisoftEntities db = new ArquisoftEntities())
             {
 
-                usersList = (from u in db.Users
+                usersList = (from u in db.Users.Where(x => x.Enable == true)
                                select u).ToList();
             }
             return Json(new { data = usersList }, JsonRequestBehavior.AllowGet);
@@ -37,7 +37,7 @@ namespace ArquisoftApp.Controllers
             using (ArquisoftEntities db = new ArquisoftEntities())
             {
 
-                user = (from p in db.Users.Where(x => x.Id == userId)
+                user = (from p in db.Users.Where(x => x.Id == userId && x.Enable == true)
                             select p).FirstOrDefault();
             }
 
@@ -48,16 +48,26 @@ namespace ArquisoftApp.Controllers
         public JsonResult Save(Users oUser)
         {
 
-            bool response = true;
+            String response = "OK";
+            var validateUser = String.Empty;
             try
             {
 
                 if (oUser.Id == 0)
                 {
-                    using (ArquisoftEntities db = new ArquisoftEntities())
+                    validateUser = UserExists(oUser);
+
+                    if (validateUser == string.Empty) 
                     {
-                        db.Users.Add(oUser);
-                        db.SaveChanges();
+                        using (ArquisoftEntities db = new ArquisoftEntities())
+                        {
+                            db.Users.Add(oUser);
+                            db.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        response = validateUser;
                     }
                 }
                 else
@@ -65,25 +75,27 @@ namespace ArquisoftApp.Controllers
                     using (ArquisoftEntities db = new ArquisoftEntities())
                     {
                         Users tempPersona = (from p in db.Users
-                                                where p.Id == oUser.Id
-                                                select p).FirstOrDefault();
+                                             where p.Id == oUser.Id
+                                             select p).FirstOrDefault();
 
                         tempPersona.Name = oUser.Name;
                         tempPersona.Last_Name = oUser.Last_Name;
                         tempPersona.Email = oUser.Email;
+                        tempPersona.Password = oUser.Password;
+                        tempPersona.Username = oUser.Username;
+                        tempPersona.Enable = oUser.Enable;
 
                         db.SaveChanges();
                     }
-
                 }
             }
             catch
             {
-                response = false;
+                response = "Ocurrió un error en el proceso de almacenado.";
 
             }
 
-            return Json(new { result = response }, JsonRequestBehavior.AllowGet);
+            return Json(new { result = response }, JsonRequestBehavior.AllowGet) ;
 
         }
 
@@ -95,11 +107,10 @@ namespace ArquisoftApp.Controllers
                 using (ArquisoftEntities db = new ArquisoftEntities())
                 {
                     Users oUser = new Users();
-                    oUser = (from p in db.Users.Where(x => x.Id == userId)
+                    oUser = (from p in db.Users.Where(x => x.Id == userId && x.Enable == true)
                                 select p).FirstOrDefault();
 
-                    db.Users.Remove(oUser);
-
+                    oUser.Enable = false;
                     db.SaveChanges();
                 }
             }
@@ -118,6 +129,44 @@ namespace ArquisoftApp.Controllers
             var oUser = (Models.Users)System.Web.HttpContext.Current.Session["user"];
             ViewBag.UserId = oUser.Id;
             ViewBag.UserName = oUser.Name + " " + oUser.Last_Name;
+        }
+
+        private String UserExists(Users oUser)
+        {
+
+            String returnString = string.Empty;
+            Users isValidUsername, isValidEmail;
+
+            try
+            {
+                using (ArquisoftEntities db = new ArquisoftEntities())
+                {
+                    isValidUsername = (from p in db.Users
+                                         where p.Username.ToLower() == oUser.Username.ToLower()
+                                         select p).FirstOrDefault();
+
+                    isValidEmail = (from p in db.Users
+                                             where p.Email.ToLower() == oUser.Email.ToLower()
+                                             select p).FirstOrDefault();
+
+                }
+
+                if (isValidUsername != null)
+                {
+                    returnString = "El nombre de usuario ya existe en el sistema.";
+                }
+
+                if (isValidEmail != null)
+                {
+                    returnString = "El correo electrónico existe en el sistema.";
+                }
+            }
+            catch
+            {
+
+            }
+
+            return returnString;
         }
     }
 }

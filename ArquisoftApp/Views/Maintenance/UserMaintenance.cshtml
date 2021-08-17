@@ -1,159 +1,95 @@
 ﻿
 @{
     ViewBag.Title = "UserMaintenance";
+    ViewBag.Page = "Usuarios";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Seguridad</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                        <li class="breadcrumb-item active">Seguridad</li>
-                    </ol>
-                </div>
-            </div>
-        </div><!-- /.container-fluid -->
-    </section>
-
     <!-- Main content -->
     <!-- Usuarios -->
     <section class="content">
-        <div class="card collapsed-card">
-            <div class="card-header">
-                <h3 class="card-title">Usuarios del sistema</h3>
 
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-            </div>
+        <div class="card-body p-2" style="background-color:whitesmoke">
+            <table class="display responsive nowrap" id="myTable" style="width:100%" data-page-length='10'>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Correo</th>
+                        <th>Nombre Usuario</th>
+                        <th></th>
+                    </tr>
+                </thead>
 
-            <div class="card-body p-2">
-                <table class="display responsive nowrap" id="myTable" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Last_Name</th>
-                            <th>Email</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-
-                </table>
-            </div>
+            </table>
         </div>
-    </section>
 
-    <!-- Roles -->
-    <section class="content">
-        <div class="card collapsed-card">
-            <div class="card-header">
-                <h3 class="card-title">Roles de seguridad</h3>
-
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class="card-body p-2">
-                <table class="display responsive nowrap" id="myTable2" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Last_Name</th>
-                            <th>Email</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <!-- Privilegios -->
-    <section class="content">
-        <div class="card collapsed-card">
-            <div class="card-header">
-                <h3 class="card-title">Privilegios del sistema</h3>
-
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class="card-body p-2">
-                <table class="display responsive nowrap" id="myTable2" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Last_Name</th>
-                            <th>Email</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-
-                </table>
-            </div>
-        </div>
     </section>
 
 </div>
 <!-- /.content-wrapper -->
-
 <!-- Modal -->
-<div class="modal" id="FormModal">
-    <div class="modal-dialog modal-lg">
+<form class="modal" id="FormModal">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Large Modal</h4>
+                <h4 class="modal-title"></h4>
 
             </div>
             <div class="modal-body">
 
                 <input type="hidden" id="txtId" />
+
                 <div class="form-group">
-                    <label for="txtName">Nombre:</label>
-                    <input type="text" class="form-control" id="txtName">
-                </div>
-                <div class="form-group">
-                    <label for="txtLastName">Apellido:</label>
-                    <input type="text" class="form-control" id="txtLastName">
-                </div>
-                <div class="form-group">
-                    <label for="txtEmail">Correo:</label>
-                    <input type="text" class="form-control" id="txtEmail">
+                    <input type="checkbox" class="form-check-input m-0" id="chkEnable">
+                    <label class="form-check" for="chkEnable">Activo</label>
                 </div>
 
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="txtName">Nombre:</label>
+                        <input type="text" class="form-control" id="txtName">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="txtLastName">Apellido:</label>
+                        <input type="text" class="form-control" id="txtLastName">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="txtUsername">Nombre de usuario:</label>
+                        <input type="text" class="form-control" id="txtUsername">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="txtPassword">Contraseña:</label>
+                        <input type="password" onchange="validatePassword(event)" class="form-control" id="txtPassword">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-12">
+                        <label for="txtEmail">Correo:</label>
+                        <input type="text" onblur="validateEmail(event)" class="form-control" id="txtEmail">
+                    </div>
+                </div>
 
             </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" onclick="Save()">Guardar</button>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-primary" onclick="Save()">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
             </div>
-        </div>
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
-</div>
+</form>
 <!-- /.modal -->
 
 
 @section scripts{
-
     <script>
          var users_table;
          $(document).ready( function () {
@@ -167,8 +103,9 @@
                     { "data": "Name" },
                     { "data": "Last_Name" },
                     { "data": "Email" },
+                    { "data": "Username" },
                     { "data": "Id", "render": function (data) {
-                        return "<button class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ")'><i class='fas fa-pen'></i></button>" +
+                        return "<button class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'><i class='fas fa-pen'></i></button>" +
                                 "<button class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'><i class='fa fa-trash'></i></button>"
                         },
                         "orderable": false,
@@ -182,7 +119,7 @@
                         text: 'Agregar Nuevo',
                         attr: { class: 'btn btn-success btn-sm' },
                         action: function (e, dt, node, config) {
-                            openModal(0)
+                            openModal(0, "Agregar");
                         }
                     }
                  ],
@@ -190,11 +127,14 @@
                      "url": "@Url.Content("~/Content/datatable/idioma/datatable.es-ES.json")"
                  }
 
-            });
+             });
          });
 
-        function openModal($userId) {
+        function openModal($userId, action) {
+
+            CleanModal();
             $("#txtId").val($userId);
+            $(".modal-title").text(action);
             if ($userId != 0) {
 
                 jQuery.ajax({
@@ -206,17 +146,24 @@
 
                         if (data != null) {
 
+                            $("#chkEnable").prop('checked', true);
                             $("#txtName").val(data.Name);
                             $("#txtLastName").val(data.Last_Name);
                             $("#txtEmail").val(data.Email);
+                            $("#txtPassword").val(data.Password);
+                            $("#txtUsername").val(data.Username);
                         }
 
                     }
                 });
             } else {
+
+                $("#chkEnable").prop('checked', true);
                 $("#txtName").val("");
                 $("#txtLastName").val("");
                 $("#txtEmail").val("");
+                $("#txtPassword").val("");
+                $("#txtUsername").val("");
             }
 
             $('#FormModal').modal('show');
@@ -224,37 +171,47 @@
         }
 
         function Save() {
-            var $data = {
-                oUser: {
-                    Id: parseInt($("#txtId").val()),
-                    Name: $("#txtName").val(),
-                    Last_Name: $("#txtLastName").val(),
-                    Email: $("#txtEmail").val(),
-                }
-            }
 
-            jQuery.ajax({
-                url: "@Url.Action("Save", "User")",
-                type: "POST",
-                data: JSON.stringify($data),
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-
-                    if (data.result) {
-                        users_table.ajax.reload();
-                        $('#FormModal').modal('hide');
-                    } else {
-                        alert("No se pudo guardar los cambios");
+            if (ValidateInputs()) {
+                var $data = {
+                    oUser: {
+                        Id: parseInt($("#txtId").val()),
+                        Name: $("#txtName").val(),
+                        Last_Name: $("#txtLastName").val(),
+                        Email: $("#txtEmail").val(),
+                        Password: $("#txtPassword").val(),
+                        Username: $("#txtUsername").val(),
+                        Enable: $("#chkEnable").prop('checked')
                     }
-                },
-                error: function (error) {
-                    console.log(error)
-                },
-                beforeSend: function () {
-
                 }
-            });
+
+                jQuery.ajax({
+                    url: "@Url.Action("Save", "User")",
+                    type: "POST",
+                    data: JSON.stringify($data),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+
+                        if (data.result === 'OK') {
+                            users_table.ajax.reload();
+                            $('#FormModal').modal('hide');
+                            toastr.success('Usuario guardado correctamente.')
+                        } else {
+                            toastr.error(data.result)
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    },
+                    beforeSend: function () {
+
+                    }
+                });
+            }
+            else {
+                toastr.error('Por favor valide los datos ingresados.')
+            }
 
         }
 
@@ -277,6 +234,28 @@
 
             }
         }
+
+        function ValidateInputs() {
+
+            var ret = true;
+
+            if ($("#txtEmail").hasClass("is-invalid") || $("#txtPassword").hasClass("is-invalid")) {
+                ret = false;
+            }
+
+            return ret;
+        }
+
+        function CleanModal() {
+            if ($("#txtEmail").hasClass("is-invalid") || $("#txtPassword").hasClass("is-invalid")) {
+
+                $("#txtEmail").removeClass("is-invalid");
+                $("#txtPassword").removeClass("is-invalid");
+                $('.invalid-feedback').remove();
+            }
+        }
+
     </script>
 
+    @Scripts.Render("~/Scripts/components/Validations.js")
 }
