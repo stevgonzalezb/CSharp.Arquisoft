@@ -312,27 +312,24 @@
             }
         }
 
+        // Validate id exist invalid inputs
         function ValidateInputs() {
-
-            var ret = true;
-
-            if ($("#txtEmail").hasClass("is-invalid") || $("#txtPassword").hasClass("is-invalid")) {
-                ret = false;
-            }
-
-            return ret;
+            return $(".is-invalid")[0] ? false : true;
         }
 
         function CleanModal() {
-            if ($("#txtEmail").hasClass("is-invalid") || $("#txtPassword").hasClass("is-invalid")) {
 
                 $("#txtEmail").removeClass("is-invalid");
+                $("#txtEmail").removeClass("is-valid");
                 $("#txtPassword").removeClass("is-invalid");
+                $("#txtPassword").removeClass("is-valid");
                 $("#txtName").removeClass("is-invalid");
+                $("#txtName").removeClass("is-valid");
                 $("#txtLastName").removeClass("is-invalid");
+                $("#txtLastName").removeClass("is-valid");
                 $("#txtUsername").removeClass("is-invalid");
+                $("#txtUsername").removeClass("is-valid");
                 $('.validation-error').remove();
-            }
         }
 
     </script>
