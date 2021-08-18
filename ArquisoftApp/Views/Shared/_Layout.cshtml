@@ -28,8 +28,6 @@
 
     <!-- jQuery -->
     <script src="~/Scripts/AdminLTE/plugins/jquery/jquery.min.js"></script>
-    <!-- jquery-validation -->
-    <script src="~/Scripts/AdminLTE/plugins/jquery-validation/jquery.validate.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="~/Scripts/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
@@ -38,10 +36,61 @@
     <script src="~/Scripts/AdminLTE/plugins/toastr/toastr.min.js"></script>
     <!-- Bootstrap Switch -->
     <script src="~/Scripts/AdminLTE/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-
+    @Scripts.Render("~/Scripts/components/app.js")
+    @Scripts.Render("~/Scripts/components/Validations.js")
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/Plugins/js")
+
     @RenderSection("Scripts", required: false)
+
+
+
+
+    <!-- Modal -->
+    <form class="modal" id="passwordModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Cambiar Contraseña</h4>
+
+                </div>
+                <div class="modal-body">
+
+                    <input type="hidden" id="txtId" />
+
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label for="txtCurrentPassword">Contraseña Actual:</label>
+                            <input type="password" onchange="validatePassword(event)" class="form-control" id="txtCurrentPassword">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label for="txtNewPassword">Contraseña:</label>
+                            <input type="password" onchange="validatePassword(event)" class="form-control" id="txtNewPassword">
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="txtConfirmPassword">Confirmar contraseña:</label>
+                            <input type="password" onchange="validatePassword(event)" class="form-control" id="txtConfirmPassword">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-primary" onclick="Save()">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+    <!-- /.modal -->
+
+
 </body>
 </html>
+

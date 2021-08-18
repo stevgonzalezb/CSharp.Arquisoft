@@ -76,18 +76,40 @@
 
                 <!-- Cambiar contraseña -->
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a data-target="#passwordModal" data-toggle="modal" href="#passwordModal" class="nav-link">
                         <i class="nav-icon fas fa-user-shield"></i>
                         <p>Cambiar contraseña</p>
                     </a>
                 </li>
 
-                <!-- Usuarios -->
+                <!-- Seguridad / Administrador -->
                 <li class="nav-item">
-                    <a href="@Url.Action("UserMaintenance", "User")" class="nav-link">
-                        <i class="nav-icon fas fa-user-cog"></i>
-                        <p>Usuarios</p>
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-tools"></i>
+                        <p>
+                            SysAdmin
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
                     </a>
+                    <ul class="nav nav-treeview">
+
+                        <!--Roles y Permisos-->
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-user-tag"></i>
+                                <p>Roles y Permisos</p>
+                            </a>
+                        </li>
+
+                        <!-- Usuarios -->
+                        <li class="nav-item">
+                            <a href="@Url.Action("UserMaintenance", "User")" class="nav-link">
+                                <i class="nav-icon fas fa-user-cog"></i>
+                                <p>Usuarios</p>
+                            </a>
+                        </li>
+
+                    </ul>
                 </li>
 
             </ul>
