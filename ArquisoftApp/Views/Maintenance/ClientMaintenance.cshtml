@@ -1,0 +1,266 @@
+﻿
+    @{
+        ViewBag.Title = "ClientMaintenance";
+        ViewBag.Page = "Clientes";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Main content -->
+        <!-- Usuarios -->
+        <section class="content">
+            <div class="card-body p-2" style="background-color:whitesmoke">
+                <table class="display responsive nowrap" id="myTable" style="width:100%" data-page-length='10'>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>Direcci&oacute;n</th>
+                            <th>Tel&eacute;fono</th>
+                            <th>Correo</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </section>
+
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- Modal -->
+    <form class="modal" id="FormModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"></h4>
+
+                </div>
+                <div class="modal-body">
+
+                    <input type="hidden" id="txtId" />
+
+                    <div class="form-group">
+                        <input type="checkbox" class="form-check-input m-0" id="chkEnable">
+                        <label class="form-check" for="chkEnable">Activo</label>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label for="txtName">Nombre:</label>
+                            <input type="text" class="form-control" id="txtName">
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="txtLastName">Apellidos:</label>
+                            <input type="text" class="form-control" id="txtLastName">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label for="txtDirection">Direccion:</label>
+                            <input type="text" class="form-control" id="txtDirection">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label for="txtPhone">Telefono:</label>
+                            <input type="text" class="form-control" id="txtPhone">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-6">
+                            <label for="txtEmail">Correo:</label>
+                            <input type="text" class="form-control" id="txtEmail">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-primary" onclick="Save()">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </form>
+    <!-- /.modal -->
+
+
+    @section scripts{
+        <script>
+         var client_table;
+         $(document).ready( function () {
+             client_table = $('#myTable').DataTable({
+                "ajax": {
+                    "url": "@Url.Action("List", "Client")",
+                    "type": "GET",
+                    "datatype": "json"
+                },
+                "columns": [
+                    { "data": "Name" },
+                    { "data": "Last_Name" },
+                    { "data": "Direction" },
+                    { "data": "Phone" },
+                    { "data": "Email" },
+                    { "data": "IdClient", "render": function (data) {
+                        return "<button class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>" +
+                            "<button class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
+                        },
+                        "orderable": false,
+                        "searchable": false,
+                        "width": "100px"
+                    }
+                ],
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        text: 'Agregar Nuevo',
+                        attr: { class: 'btn btn-success btn-sm' },
+                        action: function (e, dt, node, config) {
+                            openModal(0, "Agregar");
+                        }
+                    }
+                 ],
+                 "language": {
+                     "url": "@Url.Content("~/Content/datatable/idioma/datatable.es-ES.json")"
+                 }
+
+             });
+         });
+
+        function openModal($clientId, action) {
+
+            CleanModal();
+            $("#txtId").val($clientId);
+            $(".modal-title").text(action);
+            if ($clientId != 0) {
+
+                jQuery.ajax({
+                    url: "@Url.Action("Get","Client")" + "?clientId=" + $clientId,
+                    type: "GET",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+
+                        if (data != null) {
+
+                            $("#chkEnable").prop('checked', true);
+                            $("#txtName").val(data.Name);
+                            $("#txtLastName").val(data.Last_Name);
+                            $("#txtDirection").val(data.Direction);
+                            $("#txtPhone").val(data.Phone);
+                            $("#txtEmail").val(data.Email);
+
+                        }
+
+                    }
+                });
+            } else {
+
+                $("#chkEnable").prop('checked', true);
+                $("#txtName").val("");
+                $("#txtLastName").val("");
+                $("#txtDirection").val("");
+                $("#txtPhone").val("");
+                $("#txtEmail").val("");
+            }
+
+            $('#FormModal').modal('show');
+
+        }
+
+        function Save() {
+
+            if (ValidateInputs()) {
+                var $data = {
+                    oClient: {
+                        IdClient: parseInt($("#txtId").val()),
+                        Name: $("#txtName").val(),
+                        Last_Name: $("#txtLastName").val(),
+                        Direction: $("#txtDirection").val(),
+                        Phone: $("#txtPhone").val(),
+                        Email: $("#txtEmail").val(),
+                        IdState: 1,
+                        Enable: $("#chkEnable").prop('checked')
+                    }
+                }
+
+                jQuery.ajax({
+                    url: "@Url.Action("Save", "Client")",
+                    type: "POST",
+                    data: JSON.stringify($data),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+
+                        if (data.result === 'OK') {
+                            client_table.ajax.reload();
+                            $('#FormModal').modal('hide');
+                            toastr.success('Usuario guardado correctamente.')
+                        } else {
+                            toastr.error(data.result)
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error)
+                    },
+                    beforeSend: function () {
+
+                    }
+                });
+            }
+            else {
+                toastr.error('Por favor valide los datos ingresados.')
+            }
+
+        }
+
+        function Delete($clientId) {
+            if (confirm("¿Realmente desea eliminar?")) {
+
+                jQuery.ajax({
+                    url: "@Url.Action("Delete", "Client")" + "?clientId=" + $clientId,
+                    type: "GET",
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+
+                        if (data.result) {
+                            client_table.ajax.reload();
+                        }
+                    }
+                });
+
+
+            }
+        }
+
+        function ValidateInputs() {
+
+            var ret = true;
+
+            if ($("#txtEmail").hasClass("is-invalid")) {
+                ret = false;
+            }
+
+            return ret;
+        }
+
+        function CleanModal() {
+            if ($("#txtEmail").hasClass("is-invalid")) {
+
+                $("#txtEmail").removeClass("is-invalid");
+                $('.invalid-feedback').remove();
+            }
+        }
+
+
+
+        </script>
+
+        @Scripts.Render("~/Scripts/components/Validations.js")
+    }
