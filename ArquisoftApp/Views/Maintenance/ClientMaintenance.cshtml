@@ -1,97 +1,97 @@
 ﻿
-    @{
-        ViewBag.Title = "ClientMaintenance";
-        ViewBag.Page = "Clientes";
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
+@{
+    ViewBag.Title = "ClientMaintenance";
+    ViewBag.Page = "Clientes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Main content -->
-        <!-- Usuarios -->
-        <section class="content">
-            <div class="card-body p-2" style="background-color:whitesmoke">
-                <table class="display responsive nowrap" id="myTable" style="width:100%" data-page-length='10'>
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Apellidos</th>
-                            <th>Direcci&oacute;n</th>
-                            <th>Tel&eacute;fono</th>
-                            <th>Correo</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-        </section>
-
-    </div>
-    <!-- /.content-wrapper -->
-    <!-- Modal -->
-    <form class="modal" id="FormModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title"></h4>
-
-                </div>
-                <div class="modal-body">
-
-                    <input type="hidden" id="txtId" />
-
-                    <div class="form-group">
-                        <input type="checkbox" class="form-check-input m-0" id="chkEnable">
-                        <label class="form-check" for="chkEnable">Activo</label>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group col-6">
-                            <label for="txtName">Nombre:</label>
-                            <input type="text" class="form-control" id="txtName">
-                        </div>
-                        <div class="form-group col-6">
-                            <label for="txtLastName">Apellidos:</label>
-                            <input type="text" class="form-control" id="txtLastName">
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group col-6">
-                            <label for="txtDirection">Direccion:</label>
-                            <input type="text" class="form-control" id="txtDirection">
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group col-6">
-                            <label for="txtPhone">Telefono:</label>
-                            <input type="text" class="form-control" id="txtPhone">
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group col-6">
-                            <label for="txtEmail">Correo:</label>
-                            <input type="text" class="form-control" id="txtEmail">
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-primary" onclick="Save()">Guardar</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Main content -->
+    <!-- Usuarios -->
+    <section class="content">
+        <div class="card-body p-2" style="background-color:whitesmoke">
+            <table class="display responsive nowrap" id="myTable" style="width:100%" data-page-length='10'>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Direcci&oacute;n</th>
+                        <th>Tel&eacute;fono</th>
+                        <th>Correo</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
         </div>
-        <!-- /.modal-dialog -->
-    </form>
-    <!-- /.modal -->
+    </section>
+
+</div>
+<!-- /.content-wrapper -->
+<!-- Modal -->
+<form class="modal" id="FormModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+
+            </div>
+            <div class="modal-body">
+
+                <input type="hidden" id="txtId" />
+
+                <div class="form-group">
+                    <input type="checkbox" class="form-check-input m-0" id="chkEnable">
+                    <label class="form-check" for="chkEnable">Activo</label>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="txtName">Nombre:</label>
+                        <input type="text" class="form-control" id="txtName">
+                    </div>
+                    <div class="form-group col-6">
+                        <label for="txtLastName">Apellidos:</label>
+                        <input type="text" class="form-control" id="txtLastName">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="txtDirection">Direccion:</label>
+                        <input type="text" class="form-control" id="txtDirection">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="txtPhone">Telefono:</label>
+                        <input type="text" class="form-control" id="txtPhone">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-6">
+                        <label for="txtEmail">Correo:</label>
+                        <input type="text" class="form-control" id="txtEmail">
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-primary" onclick="Save()">Guardar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</form>
+<!-- /.modal -->
 
 
-    @section scripts{
-        <script>
+@section scripts{
+    <script>
          var client_table;
          $(document).ready( function () {
              client_table = $('#myTable').DataTable({
@@ -260,7 +260,7 @@
 
 
 
-        </script>
+    </script>
 
-        @Scripts.Render("~/Scripts/components/Validations.js")
-    }
+    @Scripts.Render("~/Scripts/components/Validations.js")
+}

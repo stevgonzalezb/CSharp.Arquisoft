@@ -5,17 +5,17 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="f0c237e3e9314e6c8893a93ed1078b2f" Name="Diagram1">
-        <EntityTypeShape EntityType="ArquisoftModel1.ModuleOperations" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ArquisoftModel1.Modules" Width="1.5" PointX="3.875" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="ArquisoftModel1.RoleOperations" Width="1.5" PointX="4.875" PointY="2.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ArquisoftModel1.Roles" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ArquisoftModel1.sysdiagrams" Width="1.5" PointX="9.375" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ArquisoftModel1.Users" Width="1.5" PointX="4.875" PointY="5.5" IsExpanded="true" />
-        <AssociationConnector Association="ArquisoftModel1.FK_ModuleOperations" ManuallyRouted="false" />
-        <AssociationConnector Association="ArquisoftModel1.FK_RoleOperations_Operations" ManuallyRouted="false" />
-        <AssociationConnector Association="ArquisoftModel1.FK_RoleOperations_Roles" ManuallyRouted="false" />
-        <AssociationConnector Association="ArquisoftModel1.FK_UserRole" ManuallyRouted="false" />
         <EntityTypeShape EntityType="ArquisoftModel1.Clients" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="ArquisoftModel1.ModuleOperations" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Modules" Width="1.5" PointX="1.125" PointY="4.125" />
+        <EntityTypeShape EntityType="ArquisoftModel1.RoleOperations" Width="1.5" PointX="5.625" PointY="2.75" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Roles" Width="1.5" PointX="3.375" PointY="3.875" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Users" Width="1.5" PointX="5.625" PointY="6.125" />
+        <AssociationConnector Association="ArquisoftModel1.FK_ModuleOperations" />
+        <AssociationConnector Association="ArquisoftModel1.FK_RoleOperations_Operations" />
+        <AssociationConnector Association="ArquisoftModel1.FK_RoleOperations_Roles" />
+        <AssociationConnector Association="ArquisoftModel1.FK_UserRole" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

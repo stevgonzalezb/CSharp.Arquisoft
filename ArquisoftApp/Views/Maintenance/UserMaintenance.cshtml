@@ -97,7 +97,7 @@
     <script>
         var users_table;
         var emailRegex = app.enums.Regex.Email;
-
+        
         // Document ready
         $(document).ready(function () {
              // Load table data method
@@ -249,6 +249,7 @@
 
         // Submit form method
         $("#userForm").on("submit", function (e) {
+            
             if (ValidateInputs()) {
                 var $data = {
                     oUser: {
@@ -258,7 +259,8 @@
                         Email: $("#txtEmail").val(),
                         Password: $("#txtPassword").val(),
                         Username: $("#txtUsername").val(),
-                        Enable: $("#chkEnable").prop('checked')
+                        Enable: $("#chkEnable").prop('checked')                     
+                        
                     }
                 }
 
@@ -330,6 +332,10 @@
                 $("#txtUsername").removeClass("is-invalid");
                 $("#txtUsername").removeClass("is-valid");
                 $('.validation-error').remove();
+        }
+
+        function Encriptacion() {
+
         }
 
     </script>

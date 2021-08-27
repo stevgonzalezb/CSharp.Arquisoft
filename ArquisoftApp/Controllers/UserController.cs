@@ -50,18 +50,33 @@ namespace ArquisoftApp.Controllers
 
             String response = "OK";
             var validateUser = String.Empty;
+            //Creo el objeto oData para poder almacenar todos los datos que trae el objeto oUser desde el HTML
+            //Asigno todos los datos pero el password lo envio a la clase Encryption para que se 
+            //encripte con SHA256, una vez devuelto guardo el objeto oData que es una copia de oUser
+            // solo que con la contraseña encriptada
+            var oData = new Users
+            {
+                Id = oUser.Id,
+                Name = oUser.Name,
+                Last_Name = oUser.Last_Name,
+                Email = oUser.Email,
+                Password = Encrypt.GetSHA256(oUser.Password),
+                Username = oUser.Username,
+                Enable = oUser.Enable,
+            };
+
             try
             {
 
-                if (oUser.Id == 0)
+                if (oData.Id == 0)
                 {
-                    validateUser = UserExists(oUser);
-
+                    validateUser = UserExists(oData);
+                                        
                     if (validateUser == string.Empty) 
                     {
                         using (ArquisoftEntities db = new ArquisoftEntities())
                         {
-                            db.Users.Add(oUser);
+                            db.Users.Add(oData);
                             db.SaveChanges();
                         }
                     }
@@ -75,15 +90,15 @@ namespace ArquisoftApp.Controllers
                     using (ArquisoftEntities db = new ArquisoftEntities())
                     {
                         Users tempPersona = (from p in db.Users
-                                             where p.Id == oUser.Id
+                                             where p.Id == oData.Id
                                              select p).FirstOrDefault();
 
-                        tempPersona.Name = oUser.Name;
-                        tempPersona.Last_Name = oUser.Last_Name;
-                        tempPersona.Email = oUser.Email;
-                        tempPersona.Password = oUser.Password;
-                        tempPersona.Username = oUser.Username;
-                        tempPersona.Enable = oUser.Enable;
+                        tempPersona.Name = oData.Name;
+                        tempPersona.Last_Name = oData.Last_Name;
+                        tempPersona.Email = oData.Email;
+                        tempPersona.Password = oData.Password;
+                        tempPersona.Username = oData.Username;
+                        tempPersona.Enable = oData.Enable;
 
                         db.SaveChanges();
                     }

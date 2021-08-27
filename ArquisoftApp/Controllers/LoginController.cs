@@ -24,8 +24,11 @@ namespace ArquisoftApp.Controllers
             {
                 using (Models.ArquisoftEntities db = new Models.ArquisoftEntities())
                 {
+                    string passwordUser = password;
+                    string passwordEncryt = Encrypt.GetSHA256(passwordUser);
+
                     Models.Users oUser = (from d in db.Users
-                                 where d.Username == username.Trim() && d.Password == password.Trim()
+                                 where d.Username == username.Trim() && d.Password == passwordEncryt.Trim()
                                  select d).FirstOrDefault();
                     
                     if (oUser == null)
@@ -36,9 +39,9 @@ namespace ArquisoftApp.Controllers
                         ViewBag.Error = "Usuario o contraseña invalida";
                         return View("~/Views/Login.cshtml");
                     }
-
+                    
                     Session["User"] = oUser;
-
+                    
                 }
 
                 return RedirectToAction("Index", "Home");
