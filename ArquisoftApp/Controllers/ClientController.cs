@@ -10,7 +10,7 @@ namespace ArquisoftApp.Controllers
     public class ClientController : Controller
     {
         // GET: Client
-        public ActionResult ClientMaintenance()
+        public ActionResult Index()
         {
             SetSessionData();
             return View("~/Views/Maintenance/ClientMaintenance.cshtml");

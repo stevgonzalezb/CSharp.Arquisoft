@@ -150,6 +150,7 @@
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\VerifySession.cs" />
     <Compile Include="Global.asax.cs">
@@ -2253,6 +2254,7 @@
     <Content Include="Views\Maintenance\UserMaintenance.cshtml" />
     <Content Include="Scripts\src\scrappers\config.ini" />
     <Content Include="Views\Maintenance\ClientMaintenance.cshtml" />
+    <Content Include="Views\Maintenance\RoleMaintenance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

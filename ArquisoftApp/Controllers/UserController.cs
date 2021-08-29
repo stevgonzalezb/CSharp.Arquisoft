@@ -10,7 +10,7 @@ namespace ArquisoftApp.Controllers
     public class UserController : Controller
     {
         // GET: User
-        public ActionResult UserMaintenance()
+        public ActionResult Index()
         {
             SetSessionData();
             return View("~/Views/Maintenance/UserMaintenance.cshtml");
