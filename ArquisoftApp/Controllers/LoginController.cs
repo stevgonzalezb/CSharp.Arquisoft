@@ -25,7 +25,7 @@ namespace ArquisoftApp.Controllers
                 using (Models.ArquisoftEntities db = new Models.ArquisoftEntities())
                 {
                     string passwordUser = password;
-                    string passwordEncryt = Encrypt.GetSHA256(passwordUser);
+                    string passwordEncryt = AppController.Encrypt(passwordUser);
 
                     Models.Users oUser = (from d in db.Users
                                  where d.Username == username.Trim() && d.Password == passwordEncryt.Trim()

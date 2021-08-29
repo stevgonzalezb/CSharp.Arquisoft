@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
 
-namespace ArquisoftApp
+namespace ArquisoftApp.Controllers
 {
-    public class Encrypt
+    public class AppController : Controller
     {
-        public static string GetSHA256(string str)
+        public static string Encrypt(string str)
         {
             SHA256 sha256 = SHA256Managed.Create();
             ASCIIEncoding encoding = new ASCIIEncoding();

@@ -19,7 +19,7 @@ namespace ArquisoftApp.Controllers
         {
             var oUser = (Models.Users)System.Web.HttpContext.Current.Session["user"];
             ViewBag.UserId = oUser.Id;
-            ViewBag.UserName = oUser.Name +" "+ oUser.Last_Name;
+            ViewBag.UserName = oUser.Name + " " + oUser.Last_Name;
         }
     }
 }

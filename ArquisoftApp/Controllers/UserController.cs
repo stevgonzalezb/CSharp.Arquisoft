@@ -60,7 +60,7 @@ namespace ArquisoftApp.Controllers
                 Name = oUser.Name,
                 Last_Name = oUser.Last_Name,
                 Email = oUser.Email,
-                Password = Encrypt.GetSHA256(oUser.Password),
+                Password = AppController.Encrypt(oUser.Password),
                 Username = oUser.Username,
                 Enable = oUser.Enable,
             };

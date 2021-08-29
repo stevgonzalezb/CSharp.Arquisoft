@@ -97,7 +97,8 @@
     <script>
         var users_table;
         var emailRegex = app.enums.Regex.Email;
-        
+        var passwordRegex = app.enums.Regex.Password;
+
         // Document ready
         $(document).ready(function () {
              // Load table data method
@@ -113,8 +114,8 @@
                     { "data": "Email" },
                     { "data": "Username" },
                     { "data": "Id", "render": function (data) {
-                        return "<button class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'><i class='fas fa-pen'></i></button>" +
-                                "<button class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'><i class='fa fa-trash'></i></button>"
+                        return "<button class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>" +
+                            "<button class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'> Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
                         },
                         "orderable": false,
                         "searchable": false,
@@ -157,24 +158,28 @@
                 return value.match(emailRegex);
             }, '');
 
+            $.validator.addMethod('passwordRegex', function (value, element, parameter) {
+                return value.match(passwordRegex);
+            }, '');
+
             // Form validations
             var validator = $("#userForm").validate({
                 rules: {
                     txtName: {
                         required: true,
-                        minlength: 8
+                        minlength: 1
                     },
                     txtLastName: {
                         required: true,
-                        minlength: 8
+                        minlength: 1
                     },
                     txtUsername: {
                         required: true,
-                        minlength: 8
+                        minlength: 5
                     },
                     txtPassword: {
                         required: true,
-                        minlength: 5
+                        passwordRegex: true,
                     },
                     txtEmail: {
                         required: true,
@@ -184,19 +189,19 @@
                 messages: {
                     txtName: {
                         required: "Requerido",
-                        minlength: "Debe contener al menos 8 caracteres"
+                        minlength: "Ingrese un nombre válido."
                     },
                     txtLastName: {
                         required: "Requerido",
-                        minlength: "Debe contener al menos 8 caracteres"
+                        minlength: "Ingrese un apellido válido."
                     },
                     txtUsername: {
                         required: "Requerido",
-                        minlength: "Debe contener al menos 8 caracteres"
+                        minlength: "Ingrese un nombre de usuario válido."
                     },
                     txtPassword: {
                         required: "Requerido",
-                        minlength: "Debe contener al menos 5 caracteres"
+                        passwordRegex: "La contraseña debe cumplir con: mínimo 8 caracteres, al menos una letra mayúscula, una letra minúscula y un número."
                     },
                     txtEmail: {
                         required: "Requerido",
@@ -249,7 +254,6 @@
 
         // Submit form method
         $("#userForm").on("submit", function (e) {
-            
             if (ValidateInputs()) {
                 var $data = {
                     oUser: {
@@ -259,8 +263,7 @@
                         Email: $("#txtEmail").val(),
                         Password: $("#txtPassword").val(),
                         Username: $("#txtUsername").val(),
-                        Enable: $("#chkEnable").prop('checked')                     
-                        
+                        Enable: $("#chkEnable").prop('checked')
                     }
                 }
 
@@ -332,10 +335,6 @@
                 $("#txtUsername").removeClass("is-invalid");
                 $("#txtUsername").removeClass("is-valid");
                 $('.validation-error').remove();
-        }
-
-        function Encriptacion() {
-
         }
 
     </script>

@@ -18,6 +18,7 @@ namespace ArquisoftApp.Models
         public ArquisoftEntities()
             : base("name=ArquisoftEntities")
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
