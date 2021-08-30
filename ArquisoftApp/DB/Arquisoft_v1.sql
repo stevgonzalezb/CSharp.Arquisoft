@@ -141,3 +141,6 @@ REFERENCES [dbo].[Roles] ([Id])
 GO
 ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [FK_UserRole]
 GO
+ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [FK_IdState] FOREIGN KEY([IdState])
+REFERENCES [dbo].[State] ([idState])
+GO

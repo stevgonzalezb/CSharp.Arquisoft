@@ -47,6 +47,13 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="idState" />
+          </Key>
+          <Property Name="idState" Type="int" Nullable="false" />
+          <Property Name="description" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -67,9 +74,21 @@
           <Property Name="Password" Type="varchar" MaxLength="150" />
           <Property Name="Name" Type="varchar" MaxLength="150" />
           <Property Name="Last_Name" Type="varchar" MaxLength="150" />
-          <Property Name="Enable" Type="bit" />
           <Property Name="IdRole" Type="int" />
+          <Property Name="IdState" Type="int" />
         </EntityType>
+        <Association Name="FK_IdState">
+          <End Role="State" Type="Self.State" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="idState" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="IdState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ModuleOperations">
           <End Role="Modules" Type="Self.Modules" Multiplicity="0..1" />
           <End Role="ModuleOperations" Type="Self.ModuleOperations" Multiplicity="*" />
@@ -124,8 +143,13 @@
           <EntitySet Name="Modules" EntityType="Self.Modules" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoleOperations" EntityType="Self.RoleOperations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_IdState" Association="Self.FK_IdState">
+            <End Role="State" EntitySet="State" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
           <AssociationSet Name="FK_ModuleOperations" Association="Self.FK_ModuleOperations">
             <End Role="Modules" EntitySet="Modules" />
             <End Role="ModuleOperations" EntitySet="ModuleOperations" />
@@ -164,7 +188,6 @@
           <EntitySet Name="Modules" EntityType="ArquisoftModel1.Modules" />
           <EntitySet Name="RoleOperations" EntityType="ArquisoftModel1.RoleOperations" />
           <EntitySet Name="Roles" EntityType="ArquisoftModel1.Roles" />
-          <EntitySet Name="Users" EntityType="ArquisoftModel1.Users" />
           <AssociationSet Name="FK_ModuleOperations" Association="ArquisoftModel1.FK_ModuleOperations">
             <End Role="Modules" EntitySet="Modules" />
             <End Role="ModuleOperations" EntitySet="ModuleOperations" />
@@ -177,8 +200,14 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="RoleOperations" EntitySet="RoleOperations" />
           </AssociationSet>
+          <EntitySet Name="State" EntityType="ArquisoftModel1.State" />
+          <EntitySet Name="Users" EntityType="ArquisoftModel1.Users" />
           <AssociationSet Name="FK_UserRole" Association="ArquisoftModel1.FK_UserRole">
             <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdState" Association="ArquisoftModel1.FK_IdState">
+            <End Role="State" EntitySet="State" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
@@ -231,20 +260,6 @@
           <NavigationProperty Name="RoleOperations" Relationship="ArquisoftModel1.FK_RoleOperations_Roles" FromRole="Roles" ToRole="RoleOperations" />
           <NavigationProperty Name="Users" Relationship="ArquisoftModel1.FK_UserRole" FromRole="Roles" ToRole="Users" />
         </EntityType>
-        <EntityType Name="Users">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Last_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Enable" Type="Boolean" />
-          <Property Name="IdRole" Type="Int32" />
-          <NavigationProperty Name="Roles" Relationship="ArquisoftModel1.FK_UserRole" FromRole="Users" ToRole="Roles" />
-        </EntityType>
         <Association Name="FK_ModuleOperations">
           <End Type="ArquisoftModel1.Modules" Role="Modules" Multiplicity="0..1" />
           <End Type="ArquisoftModel1.ModuleOperations" Role="ModuleOperations" Multiplicity="*" />
@@ -281,6 +296,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="idState" />
+          </Key>
+          <Property Name="idState" Type="Int32" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Users" Relationship="ArquisoftModel1.FK_IdState" FromRole="State" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Last_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="IdRole" Type="Int32" />
+          <Property Name="IdState" Type="Int32" />
+          <NavigationProperty Name="Roles" Relationship="ArquisoftModel1.FK_UserRole" FromRole="Users" ToRole="Roles" />
+          <NavigationProperty Name="State" Relationship="ArquisoftModel1.FK_IdState" FromRole="Users" ToRole="State" />
+        </EntityType>
         <Association Name="FK_UserRole">
           <End Type="ArquisoftModel1.Roles" Role="Roles" Multiplicity="0..1" />
           <End Type="ArquisoftModel1.Users" Role="Users" Multiplicity="*" />
@@ -290,6 +328,18 @@
             </Principal>
             <Dependent Role="Users">
               <PropertyRef Name="IdRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdState">
+          <End Type="ArquisoftModel1.State" Role="State" Multiplicity="0..1" />
+          <End Type="ArquisoftModel1.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="idState" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="IdState" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -357,11 +407,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="State">
+            <EntityTypeMapping TypeName="ArquisoftModel1.State">
+              <MappingFragment StoreEntitySet="State">
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="idState" ColumnName="idState" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="ArquisoftModel1.Users">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="IdState" ColumnName="IdState" />
                 <ScalarProperty Name="IdRole" ColumnName="IdRole" />
-                <ScalarProperty Name="Enable" ColumnName="Enable" />
                 <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Password" ColumnName="Password" />

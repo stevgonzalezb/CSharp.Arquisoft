@@ -228,7 +228,7 @@
 
                         if (data != null) {
 
-                            $("#chkEnable").prop('checked', true);
+                            $("#chkEnable").prop('checked', data.IdState == app.enums.States.ACTIVE ? true : false);
                             $("#txtName").val(data.Name);
                             $("#txtLastName").val(data.Last_Name);
                             $("#txtEmail").val(data.Email);
@@ -240,7 +240,7 @@
                 });
             } else {
 
-                $("#chkEnable").prop('checked', true);
+                $("#chkEnable").prop('checked', false);
                 $("#txtName").val("");
                 $("#txtLastName").val("");
                 $("#txtEmail").val("");
@@ -263,7 +263,7 @@
                         Email: $("#txtEmail").val(),
                         Password: $("#txtPassword").val(),
                         Username: $("#txtUsername").val(),
-                        Enable: $("#chkEnable").prop('checked')
+                        idState: $("#chkEnable").prop('checked') ? app.enums.States.ACTIVE : app.enums.States.DISABLE
                     }
                 }
 

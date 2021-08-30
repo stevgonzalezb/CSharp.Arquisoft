@@ -11,11 +11,13 @@
         <EntityTypeShape EntityType="ArquisoftModel1.Modules" Width="1.5" PointX="1.125" PointY="4.125" />
         <EntityTypeShape EntityType="ArquisoftModel1.RoleOperations" Width="1.5" PointX="5.625" PointY="2.75" />
         <EntityTypeShape EntityType="ArquisoftModel1.Roles" Width="1.5" PointX="3.375" PointY="3.875" />
-        <EntityTypeShape EntityType="ArquisoftModel1.Users" Width="1.5" PointX="5.625" PointY="6.125" />
         <AssociationConnector Association="ArquisoftModel1.FK_ModuleOperations" />
         <AssociationConnector Association="ArquisoftModel1.FK_RoleOperations_Operations" />
         <AssociationConnector Association="ArquisoftModel1.FK_RoleOperations_Roles" />
+        <EntityTypeShape EntityType="ArquisoftModel1.State" Width="1.5" PointX="3.375" PointY="7.375" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Users" Width="1.5" PointX="7" PointY="6.375" />
         <AssociationConnector Association="ArquisoftModel1.FK_UserRole" />
+        <AssociationConnector Association="ArquisoftModel1.FK_IdState" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -24,7 +24,7 @@ namespace ArquisoftApp.Controllers
             using (ArquisoftEntities db = new ArquisoftEntities())
             {
 
-                usersList = (from u in db.Users.Where(x => x.Enable == true)
+                usersList = (from u in db.Users.Where(x => x.IdState == (int)Common.AppEnums.States.ACTIVE || x.IdState == (int)Common.AppEnums.States.DISABLE)
                                select u).ToList();
             }
             return Json(new { data = usersList }, JsonRequestBehavior.AllowGet);
@@ -37,7 +37,7 @@ namespace ArquisoftApp.Controllers
             using (ArquisoftEntities db = new ArquisoftEntities())
             {
 
-                user = (from p in db.Users.Where(x => x.Id == userId && x.Enable == true)
+                user = (from p in db.Users.Where(x => x.Id == userId)
                             select p).FirstOrDefault();
             }
 
@@ -54,29 +54,31 @@ namespace ArquisoftApp.Controllers
             //Asigno todos los datos pero el password lo envio a la clase Encryption para que se 
             //encripte con SHA256, una vez devuelto guardo el objeto oData que es una copia de oUser
             // solo que con la contraseña encriptada
-            var oData = new Users
-            {
-                Id = oUser.Id,
-                Name = oUser.Name,
-                Last_Name = oUser.Last_Name,
-                Email = oUser.Email,
-                Password = AppController.Encrypt(oUser.Password),
-                Username = oUser.Username,
-                Enable = oUser.Enable,
-            };
+
+            //var oData = new Users
+            //{
+            //    Id = oUser.Id,
+            //    Name = oUser.Name,
+            //    Last_Name = oUser.Last_Name,
+            //    Email = oUser.Email,
+            //    Password = AppController.Encrypt(oUser.Password),
+            //    Username = oUser.Username,
+            //    IdState = oUser.IdState,
+            //};
 
             try
             {
 
-                if (oData.Id == 0)
+                if (oUser.Id == 0)
                 {
-                    validateUser = UserExists(oData);
+                    validateUser = UserExists(oUser);
                                         
                     if (validateUser == string.Empty) 
                     {
                         using (ArquisoftEntities db = new ArquisoftEntities())
                         {
-                            db.Users.Add(oData);
+                            oUser.Password = AppController.Encrypt(oUser.Password);
+                            db.Users.Add(oUser);
                             db.SaveChanges();
                         }
                     }
@@ -89,16 +91,16 @@ namespace ArquisoftApp.Controllers
                 {
                     using (ArquisoftEntities db = new ArquisoftEntities())
                     {
-                        Users tempPersona = (from p in db.Users
-                                             where p.Id == oData.Id
+                        Users tempUser = (from p in db.Users
+                                             where p.Id == oUser.Id
                                              select p).FirstOrDefault();
 
-                        tempPersona.Name = oData.Name;
-                        tempPersona.Last_Name = oData.Last_Name;
-                        tempPersona.Email = oData.Email;
-                        tempPersona.Password = oData.Password;
-                        tempPersona.Username = oData.Username;
-                        tempPersona.Enable = oData.Enable;
+                        tempUser.Name = oUser.Name;
+                        tempUser.Last_Name = oUser.Last_Name;
+                        tempUser.Email = oUser.Email;
+                        tempUser.Password = oUser.Password;
+                        tempUser.Username = oUser.Username;
+                        tempUser.IdState = oUser.IdState;
 
                         db.SaveChanges();
                     }
@@ -122,10 +124,10 @@ namespace ArquisoftApp.Controllers
                 using (ArquisoftEntities db = new ArquisoftEntities())
                 {
                     Users oUser = new Users();
-                    oUser = (from p in db.Users.Where(x => x.Id == userId && x.Enable == true)
+                    oUser = (from p in db.Users.Where(x => x.Id == userId)
                                 select p).FirstOrDefault();
 
-                    oUser.Enable = false;
+                    oUser.IdState = (int)Common.AppEnums.States.DELETE;
                     db.SaveChanges();
                 }
             }
