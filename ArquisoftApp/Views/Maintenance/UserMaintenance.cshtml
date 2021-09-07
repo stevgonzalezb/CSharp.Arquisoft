@@ -23,8 +23,7 @@
                 </thead>
 
             </table>
-        </div>
-
+        </div>        
     </section>
 
 </div>
@@ -114,8 +113,21 @@
                     { "data": "Email" },
                     { "data": "Username" },
                     { "data": "Id", "render": function (data) {
-                        return "<button class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>" +
-                            "<button class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'> Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
+
+                        var buttons = "";
+
+                        @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.USER_EDIT))
+                         {
+                            <text> buttons += "<button class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>"</text>
+                         }
+
+                        @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.USER_DELETE))
+                         {
+                            <text> buttons += "<button class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'> Eliminar &nbsp;<i class='fa fa-trash'></i></button>" </text>
+                         }
+
+                        return buttons;
+                            
                         },
                         "orderable": false,
                         "searchable": false,
@@ -124,16 +136,26 @@
                 ],
                 dom: 'Bfrtip',
                 buttons: [
+                    @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.USER_ADD))
                     {
-                        text: 'Agregar Nuevo',
-                        attr: { class: 'btn btn-success btn-sm' },
-                        action: function (e, dt, node, config) {
-                            openModal(0, "Agregar");
+                        <text>
+                        {
+                            text: 'Agregar Nuevo',
+                            attr: { class: 'btn btn-success btn-sm' },
+                            action: function (e, dt, node, config) {
+                                openModal(0, "Agregar");
+                            }
                         }
-                    }
+                        </text>
+
+                     }
+                     else
+                     {
+                        <text></text>
+                     }
                  ],
                  "language": {
-                     "url": "@Url.Content("~/Content/datatable/idioma/datatable.es-ES.json")"
+                        "url": "@Url.Content("~/Content/datatable/idioma/datatable.es-ES.json")"
                  }
 
              });

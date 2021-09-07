@@ -11,37 +11,53 @@ namespace ArquisoftApp.Controllers
 {
     public class AppController : Controller
     {
+
         public static string Encrypt(string str)
         {
-            SHA256 sha256 = SHA256Managed.Create();
-            ASCIIEncoding encoding = new ASCIIEncoding();
-            byte[] stream = null;
             StringBuilder sb = new StringBuilder();
-            stream = sha256.ComputeHash(encoding.GetBytes(str));
-            for (int i = 0; i < stream.Length; i++) sb.AppendFormat("{0:x2}", stream[i]);
+
+            try
+            {
+                SHA256 sha256 = SHA256Managed.Create();
+                ASCIIEncoding encoding = new ASCIIEncoding();
+                byte[] stream = null;
+                stream = sha256.ComputeHash(encoding.GetBytes(str));
+                for (int i = 0; i < stream.Length; i++) sb.AppendFormat("{0:x2}", stream[i]);
+            }
+            catch(Exception)
+            {
+            }
+
             return sb.ToString();
         }
 
         public static bool IsAuthorized(Common.AppEnums.Permissions value )
         {
+            RoleOperations hasOperation = null;
 
             try
             {
-                //var oUser = (Users)HttpContext.Current.Session["user"];
+                var currentUser = GetSessionUser();
+
+                using (ArquisoftEntities db = new ArquisoftEntities())
+                {
+
+                    hasOperation = (from u in db.RoleOperations.Where(x => x.IdRole == currentUser.IdRole && x.IdOperation == (int)value)
+                           select u).FirstOrDefault();
+                }
             }
             catch(Exception)
             {
-
+                throw;
             }
 
-
-            return false;
+            return hasOperation == null ? false : true;
         }
 
 
         public static Users GetSessionUser()
         {
-            return new Users();
+            return (Models.Users)System.Web.HttpContext.Current.Session["user"];
         }
     }
 }
