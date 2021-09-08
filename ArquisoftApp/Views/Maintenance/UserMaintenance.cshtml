@@ -77,7 +77,11 @@
 
 
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success" id="btnSaveIt">Guardar</button>
+                        @if (ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.USER_EDIT))
+                        {
+                            <button type="submit" class="btn btn-success" id="btnSaveIt">Guardar</button>
+                        }
+                        
                         <button type="button" class="btn btn-default" id="btnCloseIt" data-dismiss="modal">Cerrar</button>
                     </div>
                 </form>
@@ -116,10 +120,10 @@
 
                         var buttons = "";
 
-                        @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.USER_EDIT))
-                         {
+                        @if (ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.USER_READ))
+                        {
                             <text> buttons += "<button class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>"</text>
-                         }
+                        }
 
                         @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.USER_DELETE))
                          {
@@ -127,7 +131,7 @@
                          }
 
                         return buttons;
-                            
+
                         },
                         "orderable": false,
                         "searchable": false,

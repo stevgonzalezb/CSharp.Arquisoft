@@ -116,6 +116,7 @@ namespace ArquisoftApp.Controllers
 
         }
 
+        [ArquisoftApp.Filters.VerifyRole(Permission = Common.AppEnums.Permissions.USER_DELETE)]
         public JsonResult Delete(int userId)
         {
             bool response = true;

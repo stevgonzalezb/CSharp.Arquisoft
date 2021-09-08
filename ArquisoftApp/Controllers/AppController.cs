@@ -54,7 +54,6 @@ namespace ArquisoftApp.Controllers
             return hasOperation == null ? false : true;
         }
 
-
         public static Users GetSessionUser()
         {
             return (Models.Users)System.Web.HttpContext.Current.Session["user"];
