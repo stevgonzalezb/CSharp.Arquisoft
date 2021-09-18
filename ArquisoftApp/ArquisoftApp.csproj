@@ -16,7 +16,7 @@
     <AssemblyName>ArquisoftApp</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort>44393</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
@@ -2226,6 +2226,7 @@
     <Content Include="Content\datatable\images\Sorting icons.psd" />
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\components\api.js" />
     <Content Include="Scripts\components\app.js" />
     <Content Include="Scripts\components\Validations.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -2298,7 +2299,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>65374</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:65374/</IISUrl>
+          <IISUrl>http://localhost/ArquisoftApp</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

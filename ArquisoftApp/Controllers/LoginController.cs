@@ -22,6 +22,7 @@ namespace ArquisoftApp.Controllers
         {
             try
             {
+
                 using (Models.ArquisoftEntities db = new Models.ArquisoftEntities())
                 {
                     string passwordUser = password;
@@ -33,9 +34,6 @@ namespace ArquisoftApp.Controllers
                     
                     if (oUser == null)
                     {
-                        //Page page = System.Web.HttpContext.Current.Handler as Page;
-                        //page.ClientScript.RegisterStartupScript(GetType(), "script", "alert('Record Successfuly saved');", true);
-                        //page.ClientScript.RegisterStartupScript(this.GetType(), "CallMyFunction", "showContent();", true);
                         ViewBag.Error = "Usuario o contraseña invalida";
                         return View("~/Views/Login.cshtml");
                     }

@@ -38,6 +38,13 @@ namespace ArquisoftApp
             "~/Content/datatable/js/dataTables.responsive.min.js",
             "~/Content/datatable/js/dataTables.buttons.min.js"
             ));
+
+            // Arquisoft files 
+            bundles.Add(new ScriptBundle("~/bundles/App/js").Include(
+            "~/Scripts/components/app.js",
+            "~/Scripts/components/api.js"
+            ));
+
         }
     }
 }

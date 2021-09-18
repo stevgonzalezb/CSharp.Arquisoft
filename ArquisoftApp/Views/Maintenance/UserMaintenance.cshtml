@@ -4,110 +4,125 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Main content -->
-    <!-- Usuarios -->
-    <section class="content">
+<asp:ScriptManager runat="server" EnablePageMethods="true">
 
-        <div class="card-body p-2" style="background-color:whitesmoke">
-            <table class="display responsive nowrap" id="myTable" style="width:100%" data-page-length='10'>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Correo</th>
-                        <th>Nombre Usuario</th>
-                        <th></th>
-                    </tr>
-                </thead>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Main content -->
+        <!-- Usuarios -->
+        <section class="content">
 
-            </table>
-        </div>        
-    </section>
+            <div class="card-body p-2" style="background-color:whitesmoke">
+                <table class="display responsive nowrap" id="myTable" style="width:100%" data-page-length='10'>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Correo</th>
+                            <th>Nombre Usuario</th>
+                            <th></th>
+                        </tr>
+                    </thead>
 
-</div>
-<!-- /.content-wrapper -->
-<!-- Modal -->
-<div class="modal" id="usersModal" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Add Stuff</h4>
+                </table>
             </div>
-            <div class="modal-body">
-                <form role="form" id="userForm">
+        </section>
 
-                    <input type="hidden" id="txtId" />
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- Modal -->
+    <div class="modal" id="usersModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Add Stuff</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form" id="userForm">
 
-                    <div class="form-group">
-                        <input type="checkbox" class="form-check-input m-0" id="chkEnable">
-                        <label class="form-check" for="chkEnable">Activo</label>
-                    </div>
+                        <input type="hidden" id="txtId" />
 
-                    <div class="row">
-                        <div class="form-group col-6">
-                            <label for="txtName">Nombre:</label>
-                            <input type="text" class="form-control" id="txtName" name="txtName">
+                        <div class="form-group">
+                            <input type="checkbox" class="form-check-input m-0" id="chkEnable">
+                            <label class="form-check" for="chkEnable">Activo</label>
                         </div>
-                        <div class="form-group col-6">
-                            <label for="txtLastName">Apellido:</label>
-                            <input type="text" class="form-control" id="txtLastName" name="txtLastName">
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="form-group col-6">
-                            <label for="txtUsername">Nombre de usuario:</label>
-                            <input type="text" class="form-control" id="txtUsername" name="txtUsername">
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label for="txtName">Nombre:</label>
+                                <input type="text" class="form-control" id="txtName" name="txtName">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="txtLastName">Apellido:</label>
+                                <input type="text" class="form-control" id="txtLastName" name="txtLastName">
+                            </div>
                         </div>
-                        <div class="form-group col-6">
-                            <label for="txtPassword">Contraseña:</label>
-                            <input type="password" class="form-control" id="txtPassword" name="txtPassword">
+
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label for="txtUsername">Nombre de usuario:</label>
+                                <input type="text" class="form-control" id="txtUsername" name="txtUsername">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="txtPassword">Contraseña:</label>
+                                <input type="password" class="form-control" id="txtPassword" name="txtPassword">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="form-group col-12">
-                            <label for="txtEmail">Correo:</label>
-                            <input type="text" class="form-control" id="txtEmail" name="txtEmail">
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label for="txtEmail">Correo:</label>
+                                <input type="text" class="form-control" id="txtEmail" name="txtEmail">
+                            </div>
+
+                            <div class="form-group col-6">
+                                <label for="cmbUserRole">Rol: </label>
+                                <select class="custom-select form-control-border" id="cmbUserRole">
+                                    <option>Seleccione una opción</option>
+                                </select>
+                            </div>
+
                         </div>
-                    </div>
 
-
-                    <div class="modal-footer">
-                        @if (ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.USER_EDIT))
-                        {
+                        <div class="modal-footer">
                             <button type="submit" class="btn btn-success" id="btnSaveIt">Guardar</button>
-                        }
-                        
-                        <button type="button" class="btn btn-default" id="btnCloseIt" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </form>
+                            <button type="button" class="btn btn-default" id="btnCloseIt" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- /.modal -->
-
+    <!-- /.modal -->
 
 
 
-@section scripts{
-    
-    <script>
-        var users_table;
-        var emailRegex = app.enums.Regex.Email;
-        var passwordRegex = app.enums.Regex.Password;
 
-        // Document ready
-        $(document).ready(function () {
-             // Load table data method
-             users_table = $('#myTable').DataTable({
+    @section scripts{
+
+        <script>
+
+            const api = new UserApi();
+            const roleApi = new RoleApi();
+            const emailRegex = app.enums.Regex.Email;
+            const passwordRegex = app.enums.Regex.Password;
+
+            var users_table,
+                users_List;
+
+            // On load event - Initial event
+            $(document).ready(function () {
+                LoadTable();
+                LoadRoles();
+            });
+
+            // Load Table method
+            function LoadTable() {
+                users_table = $('#myTable').DataTable({
                 "ajax": {
-                    "url": "@Url.Action("List", "User")",
+                    "url": "/ArquisoftApp/User/List",
                     "type": "GET",
                     "datatype": "json"
                 },
@@ -120,15 +135,8 @@
 
                         var buttons = "";
 
-                        @if (ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.USER_READ))
-                        {
-                            <text> buttons += "<button class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>"</text>
-                        }
-
-                        @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.USER_DELETE))
-                         {
-                            <text> buttons += "<button class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'> Eliminar &nbsp;<i class='fa fa-trash'></i></button>" </text>
-                         }
+                        buttons += "<button class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>"
+                        buttons += "<button class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'> Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
 
                         return buttons;
 
@@ -140,215 +148,182 @@
                 ],
                 dom: 'Bfrtip',
                 buttons: [
-                    @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.USER_ADD))
                     {
-                        <text>
-                        {
-                            text: 'Agregar Nuevo',
-                            attr: { class: 'btn btn-success btn-sm' },
-                            action: function (e, dt, node, config) {
-                                openModal(0, "Agregar");
-                            }
+                        text: 'Agregar Nuevo',
+                        attr: { class: 'btn btn-success btn-sm' },
+                        action: function (e, dt, node, config) {
+                            openModal(0, "Agregar");
                         }
-                        </text>
-
-                     }
-                     else
-                     {
-                        <text></text>
-                     }
+                    }
                  ],
                  "language": {
                         "url": "@Url.Content("~/Content/datatable/idioma/datatable.es-ES.json")"
                  }
 
-             });
+                });
 
-            // Methods who add or remove de styled classes
-            $.validator.setDefaults({
-                //Add Error Class To Fieldset if field invalid
-                highlight: function (element) {
-                    $(element).addClass('is-invalid').removeClass('is-valid');
-                },
-                //Add Valid Class To Fieldset if field valid
-                unhighlight: function (element) {
-                    $(element).removeClass('is-invalid').addClass('is-valid');
-                },
-                errorPlacement: function (error, element) {
-                    error.addClass('validation-error text-red small').insertAfter(element);
-                }
-            });
-
-            // Custom methods for validations
-            $.validator.addMethod('emailRegex', function (value, element, parameter) {
-                return value.match(emailRegex);
-            }, '');
-
-            $.validator.addMethod('passwordRegex', function (value, element, parameter) {
-                return value.match(passwordRegex);
-            }, '');
-
-            // Form validations
-            var validator = $("#userForm").validate({
-                rules: {
-                    txtName: {
-                        required: true,
-                        minlength: 1
+                // Methods who add or remove de styled classes
+                $.validator.setDefaults({
+                    //Add Error Class To Fieldset if field invalid
+                    highlight: function (element) {
+                        $(element).addClass('is-invalid').removeClass('is-valid');
                     },
-                    txtLastName: {
-                        required: true,
-                        minlength: 1
+                    //Add Valid Class To Fieldset if field valid
+                    unhighlight: function (element) {
+                        $(element).removeClass('is-invalid').addClass('is-valid');
                     },
-                    txtUsername: {
-                        required: true,
-                        minlength: 5
-                    },
-                    txtPassword: {
-                        required: true,
-                        passwordRegex: true,
-                    },
-                    txtEmail: {
-                        required: true,
-                        emailRegex: true
-                    }
-                },
-                messages: {
-                    txtName: {
-                        required: "Requerido",
-                        minlength: "Ingrese un nombre válido."
-                    },
-                    txtLastName: {
-                        required: "Requerido",
-                        minlength: "Ingrese un apellido válido."
-                    },
-                    txtUsername: {
-                        required: "Requerido",
-                        minlength: "Ingrese un nombre de usuario válido."
-                    },
-                    txtPassword: {
-                        required: "Requerido",
-                        passwordRegex: "La contraseña debe cumplir con: mínimo 8 caracteres, al menos una letra mayúscula, una letra minúscula y un número."
-                    },
-                    txtEmail: {
-                        required: "Requerido",
-                        emailRegex: "Ingrese un correo válido"
-                    }
-                }
-            });
-         });
-
-        // Open modal methos
-        function openModal($userId, action) {
-
-            CleanModal();
-            $("#txtId").val($userId);
-            $(".modal-title").text(action);
-            if ($userId != 0) {
-
-                jQuery.ajax({
-                    url: "@Url.Action("Get","User")" + "?userId=" + $userId,
-                    type: "GET",
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data) {
-
-                        if (data != null) {
-
-                            $("#chkEnable").prop('checked', data.IdState == app.enums.States.ACTIVE ? true : false);
-                            $("#txtName").val(data.Name);
-                            $("#txtLastName").val(data.Last_Name);
-                            $("#txtEmail").val(data.Email);
-                            $("#txtPassword").val(data.Password);
-                            $("#txtUsername").val(data.Username);
-                        }
-
+                    errorPlacement: function (error, element) {
+                        error.addClass('validation-error text-red small').insertAfter(element);
                     }
                 });
-            } else {
 
-                $("#chkEnable").prop('checked', false);
-                $("#txtName").val("");
-                $("#txtLastName").val("");
-                $("#txtEmail").val("");
-                $("#txtPassword").val("");
-                $("#txtUsername").val("");
+                // Custom methods for validations
+                $.validator.addMethod('emailRegex', function (value, element, parameter) {
+                    return value.match(emailRegex);
+                }, '');
+
+                $.validator.addMethod('passwordRegex', function (value, element, parameter) {
+                    return value.match(passwordRegex);
+                }, '');
+
+                // Form validations
+                var validator = $("#userForm").validate({
+                    rules: {
+                        txtName: {
+                            required: true,
+                            minlength: 1
+                        },
+                        txtLastName: {
+                            required: true,
+                            minlength: 1
+                        },
+                        txtUsername: {
+                            required: true,
+                            minlength: 5
+                        },
+                        txtPassword: {
+                            required: true,
+                            passwordRegex: true,
+                        },
+                        txtEmail: {
+                            required: true,
+                            emailRegex: true
+                        }
+                    },
+                    messages: {
+                        txtName: {
+                            required: "Requerido",
+                            minlength: "Ingrese un nombre válido."
+                        },
+                        txtLastName: {
+                            required: "Requerido",
+                            minlength: "Ingrese un apellido válido."
+                        },
+                        txtUsername: {
+                            required: "Requerido",
+                            minlength: "Ingrese un nombre de usuario válido."
+                        },
+                        txtPassword: {
+                            required: "Requerido",
+                            passwordRegex: "La contraseña debe cumplir con: mínimo 8 caracteres, al menos una letra mayúscula, una letra minúscula y un número."
+                        },
+                        txtEmail: {
+                            required: "Requerido",
+                            emailRegex: "Ingrese un correo válido"
+                        }
+                    }
+                });
+
             }
 
-            $('#usersModal').modal('show');
+            // Open modal method
+            function openModal($userId, action) {
+
+                CleanModal();
+                $("#txtId").val($userId);
+                $(".modal-title").text(action);
+                if ($userId != 0) {
+
+                    api.GetUser($userId).then(user => {
+                        var userData = user;
+
+                        if (userData) {
+                            $("#chkEnable").prop('checked', userData.IdState == app.enums.States.ACTIVE ? true : false);
+                            $("#txtName").val(userData.Name);
+                            $("#txtLastName").val(userData.Last_Name);
+                            $("#txtEmail").val(userData.Email);
+                            $("#txtPassword").val(userData.Password);
+                            $("#txtUsername").val(userData.Username);
+                            $("#cmbUserRole").val(userData.IdRole);
+                        }
+                        else
+                            throw ("Data error from api");
+
+                    }).catch(err => {
+
+                        console.log(err);
+                        toastr.error("Ocurrió un error cargando los datos de usuario seleccionado.");
+                    })
+                } 
+                $('#usersModal').modal('show');
 
         }
 
-        // Submit form method
-        $("#userForm").on("submit", function (e) {
-            if (ValidateInputs()) {
-                var $data = {
-                    oUser: {
-                        Id: parseInt($("#txtId").val()),
-                        Name: $("#txtName").val(),
-                        Last_Name: $("#txtLastName").val(),
-                        Email: $("#txtEmail").val(),
-                        Password: $("#txtPassword").val(),
-                        Username: $("#txtUsername").val(),
-                        idState: $("#chkEnable").prop('checked') ? app.enums.States.ACTIVE : app.enums.States.DISABLE
+            // Submit form method
+            $("#userForm").on("submit", function (e) {
+                if (ValidateInputs()) {
+                    var $data = {
+                        oUser: {
+                            Id: parseInt($("#txtId").val()),
+                            Name: $("#txtName").val(),
+                            Last_Name: $("#txtLastName").val(),
+                            Email: $("#txtEmail").val(),
+                            Password: $("#txtPassword").val(),
+                            Username: $("#txtUsername").val(),
+                            idState: $("#chkEnable").prop('checked') ? app.enums.States.ACTIVE : app.enums.States.DISABLE
+                        }
                     }
-                }
 
-                jQuery.ajax({
-                    url: "@Url.Action("Save", "User")",
-                    type: "POST",
-                    data: JSON.stringify($data),
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data) {
-
-                        if (data.result === 'OK') {
+                    api.SaveUser($data).then(response => {
+                        if (response.result === 'OK') {
                             users_table.ajax.reload();
                             $('#usersModal').modal('hide');
-                            toastr.success('Usuario guardado correctamente.')
+                            toastr.success('Usuario guardado correctamente.');
                         } else {
-                            toastr.error(data.result)
+                            toastr.error(response.result);
                         }
-                    },
-                    error: function (error) {
-                        console.log(error)
-                    },
-                    beforeSend: function () {
 
-                    }
-                });
-            }
-            else {
-                toastr.error('Por favor valide los datos ingresados.')
-            }
-        })
+                    }).catch(err => {
 
-        // Delete user method
-        function Delete($userId) {
-            if (confirm("¿Realmente desea eliminar?")) {
+                        toastr.error("Ocurrió un error guardando los datos del usuario.");
+                    })
+                }
+                else
+                    toastr.error('Por favor valide los datos ingresados.');
+            })
 
-                jQuery.ajax({
-                    url: "@Url.Action("Delete", "User")" + "?userId=" + $userId,
-                    type: "GET",
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data) {
+            // Delete user method
+            function Delete($userId) {
+                if (confirm("¿Realmente desea eliminar?")) {
 
-                        if (data.result) {
+                    api.DeleteUser($userId).then(response => {
+                        if (response.result) {
                             users_table.ajax.reload();
+                            toastr.success('Usuario eliminado correctamente.');
                         }
-                    }
-                });
+                    }).catch(err => {
 
-
+                        toastr.error("Ocurrió un error eliminando los datos del usuario.");
+                    })
+                }
             }
-        }
 
-        // Validate id exist invalid inputs
-        function ValidateInputs() {
-            return $(".is-invalid")[0] ? false : true;
-        }
+            // Validate id exist invalid inputs
+            function ValidateInputs() {
+                return $(".is-invalid")[0] ? false : true;
+            }
 
-        function CleanModal() {
+            function CleanModal() {
 
                 $("#txtEmail").removeClass("is-invalid");
                 $("#txtEmail").removeClass("is-valid");
@@ -361,7 +336,35 @@
                 $("#txtUsername").removeClass("is-invalid");
                 $("#txtUsername").removeClass("is-valid");
                 $('.validation-error').remove();
-        }
 
-    </script>
-}
+
+                $("#chkEnable").prop('checked', false);
+                $("#txtName").val("");
+                $("#txtLastName").val("");
+                $("#txtEmail").val("");
+                $("#txtPassword").val("");
+                $("#txtUsername").val("");
+            }
+
+            function LoadRoles() {
+
+                $('#cmbUserRole').empty();
+
+                roleApi.ListRoles().then(roles => {
+                    var $RoleSelect = $('#cmbUserRole');
+                    $.each(roles.data, function (key, value) {
+                        var $option = $("<option/>", {
+                            value: value.Id,
+                            text: value.Name
+                        });
+
+                        $RoleSelect.append($option);
+                    })
+
+                })
+
+
+            }
+
+        </script>
+    }

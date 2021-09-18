@@ -46,6 +46,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Description" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -259,6 +260,7 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="RoleOperations" Relationship="ArquisoftModel1.FK_RoleOperations_Roles" FromRole="Roles" ToRole="RoleOperations" />
           <NavigationProperty Name="Users" Relationship="ArquisoftModel1.FK_UserRole" FromRole="Roles" ToRole="Users" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_ModuleOperations">
           <End Type="ArquisoftModel1.Modules" Role="Modules" Multiplicity="0..1" />
@@ -402,6 +404,7 @@
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="ArquisoftModel1.Roles">
               <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

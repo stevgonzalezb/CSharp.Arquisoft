@@ -82,35 +82,38 @@
                     </a>
                 </li>
 
-                <!-- Seguridad / Administrador -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-tools"></i>
-                        <p>
-                            SysAdmin
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
+                @if (ArquisoftApp.Controllers.AppController.isAdmin())
+                {
+                    <!-- Seguridad / Administrador -->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-tools"></i>
+                            <p>
+                                SysAdmin
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
 
-                        <!--Roles y Permisos-->
-                        <li class="nav-item">
-                            <a href="@Url.Action("Index", "Role")" class="nav-link">
-                                <i class="fas fa-user-tag"></i>
-                                <p>Roles y Permisos</p>
-                            </a>
-                        </li>
+                            <!--Roles y Permisos-->
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "Role")" class="nav-link">
+                                    <i class="fas fa-user-tag"></i>
+                                    <p>Roles y Permisos</p>
+                                </a>
+                            </li>
 
-                        <!-- Usuarios -->
-                        <li class="nav-item">
-                            <a href="@Url.Action("Index", "User")" class="nav-link">
-                                <i class="nav-icon fas fa-user-cog"></i>
-                                <p>Usuarios</p>
-                            </a>
-                        </li>
+                            <!-- Usuarios -->
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "User")" class="nav-link">
+                                    <i class="nav-icon fas fa-user-cog"></i>
+                                    <p>Usuarios</p>
+                                </a>
+                            </li>
 
-                    </ul>
-                </li>
+                        </ul>
+                    </li>
+                }
 
             </ul>
         </nav>

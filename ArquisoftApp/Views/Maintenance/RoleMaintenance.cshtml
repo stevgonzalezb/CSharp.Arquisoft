@@ -15,17 +15,16 @@
             <table class="display responsive nowrap" id="myTable" style="width:100%" data-page-length='10'>
                 <thead>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Apellidos</th>
-                        <th>Direcci&oacute;n</th>
-                        <th>Tel&eacute;fono</th>
-                        <th>Correo</th>
+                        <th>Nombre Rol</th>
+                        <th>Descripción</th>
                         <th></th>
                     </tr>
                 </thead>
             </table>
         </div>
     </section>
+
+
 
 </div>
 <!-- /.content-wrapper -->
@@ -41,46 +40,20 @@
 
                 <input type="hidden" id="txtId" />
 
-                <div class="form-group">
-                    <input type="checkbox" class="form-check-input m-0" id="chkEnable">
-                    <label class="form-check" for="chkEnable">Activo</label>
-                </div>
-
                 <div class="row">
                     <div class="form-group col-6">
                         <label for="txtName">Nombre:</label>
                         <input type="text" class="form-control" id="txtName">
                     </div>
                     <div class="form-group col-6">
-                        <label for="txtLastName">Apellidos:</label>
-                        <input type="text" class="form-control" id="txtLastName">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-6">
-                        <label for="txtDirection">Direccion:</label>
-                        <input type="text" class="form-control" id="txtDirection">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-6">
-                        <label for="txtPhone">Telefono:</label>
-                        <input type="text" class="form-control" id="txtPhone">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-6">
-                        <label for="txtEmail">Correo:</label>
-                        <input type="text" class="form-control" id="txtEmail">
+                        <label for="txtDescription">Descripción:</label>
+                        <input type="text" class="form-control" id="txtDescription">
                     </div>
                 </div>
 
             </div>
             <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-primary" onclick="Save()">Guardar</button>
+                <button type="submit" class="btn btn-primary" id="btnSaveIt">Guardar</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
@@ -93,23 +66,30 @@
 
 @section scripts{
     <script>
-         var client_table;
-         $(document).ready( function () {
-             client_table = $('#myTable').DataTable({
+        const api = new RoleApi();
+        var role_table;
+
+
+
+
+        $(document).ready(function () {
+            LoadTable();
+        });
+
+        // Load Table method
+        function LoadTable() {
+            role_table = $('#myTable').DataTable({
                 "ajax": {
-                    "url": "@Url.Action("List", "Client")",
+                    "url": "@Url.Action("List", "Role")",
                     "type": "GET",
                     "datatype": "json"
                 },
                 "columns": [
                     { "data": "Name" },
-                    { "data": "Last_Name" },
-                    { "data": "Direction" },
-                    { "data": "Phone" },
-                    { "data": "Email" },
-                    { "data": "IdClient", "render": function (data) {
-                        return "<button class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>" +
-                            "<button class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
+                    { "data": "Description"},
+                    { "data": "Id", "render": function (data) {
+                        return "<button class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar Privilegios\")'>Editar Privilegios &nbsp;<i class='fas fa-pen'></i></button>"
+                            //"<button class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
                         },
                         "orderable": false,
                         "searchable": false,
@@ -131,114 +111,70 @@
                  }
 
              });
-         });
+        }
 
-        function openModal($clientId, action) {
+        function openModal($RoleId, action) {
 
             CleanModal();
-            $("#txtId").val($clientId);
+            $("#txtId").val($RoleId);
             $(".modal-title").text(action);
-            if ($clientId != 0) {
+            if ($RoleId != 0) {
 
-                jQuery.ajax({
-                    url: "@Url.Action("Get","Client")" + "?clientId=" + $clientId,
-                    type: "GET",
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data) {
+                api.GetRole($RoleId).then(role => {
+                    var roleData = role;
 
-                        if (data != null) {
-
-                            $("#chkEnable").prop('checked', true);
-                            $("#txtName").val(data.Name);
-                            $("#txtLastName").val(data.Last_Name);
-                            $("#txtDirection").val(data.Direction);
-                            $("#txtPhone").val(data.Phone);
-                            $("#txtEmail").val(data.Email);
-
-                        }
-
+                    if (roleData) {
+                        $("#txtName").val(roleData.Name);
+                        $("#txtDescription").val(roleData.Description);
                     }
-                });
+                    else
+                        throw ("Data error from api");
+
+                }).catch(err => {
+
+                    console.log(err);
+                    toastr.error("Ocurrió un error cargando los datos de rol seleccionado.");
+                })
+
             } else {
 
-                $("#chkEnable").prop('checked', true);
                 $("#txtName").val("");
-                $("#txtLastName").val("");
-                $("#txtDirection").val("");
-                $("#txtPhone").val("");
-                $("#txtEmail").val("");
+                $("#txtDescription").val("");
             }
 
             $('#FormModal').modal('show');
 
         }
 
-        function Save() {
 
+        // Submit form method
+        $("#FormModal").on("submit", function (e) {
             if (ValidateInputs()) {
                 var $data = {
-                    oClient: {
-                        IdClient: parseInt($("#txtId").val()),
+                    oRole: {
+                        Id: parseInt($("#txtId").val()),
                         Name: $("#txtName").val(),
-                        Last_Name: $("#txtLastName").val(),
-                        Direction: $("#txtDirection").val(),
-                        Phone: $("#txtPhone").val(),
-                        Email: $("#txtEmail").val(),
-                        IdState: 1,
-                        Enable: $("#chkEnable").prop('checked')
+                        Description: $("#txtDescription").val(),
                     }
                 }
 
-                jQuery.ajax({
-                    url: "@Url.Action("Save", "Client")",
-                    type: "POST",
-                    data: JSON.stringify($data),
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data) {
-
-                        if (data.result === 'OK') {
-                            client_table.ajax.reload();
-                            $('#FormModal').modal('hide');
-                            toastr.success('Usuario guardado correctamente.')
-                        } else {
-                            toastr.error(data.result)
-                        }
-                    },
-                    error: function (error) {
-                        console.log(error)
-                    },
-                    beforeSend: function () {
-
+                api.SaveRole($data).then(response => {
+                    if (response.result === 'OK') {
+                        role_table.ajax.reload();
+                        $('#FormModal').modal('hide');
+                        toastr.success('Rol guardado correctamente.');
+                    } else {
+                        toastr.error(response.result);
                     }
-                });
+
+                }).catch(err => {
+
+                    toastr.error("Ocurrió un error guardando los datos del rol.");
+                })
             }
-            else {
-                toastr.error('Por favor valide los datos ingresados.')
-            }
-
-        }
-
-        function Delete($clientId) {
-            if (confirm("¿Realmente desea eliminar?")) {
-
-                jQuery.ajax({
-                    url: "@Url.Action("Delete", "Client")" + "?clientId=" + $clientId,
-                    type: "GET",
-                    dataType: "json",
-                    contentType: "application/json; charset=utf-8",
-                    success: function (data) {
-
-                        if (data.result) {
-                            client_table.ajax.reload();
-                        }
-                    }
-                });
-
-
-            }
-        }
+            else
+                toastr.error('Por favor valide los datos ingresados.');
+        })
 
         function ValidateInputs() {
 
@@ -252,17 +188,15 @@
         }
 
         function CleanModal() {
-            if ($("#txtEmail").hasClass("is-invalid")) {
 
-                $("#txtEmail").removeClass("is-invalid");
-                $('.invalid-feedback').remove();
-            }
+            $("#txtName").removeClass("is-invalid");
+            $("#txtName").removeClass("is-valid");
+            $("#txtDescription").removeClass("is-invalid");
+            $("#txtDescription").removeClass("is-valid");
         }
 
 
 
     </script>
-
-    @Scripts.Render("~/Scripts/components/Validations.js")
 }
 

@@ -10,12 +10,14 @@ namespace ArquisoftApp.Controllers
     public class UserController : Controller
     {
         // GET: User
+        [Filters.VerifyRole(Permission = 0)]
         public ActionResult Index()
         {
             SetSessionData();
             return View("~/Views/Maintenance/UserMaintenance.cshtml");
         }
 
+        [Filters.VerifyRole(Permission = 0)]
         public JsonResult List()
         {
 
@@ -24,12 +26,13 @@ namespace ArquisoftApp.Controllers
             using (ArquisoftEntities db = new ArquisoftEntities())
             {
 
-                usersList = (from u in db.Users.Where(x => x.IdState == (int)Common.AppEnums.States.ACTIVE || x.IdState == (int)Common.AppEnums.States.DISABLE)
+                usersList = (from u in db.Users.Where(x => x.IdState != (int)Common.AppEnums.States.DELETE && x.IdRole != (int)Common.AppEnums.Permissions.ADMIN_ROLE)
                                select u).ToList();
             }
             return Json(new { data = usersList }, JsonRequestBehavior.AllowGet);
         }
 
+        [Filters.VerifyRole(Permission = 0)]
         public JsonResult Get(int userId)
         {
             Users user = new Users();
@@ -37,35 +40,21 @@ namespace ArquisoftApp.Controllers
             using (ArquisoftEntities db = new ArquisoftEntities())
             {
 
-                user = (from p in db.Users.Where(x => x.Id == userId)
+                user = (from p in db.Users.Where(x => x.Id == userId && x.IdRole != (int)Common.AppEnums.Permissions.ADMIN_ROLE)
                             select p).FirstOrDefault();
             }
 
             return Json(user, JsonRequestBehavior.AllowGet);
         }
 
+        [Filters.VerifyRole(Permission = 0)]
         [HttpPost]
         public JsonResult Save(Users oUser)
         {
 
             String response = "OK";
             var validateUser = String.Empty;
-            //Creo el objeto oData para poder almacenar todos los datos que trae el objeto oUser desde el HTML
-            //Asigno todos los datos pero el password lo envio a la clase Encryption para que se 
-            //encripte con SHA256, una vez devuelto guardo el objeto oData que es una copia de oUser
-            // solo que con la contraseña encriptada
-
-            //var oData = new Users
-            //{
-            //    Id = oUser.Id,
-            //    Name = oUser.Name,
-            //    Last_Name = oUser.Last_Name,
-            //    Email = oUser.Email,
-            //    Password = AppController.Encrypt(oUser.Password),
-            //    Username = oUser.Username,
-            //    IdState = oUser.IdState,
-            //};
-
+            
             try
             {
 
@@ -116,7 +105,7 @@ namespace ArquisoftApp.Controllers
 
         }
 
-        [ArquisoftApp.Filters.VerifyRole(Permission = Common.AppEnums.Permissions.USER_DELETE)]
+        [Filters.VerifyRole(Permission = 0)]
         public JsonResult Delete(int userId)
         {
             bool response = true;

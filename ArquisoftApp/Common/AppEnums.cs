@@ -7,13 +7,21 @@ namespace ArquisoftApp.Common
 {
     public class AppEnums
     {
+
+        public enum Modules
+        {
+            USERS = 1,
+            ROLES = 2,
+            CLIENTS = 3,
+            MATERIALS = 4,
+            PROJECTS = 5,
+            VENDOR_MATERIALS = 6
+        }
+
         public enum Permissions
         {
-            #region Users
-            USER_READ = 1,
-            USER_EDIT = 2,
-            USER_DELETE = 3,
-            USER_ADD = 4,
+            #region Admin
+            ADMIN_ROLE = 1,
             #endregion
 
             #region Clients

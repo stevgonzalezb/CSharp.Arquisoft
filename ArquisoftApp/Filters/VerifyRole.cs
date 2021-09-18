@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArquisoftApp.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -15,7 +16,19 @@ namespace ArquisoftApp.Filters
         {
             base.OnActionExecuting(filterContext);
 
-            if (!ArquisoftApp.Controllers.AppController.IsAuthorized(this.Permission))
+            if (filterContext.Controller is UserController == true || filterContext.Controller is RoleController == true)
+            {
+                if (!Controllers.AppController.isAdmin())
+                {
+                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
+                    {
+                        controller = "Error",
+                        action = "NotAuthorized"
+                    }));
+                }
+            }
+
+            else if(!Controllers.AppController.IsAuthorized(this.Permission))
             {
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                 {

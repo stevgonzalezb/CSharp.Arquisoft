@@ -41,7 +41,6 @@ namespace ArquisoftApp.Controllers
 
                 using (ArquisoftEntities db = new ArquisoftEntities())
                 {
-
                     hasOperation = (from u in db.RoleOperations.Where(x => x.IdRole == currentUser.IdRole && x.IdOperation == (int)value)
                            select u).FirstOrDefault();
                 }
@@ -54,9 +53,31 @@ namespace ArquisoftApp.Controllers
             return hasOperation == null ? false : true;
         }
 
+        public static bool isAdmin()
+        {
+            Users currentUser;
+
+            try
+            {
+                currentUser = GetSessionUser();
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+
+            return currentUser.IdRole == (int)Common.AppEnums.Permissions.ADMIN_ROLE;
+        }
+
         public static Users GetSessionUser()
         {
             return (Models.Users)System.Web.HttpContext.Current.Session["user"];
+        }
+
+        public ActionResult LogOut()
+        {
+            System.Web.HttpContext.Current.Session["User"] = null;
+            return RedirectToAction("Login", "Login");
         }
     }
 }
