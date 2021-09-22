@@ -51,12 +51,29 @@
                     </div>
                 </div>
 
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="submit" class="btn btn-primary" id="btnSaveIt">Guardar</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
+                <div class="row">
+                    <div class="form-group col-12" id="roleSection">
+                        <input type="checkbox" class="form-check-input m-0" id="chkEnable">
+                        <label class="form-check" for="chkEnable">Clientes</label>
+                        <br />
+
+                        <input type="checkbox" class="form-check-input m-0" id="chkEnable">
+                        <label class="form-check" for="chkEnable">Agregar</label>
+                        <span class="input-group-addon">-</span>
+
+                        <input type="checkbox" class="form-check-input m-0" id="chkEnable">
+                        <label class="form-check" for="chkEnable">Editar</label>
+                        <span class="input-group-addon">-</span>
+
+                        <input type="checkbox" class="form-check-input m-0" id="chkEnable">
+                        <label class="form-check" for="chkEnable">Eliminar</label>
+
+                    </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="submit" class="btn btn-primary" id="btnSaveIt">Guardar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
@@ -146,7 +163,6 @@
 
         }
 
-
         // Submit form method
         $("#FormModal").on("submit", function (e) {
             if (ValidateInputs()) {
@@ -193,6 +209,16 @@
             $("#txtName").removeClass("is-valid");
             $("#txtDescription").removeClass("is-invalid");
             $("#txtDescription").removeClass("is-valid");
+        }
+
+        function LoadPermissions() {
+
+            api.GetPermissionsByRole(2).then(data => {
+                console.log(data);
+
+                data[0].Id
+            })
+
         }
 
 

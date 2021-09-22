@@ -44,6 +44,8 @@ namespace ArquisoftApp.Controllers
                             select p).FirstOrDefault();
             }
 
+            user.Password = AppController.Decrypt(user.Password);
+
             return Json(user, JsonRequestBehavior.AllowGet);
         }
 
@@ -87,9 +89,10 @@ namespace ArquisoftApp.Controllers
                         tempUser.Name = oUser.Name;
                         tempUser.Last_Name = oUser.Last_Name;
                         tempUser.Email = oUser.Email;
-                        tempUser.Password = oUser.Password;
+                        tempUser.Password = AppController.Encrypt(oUser.Password);
                         tempUser.Username = oUser.Username;
                         tempUser.IdState = oUser.IdState;
+                        tempUser.IdRole = oUser.IdRole;
 
                         db.SaveChanges();
                     }

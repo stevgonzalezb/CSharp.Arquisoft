@@ -1,7 +1,9 @@
 ﻿using ArquisoftApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -125,6 +127,38 @@ namespace ArquisoftApp.Controllers
             }
 
             return returnString;
+        }
+
+        [Filters.VerifyRole(Permission = 0)]
+        public JsonResult GetPermissionsByRole(int roleId)
+        {
+
+            var data = "[]";
+            var ArquisoftConnection = AppController.GetConnectionString();
+            var queryString = @"SELECT  A.Id, A.Name, Operations.Name 'Permission', CASE WHEN RoleOp.IdOperation IS NULL THEN 0 ELSE 1 END 'HasPrivilege'
+                                FROM Modules A 
+                                    INNER JOIN ModuleOperations Operations ON A.Id = Operations.IdModule
+                                    LEFT JOIN RoleOperations RoleOp on RoleOp.IdOperation = Operations.Id
+                                WHERE RoleOp.IdRole = " + roleId+ " OR RoleOp.IdRole IS NULL FOR JSON AUTO";
+
+            using (SqlConnection conn = new SqlConnection(ArquisoftConnection))
+            {
+                using (SqlCommand command = new SqlCommand(queryString, conn))
+                {
+                    conn.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            data = reader.GetValue(0).ToString();
+                        }
+                    }
+                }
+            }
+
+            return Json(new { data }, JsonRequestBehavior.AllowGet);
         }
 
     }

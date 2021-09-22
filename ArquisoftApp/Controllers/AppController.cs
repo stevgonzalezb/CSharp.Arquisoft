@@ -6,6 +6,9 @@ using System.Web.Mvc;
 using System.Security.Cryptography;
 using System.Text;
 using ArquisoftApp.Models;
+using System.IO;
+using System.Web.Configuration;
+using System.Configuration;
 
 namespace ArquisoftApp.Controllers
 {
@@ -14,21 +17,65 @@ namespace ArquisoftApp.Controllers
 
         public static string Encrypt(string str)
         {
-            StringBuilder sb = new StringBuilder();
+            string encryptStr = string.Empty;
 
             try
             {
-                SHA256 sha256 = SHA256Managed.Create();
-                ASCIIEncoding encoding = new ASCIIEncoding();
-                byte[] stream = null;
-                stream = sha256.ComputeHash(encoding.GetBytes(str));
-                for (int i = 0; i < stream.Length; i++) sb.AppendFormat("{0:x2}", stream[i]);
+                string EncryptionKey = "3nf0rce3ncr1pt";
+                byte[] clearBytes = Encoding.Unicode.GetBytes(str);
+                using (Aes encryptor = Aes.Create())
+                {
+                    Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+                    encryptor.Key = pdb.GetBytes(32);
+                    encryptor.IV = pdb.GetBytes(16);
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
+                        {
+                            cs.Write(clearBytes, 0, clearBytes.Length);
+                            cs.Close();
+                        }
+                        encryptStr = Convert.ToBase64String(ms.ToArray());
+                    }
+                }
             }
             catch(Exception)
             {
             }
 
-            return sb.ToString();
+            return encryptStr;
+        }
+
+        public static string Decrypt(string cipherStr)
+        {
+            string decryptStr = string.Empty;
+
+            try
+            {
+                string EncryptionKey = "3nf0rce3ncr1pt";
+                cipherStr = cipherStr.Replace(" ", "+");
+                byte[] cipherBytes = Convert.FromBase64String(cipherStr);
+                using (Aes encryptor = Aes.Create())
+                {
+                    Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
+                    encryptor.Key = pdb.GetBytes(32);
+                    encryptor.IV = pdb.GetBytes(16);
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
+                        {
+                            cs.Write(cipherBytes, 0, cipherBytes.Length);
+                            cs.Close();
+                        }
+                        decryptStr = Encoding.Unicode.GetString(ms.ToArray());
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+
+            return decryptStr;
         }
 
         public static bool IsAuthorized(Common.AppEnums.Permissions value )
@@ -78,6 +125,11 @@ namespace ArquisoftApp.Controllers
         {
             System.Web.HttpContext.Current.Session["User"] = null;
             return RedirectToAction("Login", "Login");
+        }
+
+        public static string GetConnectionString()
+        {
+            return ConfigurationManager.ConnectionStrings["ArquisoftSQL"].ConnectionString;
         }
     }
 }

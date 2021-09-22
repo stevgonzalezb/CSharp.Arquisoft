@@ -11,6 +11,27 @@ app.enums = {
         ACTIVE: 1,
         DISABLE: 2,
         DELETE: 3
+    },
+
+    Modules: {
+        CLIENTS: 1,
+        MATERIALS: 2,
+        PROJECTS: 3,
+        VENDOR_MATERIALS: 4
+    },
+
+    Permissions: {
+        //Clients
+        CLIENT_READ: 1,
+        CLIENT_EDIT: 2,
+        CLIENT_DELETE: 3,
+        CLIENT_ADD: 4,
+
+        //Materials
+        MATERIAL_READ: 5,
+        MATERIAL_EDIT: 6,
+        MATERIAL_DELETE: 7,
+        MATERIAL_ADD: 8
     }
 }
 

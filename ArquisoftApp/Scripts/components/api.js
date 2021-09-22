@@ -72,5 +72,14 @@ class RoleApi {
             contentType: "application/json; charset=utf-8",
         });
     }
+    // List all permissions by role
+    GetPermissionsByRole = async function (roleId) {
+        return $.ajax({
+            url: `/ArquisoftApp/Role/GetPermissionsByRole?roleId=${roleId}`,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
 
 }
