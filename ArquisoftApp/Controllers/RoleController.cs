@@ -15,6 +15,7 @@ namespace ArquisoftApp.Controllers
         [Filters.VerifyRole(Permission = 0)]
         public ActionResult Index()
         {
+            SetSessionData();
             return View("~/Views/Maintenance/RoleMaintenance.cshtml");
         }
 
@@ -159,6 +160,13 @@ namespace ArquisoftApp.Controllers
             }
 
             return Json(new { data }, JsonRequestBehavior.AllowGet);
+        }
+
+        private void SetSessionData()
+        {
+            var oUser = (Models.Users)System.Web.HttpContext.Current.Session["user"];
+            ViewBag.UserId = oUser.Id;
+            ViewBag.UserName = oUser.Name + " " + oUser.Last_Name;
         }
 
     }
