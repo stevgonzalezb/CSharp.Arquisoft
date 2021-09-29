@@ -31,7 +31,18 @@ app.enums = {
         MATERIAL_READ: 5,
         MATERIAL_EDIT: 6,
         MATERIAL_DELETE: 7,
-        MATERIAL_ADD: 8
+        MATERIAL_ADD: 8,
+
+        //Projects
+        PROJECT_READ: 9,
+        PROJECT_EDIT: 10,
+        PROJECT_DELETE: 11,
+        PROJECT_ADD: 12,
+
+        //VendorMaterials
+        VENDOR_MAT_READ: 13,
+        VENDOR_MAT_RUN: 14
+        
     }
 }
 

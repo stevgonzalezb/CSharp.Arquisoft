@@ -59,98 +59,90 @@
                         <label for="txtName">Módulos:</label>
                     </div>
 
-                    <div class="row">
+                    <div class="row permissions-boxes">
                         <div class="form-group col-3">
                             <button class="btn-sm btn-info" type="button" data-toggle="collapse" data-target="#collapseClient" aria-expanded="false" aria-controls="multiCollapseExample2">Clientes</button>
                             <div class="collapse multi-collapse" id="collapseClient">
                                 <div class="card card-body" id="collapseClientCard">
                                     <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" id="customCheckbox2" checked>
-                                        <label for="customCheckbox2" class="custom-control-label">Visualizar</label>
+                                        <input class="custom-control-input" type="checkbox" id="chkReadClient">
+                                        <label for="chkReadClient" class="custom-control-label">Visualizar</label>
                                     </div>
                                     <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" id="customCheckbox2" checked>
-                                        <label for="customCheckbox2" class="custom-control-label">Agregar</label>
+                                        <input class="custom-control-input" type="checkbox" id="chkAddClient">
+                                        <label for="chkAddClient" class="custom-control-label">Agregar</label>
                                     </div>
                                     <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" id="customCheckbox2" checked>
-                                        <label for="customCheckbox2" class="custom-control-label">Editar</label>
+                                        <input class="custom-control-input" type="checkbox" id="chkEditClient">
+                                        <label for="chkEditClient" class="custom-control-label">Editar</label>
                                     </div>
                                     <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" id="customCheckbox2" checked>
-                                        <label for="customCheckbox2" class="custom-control-label">Eliminar</label>
+                                        <input class="custom-control-input" type="checkbox" id="chkDeleteClient">
+                                        <label for="chkDeleteClient" class="custom-control-label">Eliminar</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group col-3">
-                            <button class="btn-sm btn-info" type="button" data-toggle="collapse" data-target="#collapseMaterial" aria-expanded="false" aria-controls="multiCollapseExample2">Proyectos</button>
+                            <button class="btn-sm btn-info" type="button" data-toggle="collapse" data-target="#collapseProject" aria-expanded="false" aria-controls="multiCollapseExample2">Proyectos</button>
+                            <div class="collapse multi-collapse" id="collapseProject">
+                                <div class="card card-body">
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="chkReadProject">
+                                        <label for="chkReadProject" class="custom-control-label">Visualizar</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="chkAddProject">
+                                        <label for="chkAddProject" class="custom-control-label">Agregar</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="chkEditProject">
+                                        <label for="chkEditProject" class="custom-control-label">Editar</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                        <input class="custom-control-input" type="checkbox" id="chkDeleteProject">
+                                        <label for="chkDeleteProject" class="custom-control-label">Eliminar</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-3">
+                            <button class="btn-sm btn-info" type="button" data-toggle="collapse" data-target="#collapseMaterial" aria-expanded="false" aria-controls="multiCollapseExample2">Materiales</button>
                             <div class="collapse multi-collapse" id="collapseMaterial">
                                 <div class="card card-body">
                                     <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" id="customCheckbox2" checked>
-                                        <label for="customCheckbox2" class="custom-control-label">Visualizar</label>
+                                        <input class="custom-control-input" type="checkbox" id="chkReadMaterial">
+                                        <label for="chkReadMaterial" class="custom-control-label">Visualizar</label>
                                     </div>
                                     <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" id="customCheckbox2" checked>
-                                        <label for="customCheckbox2" class="custom-control-label">Agregar</label>
+                                        <input class="custom-control-input" type="checkbox" id="chkAddMaterial">
+                                        <label for="chkAddMaterial" class="custom-control-label">Agregar</label>
                                     </div>
                                     <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" id="customCheckbox2" checked>
-                                        <label for="customCheckbox2" class="custom-control-label">Editar</label>
+                                        <input class="custom-control-input" type="checkbox" id="chkEditMaterial">
+                                        <label for="chkEditMaterial" class="custom-control-label">Editar</label>
                                     </div>
                                     <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" id="customCheckbox2" checked>
-                                        <label for="customCheckbox2" class="custom-control-label">Eliminar</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-3">
-                            <button class="btn-sm btn-info" type="button" data-toggle="collapse" data-target="#collapseVendorMaterial" aria-expanded="false" aria-controls="multiCollapseExample2">Materiales</button>
-                            <div class="collapse multi-collapse" id="collapseVendorMaterial">
-                                <div class="card card-body">
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" id="customCheckbox2" checked>
-                                        <label for="customCheckbox2" class="custom-control-label">Visualizar</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" id="customCheckbox2" checked>
-                                        <label for="customCheckbox2" class="custom-control-label">Agregar</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" id="customCheckbox2" checked>
-                                        <label for="customCheckbox2" class="custom-control-label">Editar</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" id="customCheckbox2" checked>
-                                        <label for="customCheckbox2" class="custom-control-label">Eliminar</label>
+                                        <input class="custom-control-input" type="checkbox" id="chkDeleteMaterial">
+                                        <label for="chkDeleteMaterial" class="custom-control-label">Eliminar</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group col-3 center-block">
-                            <button class="btn-sm btn-info" type="button" data-toggle="collapse" data-target="#collapseProject" aria-expanded="false" aria-controls="multiCollapseExample2">M. Proveedores</button>
-                            <div class="collapse multi-collapse" id="collapseProject">
+                            <button class="btn-sm btn-info" type="button" data-toggle="collapse" data-target="#collapseVendorMaterial" aria-expanded="false" aria-controls="multiCollapseExample2">M. Proveedores</button>
+                            <div class="collapse multi-collapse" id="collapseVendorMaterial">
                                 <div class="card card-body">
                                     <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" id="customCheckbox2" checked>
+                                        <input class="custom-control-input" type="checkbox" id="chkReadVendorMaterial">
                                         <label for="customCheckbox2" class="custom-control-label">Visualizar</label>
                                     </div>
                                     <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" id="customCheckbox2" checked>
-                                        <label for="customCheckbox2" class="custom-control-label">Agregar</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" id="customCheckbox2" checked>
-                                        <label for="customCheckbox2" class="custom-control-label">Editar</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox">
-                                        <input class="custom-control-input" type="checkbox" id="customCheckbox2" checked>
-                                        <label for="customCheckbox2" class="custom-control-label">Eliminar</label>
+                                        <input class="custom-control-input" type="checkbox" id="chkRunVendorMaterial">
+                                        <label for="customCheckbox2" class="custom-control-label">Ejecutar Script</label>
                                     </div>
                                 </div>
                             </div>
@@ -231,6 +223,7 @@
                     if (roleData) {
                         $("#txtName").val(roleData.Name);
                         $("#txtDescription").val(roleData.Description);
+                        LoadPermissions($RoleId);
                     }
                     else
                         throw ("Data error from api");
@@ -260,6 +253,11 @@
                         Name: $("#txtName").val(),
                         Description: $("#txtDescription").val(),
                     }
+                };
+
+                var $rolePermissions = {
+                    RoleId: parseInt($("#txtId").val()),
+
                 }
 
                 api.SaveRole($data).then(response => {
@@ -297,28 +295,84 @@
             $("#txtName").removeClass("is-valid");
             $("#txtDescription").removeClass("is-invalid");
             $("#txtDescription").removeClass("is-valid");
+            $('.permissions-boxes').find('input:checkbox').prop('checked', false);
         }
 
-        function LoadPermissions() {
-
-            api.GetPermissionsByRole(2).then(roleData => {
-
+        function LoadPermissions($RoleId) {
+            api.GetPermissionsByRole($RoleId).then(roleData => {
                 var jsonData = JSON.parse(roleData.data);
-
 
                 $.each(jsonData, function (key, module) {
 
                     switch (module.Id) {
                         case app.enums.Modules.CLIENTS:
+                            $.each(module.Operations, function (key, operation) {
+                                switch (operation.Permission) {
+                                    case app.enums.Permissions.CLIENT_READ:
+                                        $("#chkReadClient").prop("checked", operation.HasPrivilege);
+                                        break;
+                                    case app.enums.Permissions.CLIENT_EDIT:
+                                        $("#chkEditClient").prop("checked", operation.HasPrivilege);
+                                        break;
+                                    case app.enums.Permissions.CLIENT_DELETE:
+                                        $("#chkDeleteClient").prop("checked", operation.HasPrivilege);
+                                        break;
+                                    case app.enums.Permissions.CLIENT_ADD:
+                                        $("#chkAddClient").prop("checked", operation.HasPrivilege);
+                                        break;
+                                }
+                            })
                             break;
 
                         case app.enums.Modules.MATERIALS:
+                            $.each(module.Operations, function (key, operation) {
+                                switch (operation.Permission) {
+                                    case app.enums.Permissions.MATERIAL_READ:
+                                        $("#chkReadMaterial").prop("checked", operation.HasPrivilege);
+                                        break;
+                                    case app.enums.Permissions.MATERIAL_EDIT:
+                                        $("#chkEditMaterial").prop("checked", operation.HasPrivilege);
+                                        break;
+                                    case app.enums.Permissions.MATERIAL_DELETE:
+                                        $("#chkDeleteMaterial").prop("checked", operation.HasPrivilege);
+                                        break;
+                                    case app.enums.Permissions.MATERIAL_ADD:
+                                        $("#chkAddMaterial").prop("checked", operation.HasPrivilege);
+                                        break;
+                                }
+                            })
                             break;
 
                         case app.enums.Modules.PROJECTS:
+                            $.each(module.Operations, function (key, operation) {
+                                switch (operation.Permission) {
+                                    case app.enums.Permissions.PROJECT_READ:
+                                        $("#chkReadProject").prop("checked", operation.HasPrivilege);
+                                        break;
+                                    case app.enums.Permissions.PROJECT_EDIT:
+                                        $("#chkEditProject").prop("checked", operation.HasPrivilege);
+                                        break;
+                                    case app.enums.Permissions.PROJECT_DELETE:
+                                        $("#chkDeleteProject").prop("checked", operation.HasPrivilege);
+                                        break;
+                                    case app.enums.Permissions.PROJECT_ADD:
+                                        $("#chkAddProject").prop("checked", operation.HasPrivilege);
+                                        break;
+                                }
+                            })
                             break;
 
                         case app.enums.Modules.VENDOR_MATERIALS:
+                            $.each(module.Operations, function (key, operation) {
+                                switch (operation.Permission) {
+                                    case app.enums.Permissions.VENDOR_MAT_READ:
+                                        $("#chkReadVendorMaterial").prop("checked", operation.HasPrivilege);
+                                        break;
+                                    case app.enums.Permissions.VENDOR_MAT_RUN:
+                                        $("#chkRunVendorMaterial").prop("checked", operation.HasPrivilege);
+                                        break;
+                                }
+                            })
                             break;
                     }
 

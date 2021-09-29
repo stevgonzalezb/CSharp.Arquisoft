@@ -136,7 +136,7 @@ namespace ArquisoftApp.Controllers
 
             var data = "[]";
             var ArquisoftConnection = AppController.GetConnectionString();
-            var queryString = @"SELECT  A.Id, A.Name, Operations.Name 'Permission', CASE WHEN RoleOp.IdOperation IS NULL THEN 0 ELSE 1 END 'HasPrivilege'
+            var queryString = @"SELECT  A.Id, A.Name, Operations.Id 'Permission', CASE WHEN RoleOp.IdOperation IS NULL THEN 0 ELSE 1 END 'HasPrivilege'
                                 FROM Modules A 
                                     INNER JOIN ModuleOperations Operations ON A.Id = Operations.IdModule
                                     LEFT JOIN RoleOperations RoleOp on RoleOp.IdOperation = Operations.Id

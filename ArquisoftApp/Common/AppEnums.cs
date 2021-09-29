@@ -36,6 +36,18 @@ namespace ArquisoftApp.Common
             MATERIAL_ADD = 8,
             #endregion
 
+            #region Projects
+            PROJECT_READ = 9,
+            PROJECT_EDIT = 10,
+            PROJECT_DELETE = 11,
+            PROJECT_ADD = 12,
+            #endregion
+
+            #region VendorMaterials
+            VENDOR_MAT_READ = 13,
+            VENDOR_MAT_RUN = 14,
+            #endregion
+
         }
 
         public enum States
