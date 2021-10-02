@@ -10,13 +10,14 @@ namespace ArquisoftApp.Controllers
     public class ClientController : Controller
     {
         // GET: Client
+        [Filters.VerifyRole(Permission = Common.AppEnums.Permissions.CLIENT_READ)]
         public ActionResult Index()
         {
             SetSessionData();
             return View("~/Views/Maintenance/ClientMaintenance.cshtml");
         }
 
-
+        [Filters.VerifyRole(Permission = Common.AppEnums.Permissions.CLIENT_READ)]
         public JsonResult List()
         {
 
@@ -31,7 +32,7 @@ namespace ArquisoftApp.Controllers
             return Json(new { data = ClientList }, JsonRequestBehavior.AllowGet);
         }
 
-
+        [Filters.VerifyRole(Permission = Common.AppEnums.Permissions.CLIENT_READ)]
         public JsonResult Get(int clientId)
         {
             Clients oClients = new Clients();
@@ -53,38 +54,47 @@ namespace ArquisoftApp.Controllers
             var validateClient = String.Empty;
             try
             {
+                
                 if (oClient.IdClient == 0)
                 {
-                    validateClient = ClientExists(oClient);
-
-                    if (validateClient == string.Empty)
+                    if (AppController.IsAuthorized(Common.AppEnums.Permissions.CLIENT_ADD))
                     {
-                        using (ArquisoftEntities db = new ArquisoftEntities())
+                        validateClient = ClientExists(oClient);
+
+                        if (validateClient == string.Empty)
                         {
-                            db.Clients.Add(oClient);
-                            db.SaveChanges();
+                            using (ArquisoftEntities db = new ArquisoftEntities())
+                            {
+                                db.Clients.Add(oClient);
+                                db.SaveChanges();
+                            }
+                        }
+                        else
+                        {
+                            response = validateClient;
                         }
                     }
                     else
-                    {
-                        response = validateClient;
-                    }
+                        Redirect("~/Views/Error/NotAuthorized.cshtml");
                 }
                 else
                 {
-                    using (ArquisoftEntities db = new ArquisoftEntities())
+                    if (AppController.IsAuthorized(Common.AppEnums.Permissions.CLIENT_EDIT))
                     {
-                        Clients tempCliente = (from c in db.Clients.Where(x => x.IdClient == oClient.IdClient)
-                                               select c).FirstOrDefault();
+                        using (ArquisoftEntities db = new ArquisoftEntities())
+                        {
+                            Clients tempCliente = (from c in db.Clients.Where(x => x.IdClient == oClient.IdClient)
+                                                   select c).FirstOrDefault();
 
-                        tempCliente.Name = oClient.Name;
-                        tempCliente.Last_Name = oClient.Last_Name;
-                        tempCliente.Direction = oClient.Direction;
-                        tempCliente.Phone = oClient.Phone;
-                        tempCliente.Email = oClient.Email;
-                        tempCliente.idState = 1;
+                            tempCliente.Name = oClient.Name;
+                            tempCliente.Last_Name = oClient.Last_Name;
+                            tempCliente.Direction = oClient.Direction;
+                            tempCliente.Phone = oClient.Phone;
+                            tempCliente.Email = oClient.Email;
+                            tempCliente.idState = 1;
 
-                        db.SaveChanges();
+                            db.SaveChanges();
+                        }
                     }
                 }
             }
@@ -95,6 +105,7 @@ namespace ArquisoftApp.Controllers
             return Json(new { result = response }, JsonRequestBehavior.AllowGet);
         }
 
+        [Filters.VerifyRole(Permission = Common.AppEnums.Permissions.CLIENT_DELETE)]
         public JsonResult Delete(int clientId)
         {
             bool response = true;

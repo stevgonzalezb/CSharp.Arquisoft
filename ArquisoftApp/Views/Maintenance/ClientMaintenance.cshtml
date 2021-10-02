@@ -110,8 +110,19 @@
                      { "data": "Email" },
                      {
                          "data": "IdClient", "render": function (data) {
-                             return "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los clientes' class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>" +
-                                 "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de clientes' class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
+                             var buttons = "";
+
+                             @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.CLIENT_EDIT))
+                              {
+                                 <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los clientes' class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>" </text>
+                              }
+
+                             @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.CLIENT_DELETE))
+                              {
+                                 <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de clientes' class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>" </text>
+                              }
+
+                             return buttons;
                          },
                          "orderable": false,
                          "searchable": false,
@@ -120,14 +131,21 @@
                  ],
                  dom: 'Bfrtip',
                  buttons: [
-                    {
-                        text: 'Agregar Nuevo',
-                        attr: { class: 'btn btn-success btn-sm' },
-                        action: function (e, dt, node, config) {
-                            openModal(0, "Agregar");
-                        }
 
-                    }
+                     @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.CLIENT_ADD))
+                      {
+                        <text>
+                            {
+                                text: 'Agregar Nuevo',
+                                attr: { class: 'btn btn-success btn-sm' },
+                                action: function (e, dt, node, config) {
+                                    openModal(0, "Agregar");
+                                }
+
+                            }
+                        </text>
+                      }
+
                  ],
                  "language": {
                      "url": "@Url.Content("~/Content/datatable/idioma/datatable.es-ES.json")"
@@ -261,8 +279,6 @@
                 $('.invalid-feedback').remove();
             }
         }
-
-
 
     </script>
 

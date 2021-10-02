@@ -86,10 +86,15 @@ namespace ArquisoftApp.Controllers
             {
                 var currentUser = GetSessionUser();
 
-                using (ArquisoftEntities db = new ArquisoftEntities())
+                if (currentUser.IdRole == (int)Common.AppEnums.Permissions.ADMIN_ROLE)
+                    hasOperation = new RoleOperations();
+                else
                 {
-                    hasOperation = (from u in db.RoleOperations.Where(x => x.IdRole == currentUser.IdRole && x.IdOperation == (int)value)
-                           select u).FirstOrDefault();
+                    using (ArquisoftEntities db = new ArquisoftEntities())
+                    {
+                        hasOperation = (from u in db.RoleOperations.Where(x => x.IdRole == currentUser.IdRole && x.IdOperation == (int)value)
+                                        select u).FirstOrDefault();
+                    }
                 }
             }
             catch(Exception)
