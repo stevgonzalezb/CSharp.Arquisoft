@@ -48,10 +48,12 @@
                 <div class="row">
                     <div class="form-group col-6">
                         <label for="txtName">Nombre:</label>
+                        @*<i class="fa fa-question-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Nombre del cliente, solo se aceptan letras"></i>*@
                         <input type="text" class="form-control" id="txtName">
                     </div>
                     <div class="form-group col-6">
                         <label for="txtLastName">Apellidos:</label>
+                        <i class="fa fa-question-circle" aria-hidden="true"></i>
                         <input type="text" class="form-control" id="txtLastName">
                     </div>
                 </div>
@@ -95,34 +97,36 @@
          var client_table;
          $(document).ready( function () {
              client_table = $('#myTable').DataTable({
-                "ajax": {
-                    "url": "@Url.Action("List", "Client")",
-                    "type": "GET",
-                    "datatype": "json"
-                },
-                "columns": [
-                    { "data": "Name" },
-                    { "data": "Last_Name" },
-                    { "data": "Direction" },
-                    { "data": "Phone" },
-                    { "data": "Email" },
-                    { "data": "IdClient", "render": function (data) {
-                        return "<button class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>" +
-                            "<button class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
-                        },
-                        "orderable": false,
-                        "searchable": false,
-                        "width": "100px"
-                    }
-                ],
-                dom: 'Bfrtip',
-                buttons: [
+                 "ajax": {
+                     "url": "@Url.Action("List", "Client")",
+                     "type": "GET",
+                     "datatype": "json"
+                 },
+                 "columns": [
+                     { "data": "Name" },
+                     { "data": "Last_Name" },
+                     { "data": "Direction" },
+                     { "data": "Phone" },
+                     { "data": "Email" },
+                     {
+                         "data": "IdClient", "render": function (data) {
+                             return "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los clientes' class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>" +
+                                 "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de clientes' class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
+                         },
+                         "orderable": false,
+                         "searchable": false,
+                         "width": "100px"
+                     }
+                 ],
+                 dom: 'Bfrtip',
+                 buttons: [
                     {
                         text: 'Agregar Nuevo',
                         attr: { class: 'btn btn-success btn-sm' },
                         action: function (e, dt, node, config) {
                             openModal(0, "Agregar");
                         }
+
                     }
                  ],
                  "language": {
