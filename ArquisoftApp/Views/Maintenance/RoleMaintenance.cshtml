@@ -151,7 +151,6 @@
 
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success" id="btnSaveIt">Guardar</button>
-                        <button type="button" class="btn btn-success" id="test" onclick="GetAllCheckedValues()">Test</button>
                         <button type="button" class="btn btn-default" id="btnCloseIt" data-dismiss="modal">Cerrar</button>
                     </div>
                 </form>
@@ -245,16 +244,16 @@
         // Submit form method
         $("#FormModal").on("submit", function (e) {
             if (ValidateInputs()) {
+                var idRole = parseInt($("#txtId").val());
 
                 var $data = {
                     oRole: {
-                        Id: parseInt($("#txtId").val()),
+                        Id: idRole,
                         Name: $("#txtName").val(),
                         Description: $("#txtDescription").val(),
-                    }
+                    },
+                    oRoleOperations: GetAllCheckedValues(idRole)
                 };
-
-                var $rolePermissions = GetAllCheckedValues();
 
                 api.SaveRole($data).then(response => {
                     if (response.result === 'OK') {
@@ -307,13 +306,13 @@
             })
         }
 
-        function GetAllCheckedValues() {
+        function GetAllCheckedValues(idRole) {
 
-            var jsonData = {};
+            var jsonData = [];
 
             $('.permissions-boxes').find('input:checkbox:checked').each(function () {
                 var id = this.id;
-                jsonData[id] = true;
+                jsonData.push({ IdRole: idRole, IdOperation: id});
             })
 
             return jsonData;

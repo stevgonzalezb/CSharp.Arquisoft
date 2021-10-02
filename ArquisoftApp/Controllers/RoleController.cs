@@ -51,7 +51,7 @@ namespace ArquisoftApp.Controllers
 
         [Filters.VerifyRole(Permission = 0)]
         [HttpPost]
-        public JsonResult Save(Roles oRole)
+        public JsonResult Save(Roles oRole, List<RoleOperations> oRoleOperations)
         {
             String response = "OK";
             var validateRole = String.Empty;
@@ -70,6 +70,7 @@ namespace ArquisoftApp.Controllers
                             db.Roles.Add(oRole);
                             db.SaveChanges();
                         }
+                        SaveRoleOperations(oRoleOperations, oRole.Id);
                     }
                     else
                     {
@@ -89,6 +90,7 @@ namespace ArquisoftApp.Controllers
 
                         db.SaveChanges();
                     }
+                    SaveRoleOperations(oRoleOperations, oRole.Id);
                 }
             }
             catch
@@ -99,6 +101,31 @@ namespace ArquisoftApp.Controllers
 
             return Json(new { result = response }, JsonRequestBehavior.AllowGet);
 
+        }
+
+        private void SaveRoleOperations(List<RoleOperations> oRoleOperations, int idRole)
+        {
+            try
+            {
+                using (ArquisoftEntities db = new ArquisoftEntities())
+                {
+                    db.RoleOperations.RemoveRange(db.RoleOperations.Where(x => x.IdRole == idRole));
+                    if (oRoleOperations != null)
+                    {
+                        foreach (var op in oRoleOperations)
+                        {
+                            op.IdRole = idRole;
+                            db.RoleOperations.Add(op);
+                        }
+                    }
+                        
+                    db.SaveChanges();
+                }
+            }
+            catch(Exception e)
+            {
+                throw(e);
+            }
         }
 
         private String RoleExists(Roles oRole)
