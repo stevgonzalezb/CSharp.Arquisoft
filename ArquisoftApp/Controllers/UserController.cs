@@ -17,6 +17,12 @@ namespace ArquisoftApp.Controllers
             return View("~/Views/Maintenance/UserMaintenance.cshtml");
         }
 
+        public ActionResult Profile()
+        {
+            SetSessionData();
+            return View("~/Views/Maintenance/ProfileMaintenance.cshtml");
+        }
+
         [Filters.VerifyRole(Permission = 0)]
         public JsonResult List()
         {

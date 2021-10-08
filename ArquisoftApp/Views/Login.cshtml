@@ -13,7 +13,7 @@
 <!-- Toastr -->
 <link rel="stylesheet" href="~/Scripts/AdminLTE/plugins/toastr/toastr.min.css">
 <!-- Theme style -->
-<link rel="stylesheet" href="~/Scripts/AdminLTE/dist/css/adminlte.min.css">
+<link rel="stylesheet" href="~/Scripts/AdminLTE/dist/css/adminlte.css">
 
 <label style="color: orangered; ">@ViewBag.Error</label>
 
@@ -70,28 +70,3 @@
 <!-- AdminLTE App -->
 <script src="~/Scripts/AdminLTE/dist/js/adminlte.min.js"></script>
 
-<script>
-
-    var Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000
-    });
-
-    $('.swalDefaultError').click(function () {
-        Toast.fire({
-            icon: 'error',
-            title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-        })
-    });
-
-    $('.toastsDefaultAutohide').click(function () {
-        $(document).Toasts('create', {
-            title: 'Toast Title',
-            autohide: true,
-            delay: 750,
-            body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
-        })
-    });
-</script>

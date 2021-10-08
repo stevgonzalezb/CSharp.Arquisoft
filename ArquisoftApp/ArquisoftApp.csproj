@@ -218,6 +218,7 @@
     <Content Include="Content\datatable\js\dataTables.responsive.min.js" />
     <Content Include="Content\datatable\js\jquery.dataTables.min.js" />
     <Content Include="Content\datatable\js\jquery.js" />
+    <Content Include="Content\img\login-bg.jpg" />
     <Content Include="Content\img\logo.png" />
     <Content Include="Content\img\profile_avatar.png" />
     <Content Include="Context\dbModel.Context.tt">
@@ -2261,6 +2262,7 @@
     <Content Include="Views\Maintenance\ClientMaintenance.cshtml" />
     <Content Include="Views\Maintenance\RoleMaintenance.cshtml" />
     <Content Include="Views\Error\NotAuthorized.cshtml" />
+    <Content Include="Views\Maintenance\ProfileMaintenance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
