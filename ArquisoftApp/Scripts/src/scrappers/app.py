@@ -8,18 +8,16 @@ config_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "config.i
 config = configparser.ConfigParser()
 config.read(config_path)
 
-BASE_URL = config['config']['base_url']
-USER_AGENT = config['config']['user_agent']
-CSV_PATH = config['config']['csv_path']
-SEPARATOR = config['config']['separator']
-
-def set_personeria(row):
-    if row['Estado'] == 'Activa':
-        return 'http://dinadecodevcopia.addax.cc/zf_ConsultaPublica/Index/personeria/DAODnaVAsociacion_numero_registro/' + row['Número Registro']
+BASE_URL = config['epa_config']['base_url']
+PAGES = config['epa_config']['endpoints'].split(";")
+USER_AGENT = config['app_config']['user_agent']
+CSV_PATH = config['app_config']['csv_path']
+SEPARATOR = config['app_config']['separator']
 
 
-def get_html():
-    url = BASE_URL
+
+def get_html(page):
+    url = BASE_URL+page+".html"
     headers = {"User-Agent": USER_AGENT}
     page = requests.get(url, headers=headers)
     soup = BeautifulSoup(page.content, 'html.parser')
@@ -27,27 +25,27 @@ def get_html():
     return soup
 
 def process_data():
-    datasets = []
-    headings = []
-    page_content = get_html()
-    # print(page_content)
-    html_data = page_content.find_all("li",{"class":"item product product-item"})
-    print(html_data)
-    # for x in range(1, 2):
-    #     print('Procesando página ' + str(x))
-    #     data = get_html(str(x))
-    #     table = data.find(id='the_table')
+    dataset = []
+    headings = ["description", "url", "image", "price"]
 
-    #     if x == 1:
-    #         headings = [th.get_text() for th in table.find("tr").find_all("th")]
+    for page in PAGES:
+        page_content = get_html(page)
+        print("Processing page:" +page)
 
-    #     for row in table.find_all("tr")[1:]:
-    #         datasets.append([td.get_text().strip().replace('\n\n\n\n\n\n\nSaving...', '') for td in row.find_all("td")])
-    #     print('Termina página ' + str(x))
+        products_data = page_content.find_all("li",{"class":"item product product-item"})
 
-    df = pd.DataFrame(datasets, columns = headings)
-    return html_data
+
+    for prod in products_data:
+        img = prod.find("img", {"class": "product-image-photo"})['src']
+        desc = prod.find("a",{"class":"product-item-link"}).get_text()
+        url = prod.find("a",{"class":"product-item-link"})['href']
+        prc = prod.find("span",{"class":"precio"}).get_text()
+        
+        dataset.append([desc, url, img, prc])
+
+    df = pd.DataFrame(dataset, columns = headings)
+    return df
+
 
 df = process_data()
-# df['Personería'] = df.apply(set_personeria, axis = 1)
-# df.to_csv(CSV_PATH, sep=SEPARATOR, index=False, encoding='utf-8-sig')
+df.to_csv(CSV_PATH, sep=SEPARATOR, index=False, encoding='utf-8-sig')
