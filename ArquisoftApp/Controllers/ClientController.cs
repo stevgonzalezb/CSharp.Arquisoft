@@ -26,7 +26,7 @@ namespace ArquisoftApp.Controllers
             using (ArquisoftEntities db = new ArquisoftEntities())
             {
 
-                ClientList = (from c in db.Clients
+                ClientList = (from c in db.Clients.Where(x => x.idState != (int)Common.AppEnums.States.DELETE)
                               select c).ToList();
             }
             return Json(new { data = ClientList }, JsonRequestBehavior.AllowGet);
@@ -43,6 +43,7 @@ namespace ArquisoftApp.Controllers
                 oClients = (from c in db.Clients.Where(x => x.IdClient == clientId && x.idState == 1)
                             select c).FirstOrDefault();
             }
+
 
             return Json(oClients, JsonRequestBehavior.AllowGet);
         }
@@ -68,6 +69,7 @@ namespace ArquisoftApp.Controllers
                                 db.Clients.Add(oClient);
                                 db.SaveChanges();
                             }
+                            AppController.AuditAction(new Audit { Module = "Cliente", Action = "Crear", Date = DateTime.Now });
                         }
                         else
                         {
@@ -91,10 +93,11 @@ namespace ArquisoftApp.Controllers
                             tempCliente.Direction = oClient.Direction;
                             tempCliente.Phone = oClient.Phone;
                             tempCliente.Email = oClient.Email;
-                            tempCliente.idState = 1;
+                            tempCliente.idState = oClient.idState;
 
                             db.SaveChanges();
                         }
+                        AppController.AuditAction(new Audit { Module = "Cliente", Action = "Actualizar", Date = DateTime.Now });
                     }
                 }
             }
@@ -117,8 +120,11 @@ namespace ArquisoftApp.Controllers
                     oClient = (from c in db.Clients.Where(x => x.IdClient == clientId)
                                select c).FirstOrDefault();
 
+                    oClient.idState = (int)Common.AppEnums.States.DELETE;
+
                     db.SaveChanges();
                 }
+                AppController.AuditAction(new Audit { Module = "Cliente", Action = "Eliminar", Date = DateTime.Now });
             }
             catch
             {

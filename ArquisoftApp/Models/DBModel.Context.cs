@@ -34,5 +34,6 @@ namespace ArquisoftApp.Models
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<State> State { get; set; }
         public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Audit> Audit { get; set; }
     }
 }

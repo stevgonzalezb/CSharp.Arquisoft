@@ -51,51 +51,157 @@
     @Scripts.Render("~/bundles/Plugins/js")
     @Scripts.Render("~/bundles/App/js")
 
+    
+<script>
+
+            const apiSecurity = new UserApi();
+            const passwordRegex2 = app.enums.Regex.Password;
+
+            // On load event - Initial event
+            $(document).ready(function () {
+
+                // Methods who add or remove de styled classes
+                $.validator.setDefaults({
+                    //Add Error Class To Fieldset if field invalid
+                    highlight: function (element) {
+                        $(element).addClass('is-invalid').removeClass('is-valid');
+                    },
+                    //Add Valid Class To Fieldset if field valid
+                    unhighlight: function (element) {
+                        $(element).removeClass('is-invalid').addClass('is-valid');
+                    },
+                    errorPlacement: function (error, element) {
+                        error.addClass('validation-error text-red small').insertAfter(element);
+                    }
+                });
+
+                $.validator.addMethod('passwordRegex', function (value, element, parameter) {
+                    return value.match(passwordRegex2);
+                }, '');
+
+                $.validator.addMethod('confirmPassword', function (value, element, parameter) {
+                    return $("#txtNewPassword").val() === value //value.match(passwordRegex);
+                }, '');
+
+                // Form validations
+                $("#passForm").validate({
+                    rules: {
+                        txtCurrentPassword: {
+                            required: true,
+                            passwordRegex: true,
+                        },
+                        txtNewPassword: {
+                            required: true,
+                            passwordRegex: true,
+                        },
+                        txtConfirmPassword: {
+                            required: true,
+                            passwordRegex: true,
+                            confirmPassword: true
+                        }
+                    },
+                    messages: {
+                        txtCurrentPassword: {
+                            required: "Requerido",
+                            passwordRegex: "La contraseña debe cumplir con: mínimo 8 caracteres, al menos una letra mayúscula, una letra minúscula y un número."
+                        },
+                        txtNewPassword: {
+                            required: "Requerido",
+                            passwordRegex: "La contraseña debe cumplir con: mínimo 8 caracteres, al menos una letra mayúscula, una letra minúscula y un número."
+                        },
+                        txtConfirmPassword: {
+                            required: "Requerido",
+                            passwordRegex: "La contraseña debe cumplir con: mínimo 8 caracteres, al menos una letra mayúscula, una letra minúscula y un número.",
+                            confirmPassword: "Las contraseñas no coinciden."
+                        }
+                    }
+                });
+            });
+
+            // Submit form method
+            function ChangePassword() {
+                if ($("#passForm").valid()) {
+                    var $data = {
+                        oUser: {
+                            Name: $("#txtCurrentPassword").val(),
+                            Password: $("#txtConfirmPassword").val()
+                        }
+                    }
+
+                    apiSecurity.SaveCurrentUser($data).then(response => {
+                        if (response.result === 'OK') {
+                            toastr.success('Contraseña actualizada correctamente.');
+                            var baseUrl = "@Url.Action("LogOut", "App")";
+                            window.location.href = baseUrl;
+                        } else {
+                            toastr.error(response.result);
+                        }
+
+                    }).catch(err => {
+
+                        toastr.error("Ocurrió un error cambiando la contraseña.");
+                    })
+                }
+                else
+                    toastr.error('Por favor valide los datos ingresados.');
+            }
+
+            function CleanModal() {
+
+                $("#txtCurrentPassword").removeClass("is-valid");
+                $("#txtNewPassword").removeClass("is-valid");
+                $("#txtConfirmPassword").removeClass("is-valid");
+                $("#txtCurrentPassword").val("");
+                $("#txtNewPassword").val("");
+                $("#txtConfirmPassword").val("");
+            }
+
+</script>
+    
+
     @RenderSection("Scripts", required: false)
 
-
-
-
     <!-- Modal -->
-    <form class="modal" id="passwordModal">
+    <div class="modal" id="passwordModal" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Cambiar Contraseña</h4>
-
                 </div>
                 <div class="modal-body">
-
-                    <div class="row">
-                        <div class="form-group col-6">
-                            <label for="txtCurrentPassword">Contraseña Actual:</label>
-                            <input type="password" onchange="validatePassword(event)" class="form-control" id="txtCurrentPassword">
+                    <form role="form" id="passForm">
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label for="txtCurrentPassword">Contraseña Actual:</label>
+                                <input type="password" name="txtCurrentPassword" class="form-control" id="txtCurrentPassword">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="form-group col-6">
-                            <label for="txtNewPassword">Contraseña:</label>
-                            <input type="password" onchange="validatePassword(event)" class="form-control" id="txtNewPassword">
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label for="txtNewPassword">Contraseña nueva:</label>
+                                <input type="password" class="form-control" name="txtNewPassword" id="txtNewPassword">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="txtConfirmPassword">Confirmar contraseña:</label>
+                                <input type="password" class="form-control" name="txtConfirmPassword" id="txtConfirmPassword">
+                            </div>
                         </div>
-                        <div class="form-group col-6">
-                            <label for="txtConfirmPassword">Confirmar contraseña:</label>
-                            <input type="password" onchange="validatePassword(event)" class="form-control" id="txtConfirmPassword">
+                        <div class="row">
+                            <label class="text-sm text-gray">Nota: Cuando se reestablezca la contraseña será dirigido a la pantalla de Login y deberá iniciar sesión nuevamente.</label>
                         </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-primary" onclick="Save()">Guardar</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-primary" onclick="ChangePassword()">Guardar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
             <!-- /.modal-content -->
         </div>
         <!-- /.modal-dialog -->
-    </form>
+    </div>
     <!-- /.modal -->
-
 
 </body>
 </html>

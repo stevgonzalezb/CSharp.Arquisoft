@@ -29,13 +29,13 @@
                                      alt="User profile picture">
                             </div>
 
-                            <h3 class="profile-username text-center">Karol León</h3>
+                            <h3 class="profile-username text-center" id="lblNameTitle"></h3>
 
                             <p class="text-muted text-center">Arquisoft</p>
 
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
-                                    <b>Rol del Sistema</b> <a class="float-right">Editor</a>
+                                    <b>Rol del Sistema</b> <a class="float-right" id="lblRole">Editor</a>
                                 </li>
                             </ul>
 
@@ -56,29 +56,31 @@
                         <div class="card-body">
                             <div class="tab-content">
                                 <div class="active tab-pane" id="settings">
-                                    <form class="form-horizontal">
+                                    <form class="form-horizontal" role="form" id="userForm">
+
+                                        <input type="hidden" id="txtId" />
                                         <div class="form-group row">
-                                            <label for="inputName" class="col-sm-2 col-form-label">Nombre</label>
+                                            <label for="txtName" class="col-sm-2 col-form-label">Nombre</label>
                                             <div class="col-sm-10">
-                                                <input type="email" class="form-control" id="inputName" placeholder="Nombre">
+                                                <input type="text" class="form-control" id="txtName" name="txtName" placeholder="Nombre">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="inputName2" class="col-sm-2 col-form-label">Apellidos</label>
+                                            <label for="txtLastName" class="col-sm-2 col-form-label">Apellidos</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="inputName2" placeholder="Apellidos">
+                                                <input type="text" class="form-control" id="txtLastName" name="txtLastName" placeholder="Apellidos">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="inputEmail" class="col-sm-2 col-form-label">Correo electrónico</label>
+                                            <label for="txtEmail" class="col-sm-2 col-form-label">Correo electrónico</label>
                                             <div class="col-sm-10">
-                                                <input type="email" class="form-control" id="inputEmail" placeholder="Correo electrónico">
+                                                <input type="email" class="form-control" id="txtEmail" name="txtEmail" placeholder="Correo electrónico">
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="inputSkills" class="col-sm-2 col-form-label">Nombre de usuario</label>
+                                            <label for="txtUsername" class="col-sm-2 col-form-label">Nombre de usuario</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="inputSkills" placeholder="Nombre de usuario">
+                                                <input type="text" class="form-control" id="txtUsername" name="txtUsername" placeholder="Nombre de usuario">
                                             </div>
                                         </div>
 
@@ -104,3 +106,127 @@
     <!-- /.content -->
 </div>
 
+@section scripts{
+    <script>
+
+        const api = new UserApi();
+        const emailRegex = app.enums.Regex.Email;
+
+            // On load event - Initial event
+        $(document).ready(function () {
+
+            // Methods who add or remove de styled classes
+            $.validator.setDefaults({
+                //Add Error Class To Fieldset if field invalid
+                highlight: function (element) {
+                    $(element).addClass('is-invalid').removeClass('is-valid');
+                },
+                //Add Valid Class To Fieldset if field valid
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid').addClass('is-valid');
+                },
+                errorPlacement: function (error, element) {
+                    error.addClass('validation-error text-red small').insertAfter(element);
+                }
+            });
+
+            // Custom methods for validations
+            $.validator.addMethod('emailRegex', function (value, element, parameter) {
+                return value.match(emailRegex);
+            }, '');
+
+            // Form validations
+            var validator = $("#userForm").validate({
+                rules: {
+                    txtName: {
+                        required: true,
+                        minlength: 1
+                    },
+                    txtLastName: {
+                        required: true,
+                        minlength: 1
+                    },
+                    txtEmail: {
+                        required: true,
+                        emailRegex: true
+                    },
+                    txtUsername: {
+                        required: true,
+                        minlength: 2
+                    }
+                },
+                messages: {
+                    txtName: {
+                        required: "Requerido",
+                        minlength: "Ingrese un nombre válido."
+                    },
+                    txtLastName: {
+                        required: "Requerido",
+                        minlength: "Ingrese un apellido válido."
+                    },
+                    txtEmail: {
+                        required: "Requerido",
+                        emailRegex: "Ingrese un correo válido"
+                    },
+                    txtUsername: {
+                        required: "Requerido",
+                        minlength: "Ingrese un nombre de usuario válido."
+                    }
+                }
+            });
+
+            LoadUserData();
+
+        });
+
+        function LoadUserData() {
+                api.GetSessionUser().then(user => {
+                    if (user) {
+                        $("#txtId").val(user.Id);
+                        $("#txtName").val(user.Name);
+                        $("#txtLastName").val(user.Last_Name);
+                        $("#txtEmail").val(user.Email);
+                        $("#txtUsername").val(user.Username);
+                        $("#lblNameTitle").text(`${user.Name} ${user.Last_Name}`)
+                        $("#lblRole").text(user.IdRole)
+                    }
+                });
+        }
+
+        // Submit form method
+        $("#userForm").on("submit", function (e) {
+            if (ValidateInputs()) {
+                var $data = {
+                    oUser: {
+                        Id: parseInt($("#txtId").val()),
+                        Name: $("#txtName").val(),
+                        Last_Name: $("#txtLastName").val(),
+                        Email: $("#txtEmail").val(),
+                        Username: $("#txtUsername").val(),
+                    }
+                }
+
+                api.SaveCurrentUser($data).then(response => {
+                    if (response.result === 'OK') {
+                        toastr.success('Usuario guardado correctamente.');
+                    } else {
+                        toastr.error(response.result);
+                    }
+
+                }).catch(err => {
+
+                    toastr.error("Ocurrió un error guardando los datos del usuario.");
+                })
+            }
+            else
+                toastr.error('Por favor valide los datos ingresados.');
+        })
+
+        // Validate id exist invalid inputs
+        function ValidateInputs() {
+            return $(".is-invalid")[0] ? false : true;
+        }
+
+
+    </script>
+    }

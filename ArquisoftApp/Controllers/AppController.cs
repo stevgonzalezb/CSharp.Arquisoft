@@ -136,5 +136,15 @@ namespace ArquisoftApp.Controllers
         {
             return ConfigurationManager.ConnectionStrings["ArquisoftSQL"].ConnectionString;
         }
+
+        public static void AuditAction(Audit record)
+        {
+            record.User = ((Models.Users)System.Web.HttpContext.Current.Session["user"]).Id.ToString();
+            using (ArquisoftEntities db = new ArquisoftEntities())
+            {
+                db.Audit.Add(record);
+                db.SaveChanges();
+            }
+        }
     }
 }

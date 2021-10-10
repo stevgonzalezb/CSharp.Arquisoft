@@ -78,6 +78,7 @@ namespace ArquisoftApp.Controllers
                             db.Users.Add(oUser);
                             db.SaveChanges();
                         }
+                        AppController.AuditAction(new Audit { Module = "Usuario", Action = "Crear", Date= DateTime.Now });
                     }
                     else
                     {
@@ -86,22 +87,24 @@ namespace ArquisoftApp.Controllers
                 }
                 else
                 {
+
                     using (ArquisoftEntities db = new ArquisoftEntities())
                     {
                         Users tempUser = (from p in db.Users
                                              where p.Id == oUser.Id
                                              select p).FirstOrDefault();
 
-                        tempUser.Name = oUser.Name;
-                        tempUser.Last_Name = oUser.Last_Name;
-                        tempUser.Email = oUser.Email;
-                        tempUser.Password = AppController.Encrypt(oUser.Password);
-                        tempUser.Username = oUser.Username;
-                        tempUser.IdState = oUser.IdState;
-                        tempUser.IdRole = oUser.IdRole;
+                        tempUser.Name = oUser.Name ?? tempUser.Name;
+                        tempUser.Last_Name = oUser.Last_Name ?? tempUser.Last_Name;
+                        tempUser.Email = oUser.Email ?? tempUser.Email;
+                        tempUser.Password = oUser.Password == null ? tempUser.Password : AppController.Encrypt(oUser.Password);
+                        tempUser.Username = oUser.Username ?? tempUser.Username;
+                        tempUser.IdState = oUser.IdState ?? tempUser.IdState;
+                        tempUser.IdRole = oUser.IdRole ?? tempUser.IdRole;
 
                         db.SaveChanges();
                     }
+                    AppController.AuditAction(new Audit { Module = "Usuario", Action = "Actualizar", Date = DateTime.Now });
                 }
             }
             catch
@@ -129,6 +132,7 @@ namespace ArquisoftApp.Controllers
                     oUser.IdState = (int)Common.AppEnums.States.DELETE;
                     db.SaveChanges();
                 }
+                AppController.AuditAction(new Audit { Module = "Usuario", Action = "Eliminar", Date = DateTime.Now });
             }
             catch
             {
@@ -183,6 +187,74 @@ namespace ArquisoftApp.Controllers
             }
 
             return returnString;
+        }
+
+        public JsonResult GetSessionUser()
+        {
+            var oUser = (Models.Users)System.Web.HttpContext.Current.Session["user"];
+            var user = new Users();
+
+            using (ArquisoftEntities db = new ArquisoftEntities())
+            {
+
+                user = (from p in db.Users.Where(x => x.Id == oUser.Id)
+                        select p).FirstOrDefault();
+            }
+
+
+            return Json(user, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult SaveCurrentUser(Users oUser)
+        {
+            //System.Diagnostics.Debugger.Launch();
+            //System.Diagnostics.Debugger.Break();
+
+            String response = "OK";
+            var validateUser = String.Empty;
+            var currentUser = (Models.Users)System.Web.HttpContext.Current.Session["user"];
+
+            try
+            {
+                // If Id is equal to 0, it means user is trying to perform an update password and current password is sent on Name field.
+                if(oUser.Id == 0)
+                {
+                    if (AppController.Decrypt(currentUser.Password) == oUser.Name)
+                        oUser.Name = null;
+                    else
+                        response = "La contraseña actual no es correcta.";
+                }
+
+                oUser.Id = currentUser.Id;
+
+                if(response == "OK")
+                {
+                    using (ArquisoftEntities db = new ArquisoftEntities())
+                    {
+                        Users tempUser = (from p in db.Users
+                                          where p.Id == oUser.Id
+                                          select p).FirstOrDefault();
+
+                        tempUser.Name = oUser.Name ?? tempUser.Name;
+                        tempUser.Last_Name = oUser.Last_Name ?? tempUser.Last_Name;
+                        tempUser.Email = oUser.Email ?? tempUser.Email;
+                        tempUser.Password = oUser.Password == null ? tempUser.Password : AppController.Encrypt(oUser.Password);
+                        tempUser.Username = oUser.Username ?? tempUser.Username;
+
+                        db.SaveChanges();
+                    }
+                    AppController.AuditAction(new Audit { Module = "Usuario", Action = "Actualiza Datos", Date = DateTime.Now });
+                }
+            }
+            catch
+            {
+                response = "Ocurrió un error en el proceso de almacenado.";
+
+            }
+
+            return Json(new { result = response }, JsonRequestBehavior.AllowGet);
+
         }
     }
 }

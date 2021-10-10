@@ -39,6 +39,25 @@ class UserApi {
             contentType: "application/json; charset=utf-8",
         });
     }
+    // Get current session user
+    GetSessionUser = async function () {
+        return $.ajax({
+            url: `/ArquisoftApp/User/GetSessionUser`,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
+
+    SaveCurrentUser = async function (data) {
+        return $.ajax({
+            url: `/ArquisoftApp/User/SaveCurrentUser`,
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
 }
 
 /**  Role Maintenance API  **/
@@ -82,4 +101,48 @@ class RoleApi {
         });
     }
 
+}
+
+/**  Clients Maintenance API  **/
+class ClientApi {
+    // List all clients
+    ListClients = async function () {
+        return $.ajax({
+            url: "/ArquisoftApp/Client/List",
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
+
+    // Get single client by Id
+    GetClient = async function (clientId) {
+        return $.ajax({
+            url: `/ArquisoftApp/Client/Get?clientId=${clientId}`,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
+
+    // Save or Update Client data
+    SaveClient = async function (data) {
+        return $.ajax({
+            url: "/ArquisoftApp/Client/Save",
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
+
+    // Delete user - Will change the state
+    DeleteClient = async function (clientId) {
+        return $.ajax({
+            url: `/ArquisoftApp/Client/Delete?clientId=${clientId}`,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
 }
