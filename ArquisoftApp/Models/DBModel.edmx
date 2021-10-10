@@ -22,7 +22,7 @@
           <Property Name="IdClient" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" />
           <Property Name="Last_Name" Type="varchar" MaxLength="100" />
-          <Property Name="Direction" Type="varchar" MaxLength="200" />
+          <Property Name="Address" Type="varchar" MaxLength="200" />
           <Property Name="Phone" Type="varchar" MaxLength="8" />
           <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="idState" Type="int" />
@@ -87,6 +87,16 @@
           <Property Name="Last_Name" Type="varchar" MaxLength="150" />
           <Property Name="IdRole" Type="int" />
           <Property Name="IdState" Type="int" />
+        </EntityType>
+        <EntityType Name="VendorMaterials">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="200" />
+          <Property Name="SiteURL" Type="varchar" MaxLength="400" />
+          <Property Name="ImgURL" Type="varchar" MaxLength="400" />
+          <Property Name="Price" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_IdState">
           <End Role="State" Type="Self.State" Multiplicity="0..1" />
@@ -158,6 +168,7 @@
           <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VendorMaterials" EntityType="Self.VendorMaterials" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_IdState" Association="Self.FK_IdState">
             <End Role="State" EntitySet="State" />
             <End Role="Users" EntitySet="Users" />
@@ -195,7 +206,6 @@
         </EntityType>
         <EntityContainer Name="ArquisoftEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <EntitySet Name="Clients" EntityType="ArquisoftModel1.Clients" />
           <EntitySet Name="ModuleOperations" EntityType="ArquisoftModel1.ModuleOperations" />
           <EntitySet Name="Modules" EntityType="ArquisoftModel1.Modules" />
           <EntitySet Name="RoleOperations" EntityType="ArquisoftModel1.RoleOperations" />
@@ -223,19 +233,9 @@
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
           <EntitySet Name="Audit" EntityType="ArquisoftModel1.Audit" />
+          <EntitySet Name="Clients" EntityType="ArquisoftModel1.Clients" />
+          <EntitySet Name="VendorMaterials" EntityType="ArquisoftModel1.VendorMaterials" />
           </EntityContainer>
-        <EntityType Name="Clients">
-          <Key>
-            <PropertyRef Name="IdClient" />
-          </Key>
-          <Property Name="IdClient" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Last_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Direction" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Phone" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="idState" Type="Int32" />
-        </EntityType>
         <EntityType Name="ModuleOperations">
           <Key>
             <PropertyRef Name="Id" />
@@ -367,6 +367,28 @@
           <Property Name="User" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Date" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="IdClient" />
+          </Key>
+          <Property Name="IdClient" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Last_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="idState" Type="Int32" />
+        </EntityType>
+        <EntityType Name="VendorMaterials">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SiteURL" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="ImgURL" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -381,19 +403,6 @@
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Clients">
-            <EntityTypeMapping TypeName="ArquisoftModel1.Clients">
-              <MappingFragment StoreEntitySet="Clients">
-                <ScalarProperty Name="idState" ColumnName="idState" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Direction" ColumnName="Direction" />
-                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="IdClient" ColumnName="IdClient" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -461,6 +470,30 @@
                 <ScalarProperty Name="User" ColumnName="User" />
                 <ScalarProperty Name="Action" ColumnName="Action" />
                 <ScalarProperty Name="Module" ColumnName="Module" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="ArquisoftModel1.Clients">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="idState" ColumnName="idState" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IdClient" ColumnName="IdClient" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VendorMaterials">
+            <EntityTypeMapping TypeName="ArquisoftModel1.VendorMaterials">
+              <MappingFragment StoreEntitySet="VendorMaterials">
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ImgURL" ColumnName="ImgURL" />
+                <ScalarProperty Name="SiteURL" ColumnName="SiteURL" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -6,7 +6,6 @@
     <edmx:Diagrams>
       <Diagram DiagramId="f0c237e3e9314e6c8893a93ed1078b2f" Name="Diagram1">
         <EntityTypeShape EntityType="ArquisoftModel1.sysdiagrams" Width="1.5" PointX="9.375" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ArquisoftModel1.Clients" Width="1.5" PointX="0.75" PointY="6.75" />
         <EntityTypeShape EntityType="ArquisoftModel1.ModuleOperations" Width="1.5" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="ArquisoftModel1.Modules" Width="1.5" PointX="4.125" PointY="5" />
         <EntityTypeShape EntityType="ArquisoftModel1.RoleOperations" Width="1.5" PointX="6.875" PointY="1" />
@@ -19,6 +18,8 @@
         <AssociationConnector Association="ArquisoftModel1.FK_UserRole" />
         <AssociationConnector Association="ArquisoftModel1.FK_IdState" />
         <EntityTypeShape EntityType="ArquisoftModel1.Audit" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Clients" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="ArquisoftModel1.VendorMaterials" Width="1.5" PointX="6.375" PointY="6.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

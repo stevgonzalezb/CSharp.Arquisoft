@@ -36,36 +36,41 @@
                     </li>
                 }
 
-                <!-- Materiales -->
-                <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Puede seleccionar entre Materiales Proveedor o Materiales Genéricos">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-folder-open"></i>
-                        <p>
-                            Materiales
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Puede visualizar la lista de materiales de una ferretería">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fas fa-truck-pickup"></i>
-                                <p>Materiales Proveedores</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                @if (ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.MATERIAL_READ))
+                {
+                    <!-- Materiales-->
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Puede visualizar la lista de materiales de una ferretería">
+                        <a href="@Url.Action("Index", "Material")" class="nav-link">
+                            <i class="nav-icon fas fa-hammer"></i>
+                            <p>Materiales</p>
+                        </a>
+                    </li>
+                }
+
+                @if (ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.VENDOR_MAT_READ))
+                {
+                    <!-- Materiales Proveedor-->
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Puede visualizar la lista de materiales de una ferretería">
+                        <a href="@Url.Action("Vendors", "Material")" class="nav-link">
+                            <i class="nav-icon fas fa-truck-pickup"></i>
+                            <p>Materiales Proveedores</p>
+                        </a>
+                    </li>
+                }
 
                 <!-- Mantenimientos -->
                 <li class="nav-header">Procesos</li>
 
-                <!-- Proyectos -->
-                <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Puede realiza acciones como Registrar, editar y eliminar proyectos">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-toolbox"></i>
-                        <p>Proyectos</p>
-                    </a>
-                </li>
-
+                @if (ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.PROJECT_READ))
+                {
+                    <!-- Proyectos -->
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Puede realiza acciones como Registrar, editar y eliminar proyectos">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-toolbox"></i>
+                            <p>Proyectos</p>
+                        </a>
+                    </li>
+                }
                 <!-- Reportes -->
                 <li data-toggle="tooltip" data-placement="top" title="Puede generar distintos tipos de reportes" class="nav-item">
                     <a data-target="#passwordModal" data-toggle="modal" href="#passwordModal" class="nav-link">

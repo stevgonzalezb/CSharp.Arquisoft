@@ -71,6 +71,7 @@ namespace ArquisoftApp.Controllers
                             db.SaveChanges();
                         }
                         SaveRoleOperations(oRoleOperations, oRole.Id);
+                        AppController.AuditAction(new Audit { Module = "Roles", Action = "Crear", Date = DateTime.Now });
                     }
                     else
                     {
@@ -91,6 +92,7 @@ namespace ArquisoftApp.Controllers
                         db.SaveChanges();
                     }
                     SaveRoleOperations(oRoleOperations, oRole.Id);
+                    AppController.AuditAction(new Audit { Module = "Roles", Action = "Editar", Date = DateTime.Now });
                 }
             }
             catch

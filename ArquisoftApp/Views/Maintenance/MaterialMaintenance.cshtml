@@ -1,7 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Clientes";
-    ViewBag.Page = "Clientes";
+    ViewBag.Title = "Materiales";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -114,12 +113,12 @@
                          "data": "IdClient", "render": function (data) {
                              var buttons = "";
 
-                             @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.CLIENT_EDIT))
+                             @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.MATERIAL_EDIT))
                               {
                                  <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los clientes' class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>" </text>
                               }
 
-                             @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.CLIENT_DELETE))
+                             @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.MATERIAL_DELETE))
                               {
                                  <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de clientes' class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>" </text>
                               }
@@ -134,7 +133,7 @@
                  dom: 'Bfrtip',
                  buttons: [
 
-                     @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.CLIENT_ADD))
+                     @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.MATERIAL_ADD))
                       {
                         <text>
                             {
@@ -320,3 +319,5 @@
 
     @Scripts.Render("~/Scripts/components/Validations.js")
 }
+
+

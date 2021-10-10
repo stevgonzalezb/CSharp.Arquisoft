@@ -152,6 +152,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\MaterialController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\VerifyRole.cs" />
@@ -199,6 +200,9 @@
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Users.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VendorMaterials.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2266,6 +2270,8 @@
     <Content Include="Views\Maintenance\RoleMaintenance.cshtml" />
     <Content Include="Views\Error\NotAuthorized.cshtml" />
     <Content Include="Views\Maintenance\ProfileMaintenance.cshtml" />
+    <Content Include="Views\Maintenance\MaterialMaintenance.cshtml" />
+    <Content Include="Views\Maintenance\VendorMaterialMaintenance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

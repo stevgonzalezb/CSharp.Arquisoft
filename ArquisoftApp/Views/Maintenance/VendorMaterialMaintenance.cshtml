@@ -1,0 +1,190 @@
+﻿
+@{
+    ViewBag.Title = "Materiales Proveedores";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Main content -->
+    <!-- Usuarios -->
+    <section class="content">
+        <div class="card-body p-2" style="background-color:whitesmoke">
+            <table class="display responsive nowrap" id="myTable" style="width:100%" data-page-length='10'>
+                <thead>
+                    <tr>
+                        <th>Material</th>
+                        <th>Precio(₡)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </section>
+
+</div>
+<!-- /.content-wrapper -->
+<!-- Modal -->
+<form class="modal" id="FormModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+
+            </div>
+            <div class="modal-body">
+
+                <input type="hidden" id="txtId" />
+
+                <div class="row">
+                    <div class="form-group col-12">
+                        <label for="txtVendor">Proveedor:</label>
+                        <input type="text" class="form-control" id="txtVendor" name="txtVendor" value="EPA" disabled>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-8">
+                        <label for="txtDescription">Material:</label>
+                        <textarea class="form-control" rows="2" cols="50" id="txtDescription" name="txtDescription" disabled></textarea>
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="txtPrice">Precio:</label>
+                        <input type="text" class="form-control" id="txtPrice" name="txtPrice" disabled>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-12">
+                        <div class="col-12">
+                        <img id="imgUrl" src="" alt="Product Image"></div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer justify-content-between">
+                <a id="openSite" class="btn btn-primary" href="" target="_blank">Ver en Sitio</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</form>
+<!-- /.modal -->
+
+
+@section scripts{
+    <script>
+        const api = new MaterialApi();
+        var client_table;
+         $(document).ready( function () {
+
+             LoadTable();
+
+         });
+
+        function LoadTable() {
+            client_table = $('#myTable').DataTable({
+                 "ajax": {
+                     "url": "@Url.Action("ListVendorMaterials", "Material")",
+                     "type": "GET",
+                     "datatype": "json"
+                 },
+                 "columns": [
+                     { "data": "Description" },
+                     { "data": "Price" },
+                     {
+                         "data": "Id", "render": function (data) {
+                             var buttons = "";
+                             buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para visualizar la ficha tecnica del producto' class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ")'>Ver Ficha <i class='fas fa-eye'></i></button>"
+                             return buttons;
+                         },
+                         "orderable": false,
+                         "searchable": false,
+                         "width": "100px"
+                     }
+                 ],
+                 dom: 'Bfrtip',
+                 buttons: [
+
+                     @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.VENDOR_MAT_RUN))
+                      {
+                        <text>
+                            {
+                                text: 'Importar desde EPA.com',
+                                attr: { class: 'btn btn-success btn-sm' },
+                                action: function (e, dt, node, config) {
+                                    null
+                                }
+
+                            }
+                        </text>
+                      }
+
+                 ],
+                 "language": {
+                     "url": "@Url.Content("~/Content/datatable/idioma/datatable.es-ES.json")"
+                 }
+
+            });
+        }
+
+        function openModal($materialId) {
+
+            CleanModal();
+            $("#txtId").val($materialId);
+            $(".modal-title").text("Ficha de Producto");
+            if ($materialId != 0) {
+
+                api.GetVendorMaterial($materialId).then(material => {
+
+                    if (material != null) {
+
+                        $("#txtVendor").val("EPA Costa Rica");
+                        $("#txtDescription").val(material.Description);
+                        $("#txtPrice").val(`₡${material.Price}`);
+                        $("#imgUrl").attr('src', material.ImgURL);
+                        $("#openSite").attr('href', material.SiteURL);
+
+                    }
+
+                })
+            } else {
+
+                $("#txtPrice").val("");
+                $("#txtDescription").val("");
+                $("#txtVendor").val("");
+            }
+
+            $('#FormModal').modal('show');
+
+        }
+
+        function Delete($clientId) {
+            if (confirm("¿Realmente desea eliminar?")) {
+
+                api.DeleteClient($clientId).then(response => {
+                    if (response.result) {
+                        client_table.ajax.reload();
+                        toastr.success('Cliente eliminado correctamente.');
+                    }
+                }).catch(err => {
+                    toastr.error("Ocurrió un error eliminando los datos del cliente.");
+                })
+            }
+        }
+
+        function CleanModal() {
+            if ($("#txtEmail").hasClass("is-invalid")) {
+
+                $("#txtEmail").removeClass("is-invalid");
+                $('.invalid-feedback').remove();
+            }
+        }
+
+    </script>
+}
+
+

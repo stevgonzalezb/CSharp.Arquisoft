@@ -104,7 +104,7 @@ namespace ArquisoftApp.Controllers
 
                         db.SaveChanges();
                     }
-                    AppController.AuditAction(new Audit { Module = "Usuario", Action = "Actualizar", Date = DateTime.Now });
+                    AppController.AuditAction(new Audit { Module = "Usuario", Action = "Editar", Date = DateTime.Now });
                 }
             }
             catch

@@ -90,14 +90,14 @@ namespace ArquisoftApp.Controllers
 
                             tempCliente.Name = oClient.Name;
                             tempCliente.Last_Name = oClient.Last_Name;
-                            tempCliente.Direction = oClient.Direction;
+                            tempCliente.Address = oClient.Address;
                             tempCliente.Phone = oClient.Phone;
                             tempCliente.Email = oClient.Email;
                             tempCliente.idState = oClient.idState;
 
                             db.SaveChanges();
                         }
-                        AppController.AuditAction(new Audit { Module = "Cliente", Action = "Actualizar", Date = DateTime.Now });
+                        AppController.AuditAction(new Audit { Module = "Cliente", Action = "Editar", Date = DateTime.Now });
                     }
                 }
             }

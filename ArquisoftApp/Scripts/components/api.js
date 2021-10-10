@@ -146,3 +146,25 @@ class ClientApi {
         });
     }
 }
+
+class MaterialApi {
+    // List all clients
+    ListVendorMaterials = async function () {
+        return $.ajax({
+            url: "/ArquisoftApp/Material/ListVendorMaterials",
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
+
+    // Get single client by Id
+    GetVendorMaterial = async function (materialId) {
+        return $.ajax({
+            url: `/ArquisoftApp/Material/GetVendorMaterial?materialId=${materialId}`,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
+}

@@ -12,14 +12,12 @@ namespace ArquisoftApp.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Clients
+    public partial class VendorMaterials
     {
-        public int IdClient { get; set; }
-        public string Name { get; set; }
-        public string Last_Name { get; set; }
-        public string Address { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
-        public Nullable<int> idState { get; set; }
+        public int Id { get; set; }
+        public string Description { get; set; }
+        public string SiteURL { get; set; }
+        public string ImgURL { get; set; }
+        public string Price { get; set; }
     }
 }
