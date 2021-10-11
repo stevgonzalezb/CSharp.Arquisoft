@@ -29,7 +29,7 @@
             <p class="login-box-msg text-bold">Iniciar Sesi&oacute;n</p>
 
             <form action="@Url.Content("~/Login")" method="post">
-                <div class="input-group mb-3">
+                <div class="input-group mb-3" data-toggle="tooltip" data-placement="top" title="Coloque su usuario para ingresar al sistema">
                     <input class="form-control" name="username" placeholder="Usuario">
                     <div class="input-group-append">
                         <div class="input-group-text">
@@ -37,7 +37,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="input-group mb-3">
+                <div class="input-group mb-3" data-toggle="tooltip" data-placement="top" title="Coloque su contraseña para ingresar al sistema">
                     <input type="password" name="password" class="form-control" placeholder="Contraseña">
                     <div class="input-group-append">
                         <div class="input-group-text">
@@ -45,7 +45,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" data-toggle="tooltip" data-placement="top" title="De click para ingresar al sistema">
                     <!-- /.col -->
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary btn-block">Ingresar</button>

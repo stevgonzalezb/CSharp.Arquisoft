@@ -27,6 +27,7 @@ namespace ArquisoftApp.Controllers
             {
 
                 ClientList = (from c in db.Clients.Where(x => x.idState != (int)Common.AppEnums.States.DELETE)
+                              orderby c.Name
                               select c).ToList();
             }
             return Json(new { data = ClientList }, JsonRequestBehavior.AllowGet);
@@ -40,7 +41,7 @@ namespace ArquisoftApp.Controllers
             using (ArquisoftEntities db = new ArquisoftEntities())
             {
 
-                oClients = (from c in db.Clients.Where(x => x.IdClient == clientId && x.idState == 1)
+                oClients = (from c in db.Clients.Where(x => x.IdClient == clientId)
                             select c).FirstOrDefault();
             }
 

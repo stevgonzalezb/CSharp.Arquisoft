@@ -23,6 +23,7 @@
                     </tr>
                 </thead>
             </table>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#clientsModalAyuda"> Ayuda </button>
         </div>
     </section>
 
@@ -48,29 +49,29 @@
                 <div class="row">
                     <div class="form-group col-6">
                         <label for="txtName">Nombre:</label>
-                        <input type="text" class="form-control" id="txtName" name="txtName">
+                        <input type="text" class="form-control" id="txtName" name="txtName" placeholder="Nombre del cliente">
                     </div>
                     <div class="form-group col-6">
                         <label for="txtLastName">Apellidos:</label>
-                        <input type="text" class="form-control" id="txtLastName" name="txtLastName">
+                        <input type="text" class="form-control" id="txtLastName" name="txtLastName" placeholder="Apellidos del cliente">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-6">
-                        <label for="txtPhone">Telefono:</label>
-                        <input type="text" class="form-control" id="txtPhone" name="txtPhone">
+                        <label for="txtPhone">Tel&eacute;fono:</label>
+                        <input type="text" class="form-control" id="txtPhone" name="txtPhone" placeholder="Número del cliente">
                     </div>
                     <div class="form-group col-6">
                         <label for="txtEmail">Correo:</label>
-                        <input type="text" class="form-control" id="txtEmail" name="txtEmail">
+                        <input type="text" class="form-control" id="txtEmail" name="txtEmail" placeholder="Correo electrónico del cliente">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-12">
-                        <label for="txtAddress">Direccion:</label>
-                        <textarea class="form-control" rows="3" cols="50" id="txtAddress" name="txtAddress"></textarea>
+                        <label for="txtAddress">Direcci&oacute;n:</label>
+                        <textarea class="form-control" rows="3" cols="50" id="txtAddress" name="txtAddress" placeholder="Dirreción exacta del cliente"></textarea>
                     </div>
                 </div>
 
@@ -85,6 +86,44 @@
     <!-- /.modal-dialog -->
 </form>
 <!-- /.modal -->
+@*Modal Ayuda*@
+<div class="modal" id="clientsModalAyuda" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
+                <h4 class="modal-title"></h4>
+            </div>
+            <h4 align="center"><b>Ayuda M&oacute;dulo Clientes</b></h4>
+            <p>&nbsp;&nbsp;Este módulo esta desarrollado para que se pueda registrar, editar y eliminar clientes.</p>
+            <p><b>&nbsp;&nbsp;Gu&iacute;a para agregar un cliente nuevo:</b></p>
+            <p>&nbsp;&nbsp;1- Damos click al boton “Agregar Nuevo”</p>
+            <div class="modal-body" align="left">
+                <img src="~/Content/img/Help/Client/Agregar.JPG" class="img-rounded" alt="Cinque Terre" />
+            </div>
+            <p>&nbsp;&nbsp;2-Completamos las siguiente información</p>
+            <div class="modal-body" align="left">
+                <img src="~/Content/img/Help/Client/Modal_Agregar.JPG" class="img-rounded" alt="Cinque Terre" />
+            </div>
+            <p>&nbsp;&nbsp; <b>1:</b>&nbsp;&nbsp;Nombre del cliente</p>
+            <p>&nbsp;&nbsp; <b>2:</b>&nbsp;&nbsp;Apellidos del cliente</p>
+            <p>&nbsp;&nbsp; <b>3:</b>&nbsp;&nbsp;Número de teléfono para contactar al cliente.</p>
+            <p>&nbsp;&nbsp; <b>4:</b>&nbsp;&nbsp;Correo electrónico del cliente.</p>
+            <p>&nbsp;&nbsp; <b>5:</b>&nbsp;&nbsp;Dirección exacta de residencia del cliente.</p>
+            <p>&nbsp;&nbsp; <b>6:</b>&nbsp;&nbsp;Guardar cliente.</p>
+
+
+            <div class="modal-body" align="center">
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*/.modal*@
+
+
 
 
 @section scripts{
@@ -193,6 +232,10 @@
                     txtEmail: {
                         required: true,
                         emailRegex: true
+                    },
+                    txtAddress: {
+                        required: true,
+                        minlength: 1
                     }
                 },
                 messages: {
@@ -211,6 +254,10 @@
                     txtEmail: {
                         required: "Requerido",
                         emailRegex: "Ingrese un correo válido"
+                    },
+                    txtAddress: {
+                        required: "Requedido",
+                        minlength: "Ingrese una dirección válida."
                     }
                 }
             });
@@ -227,12 +274,12 @@
 
                     if (client != null) {
 
-                        $("#chkEnable").prop('checked', true);
                         $("#txtName").val(client.Name);
                         $("#txtLastName").val(client.Last_Name);
                         $("#txtAddress").val(client.Address);
                         $("#txtPhone").val(client.Phone);
                         $("#txtEmail").val(client.Email);
+                        $("#chkEnable").prop('checked', true);
 
                     }
 
@@ -269,7 +316,7 @@
                     if (response.result === 'OK') {
                         client_table.ajax.reload();
                         $('#FormModal').modal('hide');
-                        toastr.success('Usuario guardado correctamente.')
+                        toastr.success('Cliente guardado correctamente.')
                     } else {
                         toastr.error(response.result);
                     }
@@ -284,7 +331,7 @@
         }
 
         function Delete($clientId) {
-            if (confirm("¿Realmente desea eliminar?")) {
+            if (confirm("¿Realmente desea eliminar este cliente?")) {
 
                 api.DeleteClient($clientId).then(response => {
                     if (response.result) {
@@ -309,12 +356,36 @@
         }
 
         function CleanModal() {
-            if ($("#txtEmail").hasClass("is-invalid")) {
 
-                $("#txtEmail").removeClass("is-invalid");
-                $('.invalid-feedback').remove();
-            }
+            $("#txtName").removeClass("is-invalid");
+            $("#txtName").removeClass("is-valid");
+            $("#txtLastName").removeClass("is-invalid");
+            $("#txtLastName").removeClass("is-valid");
+            $("#txtAddress").removeClass("is-invalid");
+            $("#txtAddress").removeClass("is-valid");
+            $("#txtPhone").removeClass("is-invalid");
+            $("#txtPhone").removeClass("is-valid");
+            $("#txtEmail").removeClass("is-invalid");
+            $("#txtEmail").removeClass("is-valid");
+            $('.validation-error').remove();
+
+
+            $("#chkEnable").prop('checked', false);
+            $("#txtName").val("");
+            $("#txtLastName").val("");
+            $("#txtAddress").val("");
+            $("#txtPhone").val("");
+            $("#txtEmail").val("");
+
         }
+
+        //function CleanModal() {
+        //    if ($("#txtEmail").hasClass("is-invalid")) {
+
+        //        $("#txtEmail").removeClass("is-invalid");
+        //        $('.invalid-feedback').remove();
+        //    }
+        //}
 
     </script>
 
