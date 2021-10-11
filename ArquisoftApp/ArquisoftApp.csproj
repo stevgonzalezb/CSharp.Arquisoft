@@ -225,6 +225,10 @@
     <Content Include="Content\datatable\js\dataTables.responsive.min.js" />
     <Content Include="Content\datatable\js\jquery.dataTables.min.js" />
     <Content Include="Content\datatable\js\jquery.js" />
+    <Content Include="Content\img\Help\Client\Agregar.JPG" />
+    <Content Include="Content\img\Help\Client\Editar.JPG" />
+    <Content Include="Content\img\Help\Client\Eliminar.JPG" />
+    <Content Include="Content\img\Help\Client\Modal_Agregar.JPG" />
     <Content Include="Content\img\login-bg.jpg" />
     <Content Include="Content\img\logo.png" />
     <Content Include="Content\img\profile_avatar.png" />
