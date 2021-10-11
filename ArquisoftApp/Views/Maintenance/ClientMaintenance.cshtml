@@ -48,29 +48,29 @@
                 <div class="row">
                     <div class="form-group col-6">
                         <label for="txtName">Nombre:</label>
-                        <input type="text" class="form-control" id="txtName" name="txtName" placeholder="Nombre del cliente">
+                        <input type="text" class="form-control" id="txtName" name="txtName" placeholder="Nombre">
                     </div>
                     <div class="form-group col-6">
                         <label for="txtLastName">Apellidos:</label>
-                        <input type="text" class="form-control" id="txtLastName" name="txtLastName" placeholder="Apellidos del cliente">
+                        <input type="text" class="form-control" id="txtLastName" name="txtLastName" placeholder="Apellidos">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-6">
                         <label for="txtPhone">Tel&eacute;fono:</label>
-                        <input type="text" class="form-control" id="txtPhone" name="txtPhone" placeholder="Número del cliente">
+                        <input type="text" class="form-control" id="txtPhone" name="txtPhone" placeholder="Número de contacto">
                     </div>
                     <div class="form-group col-6">
                         <label for="txtEmail">Correo:</label>
-                        <input type="text" class="form-control" id="txtEmail" name="txtEmail" placeholder="Correo electrónico del cliente">
+                        <input type="text" class="form-control" id="txtEmail" name="txtEmail" placeholder="Correo electrónico">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-12">
                         <label for="txtAddress">Direcci&oacute;n:</label>
-                        <textarea class="form-control" rows="3" cols="50" id="txtAddress" name="txtAddress" placeholder="Dirreción exacta del cliente"></textarea>
+                        <textarea class="form-control" rows="3" cols="50" id="txtAddress" name="txtAddress" placeholder="Dirreción exacta"></textarea>
                     </div>
                 </div>
 
@@ -85,32 +85,68 @@
     <!-- /.modal-dialog -->
 </form>
 <!-- /.modal -->
+
 @*Modal Ayuda*@
 <div class="modal" id="clientsModalAyuda" role="dialog">
     <div class="modal-dialog" style="overflow-y: initial !important">
         <div class="modal-content">
             <div class="modal-header">
-                @*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
                 <h4 class="modal-title">Ayuda M&oacute;dulo Clientes</h4>
             </div>
             <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
                 <h4 align="center"><b></b></h4>
                 <p>&nbsp;&nbsp;Este módulo esta desarrollado para que se pueda registrar, editar y eliminar clientes.</p>
-                <p><b>&nbsp;&nbsp;Gu&iacute;a para agregar un cliente nuevo:</b></p>
+
+                @*Ayuda Agregar Clientes*@
+
+                <h4><b>&nbsp;&nbsp;Gu&iacute;a para agregar un cliente nuevo:</b></h4>
                 <p>&nbsp;&nbsp;1- Damos click al boton “Agregar Nuevo”</p>
                 <div class="modal-body" align="left">
                     <img src="~/Content/img/Help/Client/Agregar.JPG" class="img-rounded" alt="Cinque Terre" />
                 </div>
-                <p>&nbsp;&nbsp;2-Completamos las siguiente información</p>
+                <p>&nbsp;&nbsp;2- Completamos la siguiente información</p>
                 <div class="modal-body" align="left">
                     <img src="~/Content/img/Help/Client/Modal_Agregar.JPG" class="img-rounded" alt="Cinque Terre" />
                 </div>
-                <p>&nbsp;&nbsp; <b>1:</b>&nbsp;&nbsp;Nombre del cliente</p>
-                <p>&nbsp;&nbsp; <b>2:</b>&nbsp;&nbsp;Apellidos del cliente</p>
+                <p>&nbsp;&nbsp; <b>1:</b>&nbsp;&nbsp;Nombre del cliente.</p>
+                <p>&nbsp;&nbsp; <b>2:</b>&nbsp;&nbsp;Apellidos del cliente.</p>
                 <p>&nbsp;&nbsp; <b>3:</b>&nbsp;&nbsp;Número de teléfono para contactar al cliente.</p>
                 <p>&nbsp;&nbsp; <b>4:</b>&nbsp;&nbsp;Correo electrónico del cliente.</p>
                 <p>&nbsp;&nbsp; <b>5:</b>&nbsp;&nbsp;Dirección exacta de residencia del cliente.</p>
                 <p>&nbsp;&nbsp; <b>6:</b>&nbsp;&nbsp;Guardar cliente.</p>
+                <br />
+                @*Ayuda Editar Clientes*@
+
+                <h4><b>&nbsp;&nbsp;Gu&iacute;a para editar un cliente:</b></h4>
+                <p>&nbsp;&nbsp;1- Damos click al boton “Editar”</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Client/Editar.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp;2- Completamos la siguiente información</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Client/Modal_Editar.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp; <b>1:</b>&nbsp;&nbsp;Habilitar/Deshabilitar un cliente.</p>
+                <p>&nbsp;&nbsp; <b>2:</b>&nbsp;&nbsp;Nombre del cliente.</p>
+                <p>&nbsp;&nbsp; <b>3:</b>&nbsp;&nbsp;Apellidos del cliente.</p>
+                <p>&nbsp;&nbsp; <b>4:</b>&nbsp;&nbsp;Número de teléfono para contactar al cliente.</p>
+                <p>&nbsp;&nbsp; <b>5:</b>&nbsp;&nbsp;Correo electrónico del cliente.</p>
+                <p>&nbsp;&nbsp; <b>6:</b>&nbsp;&nbsp;Dirección exacta de residencia del cliente.</p>
+                <p>&nbsp;&nbsp; <b>7:</b>&nbsp;&nbsp;Guardar cliente.</p>
+
+                @*Ayuda Eliminar Clientes*@
+
+                <h4><b>&nbsp;&nbsp;Gu&iacute;a para eliminar un cliente:</b></h4>
+                <p>&nbsp;&nbsp;1- Damos click al boton “Eliminar”</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Client/Eliminar.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp;2- Saldrá el siguiente mensaje para confirmar la eliminación</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Client/Modal_Eliminar.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp; <b>1:</b>&nbsp;&nbsp;Confirmamos la eliminación para eliminar el cliente.</p>
+                <p>&nbsp;&nbsp; <b>2:</b>&nbsp;&nbsp;No confirmamos la eliminación para eliminar el cliente, no se realizan cambios.</p>
 
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -155,12 +191,12 @@
 
                              @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.CLIENT_EDIT))
                               {
-                                 <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los clientes' class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>" </text>
+                                 <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los clientes' class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar Cliente\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>" </text>
                               }
 
                              @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.CLIENT_DELETE))
                               {
-                                 <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de clientes' class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>" </text>
+                                 <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado del cliente' class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>" </text>
                               }
 
                              return buttons;
@@ -180,7 +216,7 @@
                                 text: 'Agregar Nuevo',
                                 attr: { class: 'btn btn-success btn-sm' },
                                 action: function (e, dt, node, config) {
-                                    openModal(0, "Agregar");
+                                    openModal(0, "Agregar Cliente");
                                 }
 
                             }

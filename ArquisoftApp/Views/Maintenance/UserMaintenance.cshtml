@@ -51,29 +51,29 @@
                         <div class="row">
                             <div class="form-group col-6">
                                 <label for="txtName">Nombre:</label>
-                                <input type="text" class="form-control" id="txtName" name="txtName">
+                                <input type="text" class="form-control" id="txtName" name="txtName" placeholder="Nombre">
                             </div>
                             <div class="form-group col-6">
                                 <label for="txtLastName">Apellido:</label>
-                                <input type="text" class="form-control" id="txtLastName" name="txtLastName">
+                                <input type="text" class="form-control" id="txtLastName" name="txtLastName" placeholder="Apellidos">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="form-group col-6">
                                 <label for="txtUsername">Nombre de usuario:</label>
-                                <input type="text" class="form-control" id="txtUsername" name="txtUsername">
+                                <input type="text" class="form-control" id="txtUsername" name="txtUsername" placeholder="Usuario">
                             </div>
                             <div class="form-group col-6">
                                 <label for="txtPassword">Contraseña:</label>
-                                <input type="password" class="form-control" id="txtPassword" name="txtPassword">
+                                <input type="password" class="form-control" id="txtPassword" name="txtPassword" placeholder="Contraseña">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="form-group col-6">
                                 <label for="txtEmail">Correo:</label>
-                                <input type="text" class="form-control" id="txtEmail" name="txtEmail">
+                                <input type="text" class="form-control" id="txtEmail" name="txtEmail" placeholder="Correo electrónico">
                             </div>
 
                             <div class="form-group col-6">
@@ -135,8 +135,8 @@
 
                         var buttons = "";
 
-                        buttons += "<button class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>"
-                        buttons += "<button class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'> Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
+                        buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos del usuario' class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar Usuario\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>"
+                        buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado del usuario' class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'> Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
 
                         return buttons;
 
@@ -152,7 +152,7 @@
                         text: 'Agregar Nuevo',
                         attr: { class: 'btn btn-success btn-sm' },
                         action: function (e, dt, node, config) {
-                            openModal(0, "Agregar");
+                            openModal(0, "Agregar Usuario");
                         }
                     }
                  ],
@@ -258,6 +258,7 @@
                         }
                         else
                             throw ("Data error from api");
+                        $("#chkEnable").prop('checked', true);
 
                     }).catch(err => {
 
@@ -305,7 +306,7 @@
 
             // Delete user method
             function Delete($userId) {
-                if (confirm("¿Realmente desea eliminar?")) {
+                if (confirm("¿Realmente desea eliminar este usuario?")) {
 
                     api.DeleteUser($userId).then(response => {
                         if (response.result) {

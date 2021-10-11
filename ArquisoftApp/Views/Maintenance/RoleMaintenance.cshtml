@@ -44,14 +44,14 @@
                     <div class="row">
                         <div class="form-group col-12">
                             <label for="txtName">Nombre:</label>
-                            <input type="text" class="form-control" id="txtName">
+                            <input type="text" class="form-control" id="txtName" placeholder="Nombre del rol">
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group col-12">
                             <label for="txtDescription">Descripción:</label>
-                            <input type="text" class="form-control" id="txtDescription">
+                            <input type="text" class="form-control" id="txtDescription" placeholder="Descripción del rol">
                         </div>
                     </div>
 
@@ -182,7 +182,7 @@
                     { "data": "Name" },
                     { "data": "Description"},
                     { "data": "Id", "render": function (data) {
-                        return "<button class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar Privilegios\")'>Editar Privilegios &nbsp;<i class='fas fa-pen'></i></button>"
+                        return "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los privilegios de usuarios' class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar Privilegios\")'>Editar Privilegios &nbsp;<i class='fas fa-pen'></i></button>"
                             //"<button class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
                         },
                         "orderable": false,

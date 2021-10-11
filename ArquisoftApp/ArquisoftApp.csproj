@@ -229,6 +229,8 @@
     <Content Include="Content\img\Help\Client\Editar.JPG" />
     <Content Include="Content\img\Help\Client\Eliminar.JPG" />
     <Content Include="Content\img\Help\Client\Modal_Agregar.JPG" />
+    <Content Include="Content\img\Help\Client\Modal_Editar.JPG" />
+    <Content Include="Content\img\Help\Client\Modal_Eliminar.jpg" />
     <Content Include="Content\img\login-bg.jpg" />
     <Content Include="Content\img\logo.png" />
     <Content Include="Content\img\profile_avatar.png" />
