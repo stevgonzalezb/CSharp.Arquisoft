@@ -44,7 +44,7 @@
                         <input type="hidden" id="txtId" />
 
                         <div class="form-group">
-                            <input type="checkbox" class="form-check-input m-0" id="chkEnable">
+                            <input type="checkbox" class="form-check-input m-0" id="chkEnable" checked>
                             <label class="form-check" for="chkEnable">Activo</label>
                         </div>
 
@@ -271,7 +271,7 @@
 
             // Submit form method
             $("#userForm").on("submit", function (e) {
-                if (ValidateInputs()) {
+                if ($("#userForm").valid()) {
                     var $data = {
                         oUser: {
                             Id: parseInt($("#txtId").val()),

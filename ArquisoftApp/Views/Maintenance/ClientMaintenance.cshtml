@@ -23,7 +23,6 @@
                     </tr>
                 </thead>
             </table>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#clientsModalAyuda"> Ayuda </button>
         </div>
     </section>
 
@@ -88,32 +87,31 @@
 <!-- /.modal -->
 @*Modal Ayuda*@
 <div class="modal" id="clientsModalAyuda" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="overflow-y: initial !important">
         <div class="modal-content">
             <div class="modal-header">
                 @*<button type="button" class="close" data-dismiss="modal">&times;</button>*@
-                <h4 class="modal-title"></h4>
+                <h4 class="modal-title">Ayuda M&oacute;dulo Clientes</h4>
             </div>
-            <h4 align="center"><b>Ayuda M&oacute;dulo Clientes</b></h4>
-            <p>&nbsp;&nbsp;Este módulo esta desarrollado para que se pueda registrar, editar y eliminar clientes.</p>
-            <p><b>&nbsp;&nbsp;Gu&iacute;a para agregar un cliente nuevo:</b></p>
-            <p>&nbsp;&nbsp;1- Damos click al boton “Agregar Nuevo”</p>
-            <div class="modal-body" align="left">
-                <img src="~/Content/img/Help/Client/Agregar.JPG" class="img-rounded" alt="Cinque Terre" />
-            </div>
-            <p>&nbsp;&nbsp;2-Completamos las siguiente información</p>
-            <div class="modal-body" align="left">
-                <img src="~/Content/img/Help/Client/Modal_Agregar.JPG" class="img-rounded" alt="Cinque Terre" />
-            </div>
-            <p>&nbsp;&nbsp; <b>1:</b>&nbsp;&nbsp;Nombre del cliente</p>
-            <p>&nbsp;&nbsp; <b>2:</b>&nbsp;&nbsp;Apellidos del cliente</p>
-            <p>&nbsp;&nbsp; <b>3:</b>&nbsp;&nbsp;Número de teléfono para contactar al cliente.</p>
-            <p>&nbsp;&nbsp; <b>4:</b>&nbsp;&nbsp;Correo electrónico del cliente.</p>
-            <p>&nbsp;&nbsp; <b>5:</b>&nbsp;&nbsp;Dirección exacta de residencia del cliente.</p>
-            <p>&nbsp;&nbsp; <b>6:</b>&nbsp;&nbsp;Guardar cliente.</p>
+            <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
+                <h4 align="center"><b></b></h4>
+                <p>&nbsp;&nbsp;Este módulo esta desarrollado para que se pueda registrar, editar y eliminar clientes.</p>
+                <p><b>&nbsp;&nbsp;Gu&iacute;a para agregar un cliente nuevo:</b></p>
+                <p>&nbsp;&nbsp;1- Damos click al boton “Agregar Nuevo”</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Client/Agregar.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp;2-Completamos las siguiente información</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Client/Modal_Agregar.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp; <b>1:</b>&nbsp;&nbsp;Nombre del cliente</p>
+                <p>&nbsp;&nbsp; <b>2:</b>&nbsp;&nbsp;Apellidos del cliente</p>
+                <p>&nbsp;&nbsp; <b>3:</b>&nbsp;&nbsp;Número de teléfono para contactar al cliente.</p>
+                <p>&nbsp;&nbsp; <b>4:</b>&nbsp;&nbsp;Correo electrónico del cliente.</p>
+                <p>&nbsp;&nbsp; <b>5:</b>&nbsp;&nbsp;Dirección exacta de residencia del cliente.</p>
+                <p>&nbsp;&nbsp; <b>6:</b>&nbsp;&nbsp;Guardar cliente.</p>
 
-
-            <div class="modal-body" align="center">
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
@@ -130,7 +128,9 @@
     <script>
         const api = new ClientApi();
         var client_table;
-         $(document).ready( function () {
+        $(document).ready(function () {
+
+            $("#helpModalNav").attr('data-target', "#clientsModalAyuda");
 
              LoadTable();
 
@@ -279,7 +279,7 @@
                         $("#txtAddress").val(client.Address);
                         $("#txtPhone").val(client.Phone);
                         $("#txtEmail").val(client.Email);
-                        $("#chkEnable").prop('checked', true);
+                        $("#chkEnable").prop('checked', client.idState == app.enums.States.ACTIVE ? true : false);
 
                     }
 
