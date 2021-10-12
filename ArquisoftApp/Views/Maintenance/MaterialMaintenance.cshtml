@@ -13,11 +13,8 @@
             <table class="display responsive nowrap" id="myTable" style="width:100%" data-page-length='10'>
                 <thead>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Apellidos</th>
-                        <th>Direcci&oacute;n</th>
-                        <th>Tel&eacute;fono</th>
-                        <th>Correo</th>
+                        <th>Descripción</th>
+                        <th>Precio(₡)</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -45,31 +42,13 @@
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-6">
-                        <label for="txtName">Nombre:</label>
-                        <input type="text" class="form-control" id="txtName" name="txtName">
+                    <div class="form-group col-8">
+                        <label for="txtDescription">Material:</label>
+                        <textarea class="form-control" rows="2" cols="50" id="txtDescription" name="txtDescription"></textarea>
                     </div>
-                    <div class="form-group col-6">
-                        <label for="txtLastName">Apellidos:</label>
-                        <input type="text" class="form-control" id="txtLastName" name="txtLastName">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-6">
-                        <label for="txtPhone">Telefono:</label>
-                        <input type="text" class="form-control" id="txtPhone" name="txtPhone">
-                    </div>
-                    <div class="form-group col-6">
-                        <label for="txtEmail">Correo:</label>
-                        <input type="text" class="form-control" id="txtEmail" name="txtEmail">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-12">
-                        <label for="txtAddress">Direccion:</label>
-                        <textarea class="form-control" rows="3" cols="50" id="txtAddress" name="txtAddress"></textarea>
+                    <div class="form-group col-4">
+                        <label for="txtPrice">Precio:</label>
+                        <input type="text" class="form-control" id="txtPrice" name="txtPrice">
                     </div>
                 </div>
 
@@ -88,7 +67,7 @@
 
 @section scripts{
     <script>
-        const api = new ClientApi();
+        const api = new MaterialApi();
         var client_table;
          $(document).ready( function () {
 
@@ -99,28 +78,25 @@
         function LoadTable() {
             client_table = $('#myTable').DataTable({
                  "ajax": {
-                     "url": "@Url.Action("List", "Client")",
+                     "url": "@Url.Action("ListMaterials", "Material")",
                      "type": "GET",
                      "datatype": "json"
                  },
                  "columns": [
-                     { "data": "Name" },
-                     { "data": "Last_Name" },
-                     { "data": "Address" },
-                     { "data": "Phone" },
-                     { "data": "Email" },
+                     { "data": "Description" },
+                     { "data": "Price" },
                      {
-                         "data": "IdClient", "render": function (data) {
+                         "data": "Id", "render": function (data) {
                              var buttons = "";
 
                              @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.MATERIAL_EDIT))
                               {
-                                 <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los clientes' class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>" </text>
+                                 <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los materiales' class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>" </text>
                               }
 
                              @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.MATERIAL_DELETE))
                               {
-                                 <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de clientes' class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>" </text>
+                                 <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de materiales' class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>" </text>
                               }
 
                              return buttons;
@@ -169,69 +145,45 @@
                 }
             });
 
-            // Custom methods for validations
-            $.validator.addMethod('emailRegex', function (value, element, parameter) {
-                return value.match(app.enums.Regex.Email);
-            }, '');
-
             // Form validations
             var validator = $("#FormModal").validate({
                 rules: {
-                    txtName: {
+                    txtDescription: {
                         required: true,
                         minlength: 1
                     },
-                    txtLastName: {
+                    txtPrice: {
                         required: true,
                         minlength: 1
-                    },
-                    txtPhone: {
-                        required: true,
-                        minlength: 8
-                    },
-                    txtEmail: {
-                        required: true,
-                        emailRegex: true
                     }
                 },
                 messages: {
-                    txtName: {
+                    txtDescription: {
                         required: "Requerido",
-                        minlength: "Ingrese un nombre válido."
+                        minlength: "Ingrese una descripción válida."
                     },
-                    txtLastName: {
+                    txtPrice: {
                         required: "Requerido",
-                        minlength: "Ingrese un apellido válido."
-                    },
-                    txtPhone: {
-                        required: "Requerido",
-                        minlength: "Ingrese un número válido."
-                    },
-                    txtEmail: {
-                        required: "Requerido",
-                        emailRegex: "Ingrese un correo válido"
+                        minlength: "Ingrese un precio válido."
                     }
                 }
             });
         }
 
-        function openModal($clientId, action) {
+        function openModal($materialId, action) {
 
             CleanModal();
-            $("#txtId").val($clientId);
+            $("#txtId").val($materialId);
             $(".modal-title").text(action);
-            if ($clientId != 0) {
+            if ($materialId != 0) {
 
-                api.GetClient($clientId).then(client => {
+                api.GetMaterial($materialId).then(material => {
 
-                    if (client != null) {
+                    if (material != null) {
 
-                        $("#chkEnable").prop('checked', true);
-                        $("#txtName").val(client.Name);
-                        $("#txtLastName").val(client.Last_Name);
-                        $("#txtAddress").val(client.Address);
-                        $("#txtPhone").val(client.Phone);
-                        $("#txtEmail").val(client.Email);
+                        $("#chkEnable").prop('checked', material.IdState == app.enums.States.ACTIVE ? true : false);
+                        $("#txtDescription").val(material.Description);
+                        $("#txtPrice").val(material.Price);
 
                     }
 
@@ -239,11 +191,8 @@
             } else {
 
                 $("#chkEnable").prop('checked', true);
-                $("#txtName").val("");
-                $("#txtLastName").val("");
-                $("#txtAddress").val("");
-                $("#txtPhone").val("");
-                $("#txtEmail").val("");
+                $("#txtDescription").val("");
+                $("#txtPrice").val("");
             }
 
             $('#FormModal').modal('show');
@@ -253,27 +202,24 @@
         function Save() {
             if ($("#FormModal").valid()) {
                 var $data = {
-                    oClient: {
-                        IdClient: parseInt($("#txtId").val()),
-                        Name: $("#txtName").val(),
-                        Last_Name: $("#txtLastName").val(),
-                        Address: $("#txtAddress").val(),
-                        Phone: $("#txtPhone").val(),
-                        Email: $("#txtEmail").val(),
+                    oMaterial: {
+                        Id: parseInt($("#txtId").val()),
+                        Description: $("#txtDescription").val(),
+                        Price: $("#txtPrice").val(),
                         IdState: $("#chkEnable").prop('checked') ? app.enums.States.ACTIVE : app.enums.States.DISABLE
                     }
                 }
 
-                api.SaveClient($data).then(response => {
+                api.SaveMaterial($data).then(response => {
                     if (response.result === 'OK') {
                         client_table.ajax.reload();
                         $('#FormModal').modal('hide');
-                        toastr.success('Usuario guardado correctamente.')
+                        toastr.success('Material guardado correctamente.')
                     } else {
                         toastr.error(response.result);
                     }
                 }).catch(err => {
-                    toastr.error("Ocurrió un error guardando los datos del cliente.");
+                    toastr.error("Ocurrió un error guardando los datos del material.");
                 })
             }
             else {
@@ -282,13 +228,13 @@
 
         }
 
-        function Delete($clientId) {
+        function Delete($materialId) {
             if (confirm("¿Realmente desea eliminar?")) {
 
-                api.DeleteClient($clientId).then(response => {
+                api.DeleteMaterial($materialId).then(response => {
                     if (response.result) {
                         client_table.ajax.reload();
-                        toastr.success('Cliente eliminado correctamente.');
+                        toastr.success('Material eliminado correctamente.');
                     }
                 }).catch(err => {
                     toastr.error("Ocurrió un error eliminando los datos del cliente.");
@@ -296,28 +242,17 @@
             }
         }
 
-        function ValidateInputs() {
-
-            var ret = true;
-
-            if ($("#txtEmail").hasClass("is-invalid")) {
-                ret = false;
-            }
-
-            return ret;
-        }
-
         function CleanModal() {
-            if ($("#txtEmail").hasClass("is-invalid")) {
 
-                $("#txtEmail").removeClass("is-invalid");
-                $('.invalid-feedback').remove();
-            }
+            $('.is-invalid').removeClass('.is-invalid');
+            $("#txtDescription").removeClass(".is-valid");
+            $('#txtPrice').removeClass('.is-invalid');
+            $('#txtPrice').removeClass('.is-valid');
+            $('.validation-error').remove();
+            
         }
 
     </script>
-
-    @Scripts.Render("~/Scripts/components/Validations.js")
 }
 
 

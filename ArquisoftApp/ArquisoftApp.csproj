@@ -181,6 +181,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Materials.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ModuleOperations.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>

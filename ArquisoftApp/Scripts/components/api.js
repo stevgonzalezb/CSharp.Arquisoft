@@ -148,7 +148,7 @@ class ClientApi {
 }
 
 class MaterialApi {
-    // List all clients
+    // List all Vendor Materials
     ListVendorMaterials = async function () {
         return $.ajax({
             url: "/ArquisoftApp/Material/ListVendorMaterials",
@@ -158,7 +158,7 @@ class MaterialApi {
         });
     }
 
-    // Get single client by Id
+    // Get single vendor material by Id
     GetVendorMaterial = async function (materialId) {
         return $.ajax({
             url: `/ArquisoftApp/Material/GetVendorMaterial?materialId=${materialId}`,
@@ -167,4 +167,49 @@ class MaterialApi {
             contentType: "application/json; charset=utf-8",
         });
     }
+
+
+
+
+    // List all materials
+    ListMaterials = async function () {
+        return $.ajax({
+            url: "/ArquisoftApp/Material/ListMaterials",
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
+
+    // Get single material by Id
+    GetMaterial = async function (materialId) {
+        return $.ajax({
+            url: `/ArquisoftApp/Material/GetMaterial?materialId=${materialId}`,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
+
+    // Save or Update material data
+    SaveMaterial = async function (data) {
+        return $.ajax({
+            url: "/ArquisoftApp/Material/Save",
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
+
+    // Delete material - Will change the state
+    DeleteMaterial = async function (materialId) {
+        return $.ajax({
+            url: `/ArquisoftApp/Material/DeleteMaterial?materialId=${materialId}`,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
+
 }

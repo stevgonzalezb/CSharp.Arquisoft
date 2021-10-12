@@ -20,6 +20,8 @@
         <EntityTypeShape EntityType="ArquisoftModel1.Audit" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="ArquisoftModel1.Clients" Width="1.5" PointX="0.75" PointY="3.75" />
         <EntityTypeShape EntityType="ArquisoftModel1.VendorMaterials" Width="1.5" PointX="6.375" PointY="6.75" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Materials" Width="1.5" PointX="11.125" PointY="3.875" />
+        <AssociationConnector Association="ArquisoftModel1.FK_Materials_State" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

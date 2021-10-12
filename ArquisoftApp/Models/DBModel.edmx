@@ -27,6 +27,15 @@
           <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="idState" Type="int" />
         </EntityType>
+        <EntityType Name="Materials">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="200" />
+          <Property Name="Price" Type="varchar" MaxLength="50" />
+          <Property Name="IdState" Type="int" />
+        </EntityType>
         <EntityType Name="ModuleOperations">
           <Key>
             <PropertyRef Name="Id" />
@@ -110,6 +119,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Materials_State">
+          <End Role="State" Type="Self.State" Multiplicity="0..1" />
+          <End Role="Materials" Type="Self.Materials" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="idState" />
+            </Principal>
+            <Dependent Role="Materials">
+              <PropertyRef Name="IdState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ModuleOperations">
           <End Role="Modules" Type="Self.Modules" Multiplicity="0..1" />
           <End Role="ModuleOperations" Type="Self.ModuleOperations" Multiplicity="*" />
@@ -161,6 +182,7 @@
         <EntityContainer Name="ArquisoftModel1StoreContainer">
           <EntitySet Name="Audit" EntityType="Self.Audit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Materials" EntityType="Self.Materials" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ModuleOperations" EntityType="Self.ModuleOperations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Modules" EntityType="Self.Modules" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoleOperations" EntityType="Self.RoleOperations" Schema="dbo" store:Type="Tables" />
@@ -172,6 +194,10 @@
           <AssociationSet Name="FK_IdState" Association="Self.FK_IdState">
             <End Role="State" EntitySet="State" />
             <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Materials_State" Association="Self.FK_Materials_State">
+            <End Role="State" EntitySet="State" />
+            <End Role="Materials" EntitySet="Materials" />
           </AssociationSet>
           <AssociationSet Name="FK_ModuleOperations" Association="Self.FK_ModuleOperations">
             <End Role="Modules" EntitySet="Modules" />
@@ -235,6 +261,11 @@
           <EntitySet Name="Audit" EntityType="ArquisoftModel1.Audit" />
           <EntitySet Name="Clients" EntityType="ArquisoftModel1.Clients" />
           <EntitySet Name="VendorMaterials" EntityType="ArquisoftModel1.VendorMaterials" />
+          <EntitySet Name="Materials" EntityType="ArquisoftModel1.Materials" />
+          <AssociationSet Name="FK_Materials_State" Association="ArquisoftModel1.FK_Materials_State">
+            <End Role="State" EntitySet="State" />
+            <End Role="Materials" EntitySet="Materials" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="ModuleOperations">
           <Key>
@@ -317,6 +348,7 @@
           <Property Name="idState" Type="Int32" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Users" Relationship="ArquisoftModel1.FK_IdState" FromRole="State" ToRole="Users" />
+          <NavigationProperty Name="Materials" Relationship="ArquisoftModel1.FK_Materials_State" FromRole="State" ToRole="Materials" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -389,6 +421,28 @@
           <Property Name="ImgURL" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
           <Property Name="Price" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Materials">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IdState" Type="Int32" />
+          <NavigationProperty Name="State" Relationship="ArquisoftModel1.FK_Materials_State" FromRole="Materials" ToRole="State" />
+        </EntityType>
+        <Association Name="FK_Materials_State">
+          <End Type="ArquisoftModel1.State" Role="State" Multiplicity="0..1" />
+          <End Type="ArquisoftModel1.Materials" Role="Materials" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="idState" />
+            </Principal>
+            <Dependent Role="Materials">
+              <PropertyRef Name="IdState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -493,6 +547,16 @@
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="ImgURL" ColumnName="ImgURL" />
                 <ScalarProperty Name="SiteURL" ColumnName="SiteURL" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Materials">
+            <EntityTypeMapping TypeName="ArquisoftModel1.Materials">
+              <MappingFragment StoreEntitySet="Materials">
+                <ScalarProperty Name="IdState" ColumnName="IdState" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

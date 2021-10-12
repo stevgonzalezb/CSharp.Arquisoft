@@ -91,7 +91,7 @@
     <div class="modal-dialog" style="overflow-y: initial !important">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Ayuda M&oacute;dulo Clientes</h4>
+                <h4 class="text-bold text-center">Ayuda M&oacute;dulo Clientes</h4>
             </div>
             <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
                 <h4 align="center"><b></b></h4>
@@ -167,7 +167,6 @@
         $(document).ready(function () {
 
             $("#helpModalNav").attr('data-target', "#clientsModalAyuda");
-
              LoadTable();
 
          });
@@ -406,7 +405,7 @@
             $('.validation-error').remove();
 
 
-            $("#chkEnable").prop('checked', false);
+            $("#chkEnable").prop('checked', true);
             $("#txtName").val("");
             $("#txtLastName").val("");
             $("#txtAddress").val("");
