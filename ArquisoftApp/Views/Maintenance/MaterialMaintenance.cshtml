@@ -54,7 +54,7 @@
 
             </div>
             <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-primary" onclick="Save()">Guardar</button>
+                <button type="button" class="btn btn-secondary" onclick="Save()">Guardar</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
@@ -91,12 +91,12 @@
 
                              @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.MATERIAL_EDIT))
                               {
-                                 <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los materiales' class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>" </text>
+                                 <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los materiales' class='btn btn-outline-secondary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>" </text>
                               }
 
                              @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.MATERIAL_DELETE))
                               {
-                                 <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de materiales' class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>" </text>
+                                 <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de materiales' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='Delete(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>" </text>
                               }
 
                              return buttons;
@@ -114,7 +114,7 @@
                         <text>
                             {
                                 text: 'Agregar Nuevo',
-                                attr: { class: 'btn btn-success btn-sm' },
+                                attr: { class: 'btn btn-secondary btn-sm' },
                                 action: function (e, dt, node, config) {
                                     openModal(0, "Agregar");
                                 }

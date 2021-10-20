@@ -2817,8 +2817,8 @@ fieldset:disabled a.btn {
 }
 
 .btn-secondary:hover {
-  color: #fff;
-  background-color: #5a6268;
+  color: #000000;
+  background-color: #C1C1C1;
   border-color: #545b62;
 }
 
@@ -3108,13 +3108,13 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-secondary {
-  color: #6c757d;
-  border-color: #6c757d;
+    color: #363636;
+    border-color: #6c757d;
 }
 
 .btn-outline-secondary:hover {
-  color: #fff;
-  background-color: #6c757d;
+  color: #000000;
+  background-color: #C1C1C1;
   border-color: #6c757d;
 }
 
@@ -4568,7 +4568,7 @@ input[type="button"].btn-block {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #fff;
-  background-color: #007bff;
+  background-color: #6c757d;
 }
 
 .nav-fill > .nav-link,
@@ -32598,7 +32598,7 @@ html.maximized-card {
 }
 
 .dark-mode .btn-secondary {
-  color: #fff;
+  color: #000000;
   background-color: #6c757d;
   border-color: #6c757d;
   box-shadow: none;

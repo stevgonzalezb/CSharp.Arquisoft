@@ -1,0 +1,239 @@
+﻿
+@{
+    ViewBag.Title = "Proyecto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            @*<div class="row mb-sm-0">
+                <div class="col-sm-6">
+                    <h1>Profile</h1>
+                </div>
+            </div>*@
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-secondary card-tabs">
+                        <div class="card-header p-0 pt-1">
+                            <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                                <li class="pt-2 px-3"><h4 class="card-title">Nuevo Proyecto</h4></li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill" href="#general-project" role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">General</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="custom-tabs-two-profile-tab" data-toggle="pill" href="#budget-project" role="tab" aria-controls="custom-tabs-two-profile" aria-selected="false">Presupuestos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="custom-tabs-two-messages-tab" data-toggle="pill" href="#project-files" role="tab" aria-controls="custom-tabs-two-messages" aria-selected="false">Adjuntos</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="custom-tabs-two-tabContent">
+                                <div class="tab-pane show active" id="general-project" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
+                                    <form class="form-horizontal">
+                                        <div class="form-group row">
+                                            <label for="inputName" class="col-sm-2 col-form-label">Nombre Proyecto</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="inputName" placeholder="Nombre Proyecto">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputName" class="col-sm-2 col-form-label">Cliente</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="inputName" placeholder="Cliente">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputName" class="col-sm-2 col-form-label">Terreno</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="inputName" placeholder="Terreno">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputEmail" class="col-sm-2 col-form-label">Metros Construcción</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="inputEmail" placeholder="Metros Construcción">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputName2" class="col-sm-2 col-form-label">No. Niveles</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="inputName2" placeholder="Niveles">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputExperience" class="col-sm-2 col-form-label">Sistema Constructivo</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="inputName2" placeholder="Sistema Constructivo">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="inputSkills" class="col-sm-2 col-form-label">Maestro de Obra</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="inputSkills" placeholder="Maestro de Obra">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="offset-sm-2 col-sm-10">
+                                                <button type="submit" class="btn btn-secondary">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="tab-pane" id="budget-project" role="tabpanel" aria-labelledby="custom-tabs-two-messages-tab">
+                                    <table class="display nowrap col-12" id="myTable" style="width:100%" data-page-length='10'>
+                                        <thead>
+                                            <tr>
+                                                <th>Nombre Presupuesto</th>
+                                                <th>Tipo</th>
+                                                <th>Fecha creación</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="tab-pane" id="project-files" role="tabpanel" aria-labelledby="custom-tabs-two-settings-tab">
+                                    <!-- /.card -->
+                                    <div class="card card-info">
+                                        <div class="card-body p-0">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>File Name</th>
+                                                        <th>File Size</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <tr>
+                                                        <td>Functional-requirements.docx</td>
+                                                        <td>49.8005 kb</td>
+                                                        <td class="text-right py-0 align-middle">
+                                                            <div class="btn-group btn-group-sm">
+                                                                <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                                                <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                            </div>
+                                                        </td>
+                                                    <tr>
+                                                        <td>UAT.pdf</td>
+                                                        <td>28.4883 kb</td>
+                                                        <td class="text-right py-0 align-middle">
+                                                            <div class="btn-group btn-group-sm">
+                                                                <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                                                <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                            </div>
+                                                        </td>
+                                                    <tr>
+                                                        <td>Email-from-flatbal.mln</td>
+                                                        <td>57.9003 kb</td>
+                                                        <td class="text-right py-0 align-middle">
+                                                            <div class="btn-group btn-group-sm">
+                                                                <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                                                <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                            </div>
+                                                        </td>
+                                                    <tr>
+                                                        <td>Logo.png</td>
+                                                        <td>50.5190 kb</td>
+                                                        <td class="text-right py-0 align-middle">
+                                                            <div class="btn-group btn-group-sm">
+                                                                <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                                                <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                            </div>
+                                                        </td>
+                                                    <tr>
+                                                        <td>Contract-10_12_2014.docx</td>
+                                                        <td>44.9715 kb</td>
+                                                        <td class="text-right py-0 align-middle">
+                                                            <div class="btn-group btn-group-sm">
+                                                                <a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                                                                <a href="#" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                                                            </div>
+                                                        </td>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!-- /.card-body -->
+                                    </div>
+                                    <!-- /.card -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+
+            LoadTable();
+
+        });
+
+
+        function LoadTable() {
+            client_table = $('#myTable').DataTable({
+                 "ajax": {
+                     "url": "@Url.Action("ListMaterials", "Material")",
+                     "type": "GET",
+                     "datatype": "json"
+                 },
+                 "columns": [
+                     { "data": "Description" },
+                     { "data": "Price" },
+                     { "data": "Description" },
+                     {
+                         "data": "Id", "render": function (data) {
+                             var buttons = "";
+                                buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los materiales' class='btn btn-outline-secondary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Visualizar <i class='fas fa-eye'></i></button>"
+                                buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los materiales' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='openModal(" + data + ", \"Editar\")'>Descargar <i class='fas fa-download'></i></button>"
+                                buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de materiales' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='Delete(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
+                              
+                             return buttons;
+                         },
+                         "orderable": false,
+                         "searchable": false,
+                         "width": "100px"
+                     }
+                 ],
+                 dom: 'Bfrtip',
+                 buttons: [
+
+                            {
+                                text: 'Crear Nuevo',
+                                attr: { class: 'btn btn-secondary btn-sm' },
+                                action: function (e, dt, node, config) {
+                                    openModal(0, "Agregar");
+                                }
+
+                            }
+
+                 ],
+                 "language": {
+                     "url": "@Url.Content("~/Content/datatable/idioma/datatable.es-ES.json")"
+                 }
+
+            });
+        }
+    </script>
+
+
+}

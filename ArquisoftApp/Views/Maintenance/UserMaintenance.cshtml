@@ -86,7 +86,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-success" id="btnSaveIt">Guardar</button>
+                            <button type="submit" class="btn btn-secondary" id="btnSaveIt">Guardar</button>
                             <button type="button" class="btn btn-default" id="btnCloseIt" data-dismiss="modal">Cerrar</button>
                         </div>
                     </form>
@@ -135,8 +135,8 @@
 
                         var buttons = "";
 
-                        buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos del usuario' class='btn btn-primary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar Usuario\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>"
-                        buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado del usuario' class='btn btn-danger btn-sm ml-2' type='button' onclick='Delete(" + data + ")'> Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
+                        buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos del usuario' class='btn btn-outline-secondary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar Usuario\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>"
+                        buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado del usuario' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='Delete(" + data + ")'> Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
 
                         return buttons;
 
@@ -150,7 +150,7 @@
                 buttons: [
                     {
                         text: 'Agregar Nuevo',
-                        attr: { class: 'btn btn-success btn-sm' },
+                        attr: { class: 'btn btn-secondary btn-sm' },
                         action: function (e, dt, node, config) {
                             openModal(0, "Agregar Usuario");
                         }

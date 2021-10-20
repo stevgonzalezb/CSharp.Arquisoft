@@ -1,0 +1,260 @@
+﻿
+@{
+    ViewBag.Title = "Lista Proyectos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Main content -->
+    <!-- Usuarios -->
+    <section class="content">
+        <div class="card-body p-2" style="background-color:whitesmoke">
+            <table class="display responsive nowrap" id="myTable" style="width:100%" data-page-length='10'>
+                <thead>
+                    <tr>
+                        <th>Descripción</th>
+                        <th>Precio(₡)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </section>
+
+</div>
+<!-- /.content-wrapper -->
+<!-- Modal -->
+<form class="modal" id="FormModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+
+            </div>
+            <div class="modal-body">
+
+                <input type="hidden" id="txtId" />
+
+                <div class="form-group">
+                    <input type="checkbox" class="form-check-input m-0" id="chkEnable">
+                    <label class="form-check" for="chkEnable">Activo</label>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-8">
+                        <label for="txtDescription">Material:</label>
+                        <textarea class="form-control" rows="2" cols="50" id="txtDescription" name="txtDescription"></textarea>
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="txtPrice">Precio:</label>
+                        <input type="text" class="form-control" id="txtPrice" name="txtPrice">
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-secondary" onclick="Save()">Guardar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</form>
+<!-- /.modal -->
+
+
+@section scripts{
+    <script>
+        const api = new MaterialApi();
+        var client_table;
+         $(document).ready( function () {
+
+             LoadTable();
+
+         });
+
+        function LoadTable() {
+            client_table = $('#myTable').DataTable({
+                 "ajax": {
+                     "url": "@Url.Action("ListMaterials", "Material")",
+                     "type": "GET",
+                     "datatype": "json"
+                 },
+                 "columns": [
+                     { "data": "Description" },
+                     { "data": "Price" },
+                     {
+                         "data": "Id", "render": function (data) {
+                             var buttons = "";
+
+                             @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.MATERIAL_EDIT))
+                              {
+                                 <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los materiales' class='btn btn-outline-secondary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>" </text>
+                              }
+
+                             @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.MATERIAL_DELETE))
+                              {
+                                 <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de materiales' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='Delete(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>" </text>
+                              }
+
+                             return buttons;
+                         },
+                         "orderable": false,
+                         "searchable": false,
+                         "width": "100px"
+                     }
+                 ],
+                 dom: 'Bfrtip',
+                 buttons: [
+
+                     @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.MATERIAL_ADD))
+                      {
+                        <text>
+                            {
+                                text: 'Agregar Nuevo',
+                                attr: { class: 'btn btn-secondary btn-sm' },
+                                action: function (e, dt, node, config) {
+                                    openModal(0, "Agregar");
+                                }
+
+                            }
+                        </text>
+                      }
+
+                 ],
+                 "language": {
+                     "url": "@Url.Content("~/Content/datatable/idioma/datatable.es-ES.json")"
+                 }
+
+            });
+
+            // Methods who add or remove de styled classes
+            $.validator.setDefaults({
+                //Add Error Class To Fieldset if field invalid
+                highlight: function (element) {
+                    $(element).addClass('is-invalid').removeClass('is-valid');
+                },
+                //Add Valid Class To Fieldset if field valid
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid').addClass('is-valid');
+                },
+                errorPlacement: function (error, element) {
+                    error.addClass('validation-error text-red small').insertAfter(element);
+                }
+            });
+
+            // Form validations
+            var validator = $("#FormModal").validate({
+                rules: {
+                    txtDescription: {
+                        required: true,
+                        minlength: 1
+                    },
+                    txtPrice: {
+                        required: true,
+                        minlength: 1
+                    }
+                },
+                messages: {
+                    txtDescription: {
+                        required: "Requerido",
+                        minlength: "Ingrese una descripción válida."
+                    },
+                    txtPrice: {
+                        required: "Requerido",
+                        minlength: "Ingrese un precio válido."
+                    }
+                }
+            });
+        }
+
+        function openModal($materialId, action) {
+
+            window.location.href = "Instance?Id=1";
+
+            //CleanModal();
+            //$("#txtId").val($materialId);
+            //$(".modal-title").text(action);
+            //if ($materialId != 0) {
+
+            //    api.GetMaterial($materialId).then(material => {
+
+            //        if (material != null) {
+
+            //            $("#chkEnable").prop('checked', material.IdState == app.enums.States.ACTIVE ? true : false);
+            //            $("#txtDescription").val(material.Description);
+            //            $("#txtPrice").val(material.Price);
+
+            //        }
+
+            //    })
+            //} else {
+
+            //    $("#chkEnable").prop('checked', true);
+            //    $("#txtDescription").val("");
+            //    $("#txtPrice").val("");
+            //}
+
+            //$('#FormModal').modal('show');
+
+        }
+
+        function Save() {
+            if ($("#FormModal").valid()) {
+                var $data = {
+                    oMaterial: {
+                        Id: parseInt($("#txtId").val()),
+                        Description: $("#txtDescription").val(),
+                        Price: $("#txtPrice").val(),
+                        IdState: $("#chkEnable").prop('checked') ? app.enums.States.ACTIVE : app.enums.States.DISABLE
+                    }
+                }
+
+                api.SaveMaterial($data).then(response => {
+                    if (response.result === 'OK') {
+                        client_table.ajax.reload();
+                        $('#FormModal').modal('hide');
+                        toastr.success('Material guardado correctamente.')
+                    } else {
+                        toastr.error(response.result);
+                    }
+                }).catch(err => {
+                    toastr.error("Ocurrió un error guardando los datos del material.");
+                })
+            }
+            else {
+                toastr.error('Por favor valide los datos ingresados.')
+            }
+
+        }
+
+        function Delete($materialId) {
+            if (confirm("¿Realmente desea eliminar?")) {
+
+                api.DeleteMaterial($materialId).then(response => {
+                    if (response.result) {
+                        client_table.ajax.reload();
+                        toastr.success('Material eliminado correctamente.');
+                    }
+                }).catch(err => {
+                    toastr.error("Ocurrió un error eliminando los datos del cliente.");
+                })
+            }
+        }
+
+        function CleanModal() {
+
+            $('.is-invalid').removeClass('.is-invalid');
+            $("#txtDescription").removeClass(".is-valid");
+            $('#txtPrice').removeClass('.is-invalid');
+            $('#txtPrice').removeClass('.is-valid');
+            $('.validation-error').remove();
+
+        }
+
+    </script>
+}
+
+
