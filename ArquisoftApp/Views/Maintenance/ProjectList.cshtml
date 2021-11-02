@@ -13,8 +13,8 @@
             <table class="display responsive nowrap" id="myTable" style="width:100%" data-page-length='10'>
                 <thead>
                     <tr>
-                        <th>Descripción</th>
-                        <th>Precio(₡)</th>
+                        <th>Nombre Proyecto</th>
+                        <th>Cliente</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -67,7 +67,7 @@
 
 @section scripts{
     <script>
-        const api = new MaterialApi();
+        const api = new ProjectApi();
         var client_table;
          $(document).ready( function () {
 
@@ -77,21 +77,22 @@
 
         function LoadTable() {
             client_table = $('#myTable').DataTable({
-                 "ajax": {
-                     "url": "@Url.Action("ListMaterials", "Material")",
-                     "type": "GET",
-                     "datatype": "json"
-                 },
+                "ajax": {
+                    "url": "@Url.Action("ListProjects", "Project")",
+                    "dataSrc": function (json) {
+                        return JSON.parse(json.data);
+                    }
+                },
                  "columns": [
-                     { "data": "Description" },
-                     { "data": "Price" },
+                     { "data": "Name" },
+                     { "data": "ClientName" },
                      {
                          "data": "Id", "render": function (data) {
                              var buttons = "";
 
                              @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.MATERIAL_EDIT))
                               {
-                                 <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los materiales' class='btn btn-outline-secondary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar &nbsp;<i class='fas fa-pen'></i></button>" </text>
+                                 <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los materiales' class='btn btn-outline-secondary btn-sm' type='button' onclick='openModal(" + data + ")'>Visualizar &nbsp;<i class='fas fa-eye'></i></button>" </text>
                               }
 
                              @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.MATERIAL_DELETE))
@@ -130,127 +131,10 @@
 
             });
 
-            // Methods who add or remove de styled classes
-            $.validator.setDefaults({
-                //Add Error Class To Fieldset if field invalid
-                highlight: function (element) {
-                    $(element).addClass('is-invalid').removeClass('is-valid');
-                },
-                //Add Valid Class To Fieldset if field valid
-                unhighlight: function (element) {
-                    $(element).removeClass('is-invalid').addClass('is-valid');
-                },
-                errorPlacement: function (error, element) {
-                    error.addClass('validation-error text-red small').insertAfter(element);
-                }
-            });
-
-            // Form validations
-            var validator = $("#FormModal").validate({
-                rules: {
-                    txtDescription: {
-                        required: true,
-                        minlength: 1
-                    },
-                    txtPrice: {
-                        required: true,
-                        minlength: 1
-                    }
-                },
-                messages: {
-                    txtDescription: {
-                        required: "Requerido",
-                        minlength: "Ingrese una descripción válida."
-                    },
-                    txtPrice: {
-                        required: "Requerido",
-                        minlength: "Ingrese un precio válido."
-                    }
-                }
-            });
         }
 
-        function openModal($materialId, action) {
-
-            window.location.href = "Instance?Id=1";
-
-            //CleanModal();
-            //$("#txtId").val($materialId);
-            //$(".modal-title").text(action);
-            //if ($materialId != 0) {
-
-            //    api.GetMaterial($materialId).then(material => {
-
-            //        if (material != null) {
-
-            //            $("#chkEnable").prop('checked', material.IdState == app.enums.States.ACTIVE ? true : false);
-            //            $("#txtDescription").val(material.Description);
-            //            $("#txtPrice").val(material.Price);
-
-            //        }
-
-            //    })
-            //} else {
-
-            //    $("#chkEnable").prop('checked', true);
-            //    $("#txtDescription").val("");
-            //    $("#txtPrice").val("");
-            //}
-
-            //$('#FormModal').modal('show');
-
-        }
-
-        function Save() {
-            if ($("#FormModal").valid()) {
-                var $data = {
-                    oMaterial: {
-                        Id: parseInt($("#txtId").val()),
-                        Description: $("#txtDescription").val(),
-                        Price: $("#txtPrice").val(),
-                        IdState: $("#chkEnable").prop('checked') ? app.enums.States.ACTIVE : app.enums.States.DISABLE
-                    }
-                }
-
-                api.SaveMaterial($data).then(response => {
-                    if (response.result === 'OK') {
-                        client_table.ajax.reload();
-                        $('#FormModal').modal('hide');
-                        toastr.success('Material guardado correctamente.')
-                    } else {
-                        toastr.error(response.result);
-                    }
-                }).catch(err => {
-                    toastr.error("Ocurrió un error guardando los datos del material.");
-                })
-            }
-            else {
-                toastr.error('Por favor valide los datos ingresados.')
-            }
-
-        }
-
-        function Delete($materialId) {
-            if (confirm("¿Realmente desea eliminar?")) {
-
-                api.DeleteMaterial($materialId).then(response => {
-                    if (response.result) {
-                        client_table.ajax.reload();
-                        toastr.success('Material eliminado correctamente.');
-                    }
-                }).catch(err => {
-                    toastr.error("Ocurrió un error eliminando los datos del cliente.");
-                })
-            }
-        }
-
-        function CleanModal() {
-
-            $('.is-invalid').removeClass('.is-invalid');
-            $("#txtDescription").removeClass(".is-valid");
-            $('#txtPrice').removeClass('.is-invalid');
-            $('#txtPrice').removeClass('.is-valid');
-            $('.validation-error').remove();
+        function openModal($projectId) {
+            window.location.href = `Instance?Id=${$projectId}`;
 
         }
 

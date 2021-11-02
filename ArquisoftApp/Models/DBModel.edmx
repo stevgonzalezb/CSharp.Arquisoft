@@ -51,6 +51,21 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="Projects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" />
+          <Property Name="SiteArea" Type="varchar" MaxLength="50" />
+          <Property Name="ConstructionArea" Type="varchar" MaxLength="50" />
+          <Property Name="Levels" Type="varchar" MaxLength="200" />
+          <Property Name="ConstructionSystem" Type="varchar" MaxLength="200" />
+          <Property Name="MasterBuilder" Type="varchar" MaxLength="200" />
+          <Property Name="Comments" Type="varchar" MaxLength="400" />
+          <Property Name="IdClient" Type="int" />
+          <Property Name="IdState" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="RoleOperations">
           <Key>
             <PropertyRef Name="Id" />
@@ -143,6 +158,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Projects_Client">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="Projects" Type="Self.Projects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="IdClient" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="IdClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projects_State">
+          <End Role="State" Type="Self.State" Multiplicity="1" />
+          <End Role="Projects" Type="Self.Projects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="idState" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="IdState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RoleOperations_Operations">
           <End Role="ModuleOperations" Type="Self.ModuleOperations" Multiplicity="0..1" />
           <End Role="RoleOperations" Type="Self.RoleOperations" Multiplicity="*" />
@@ -185,6 +224,7 @@
           <EntitySet Name="Materials" EntityType="Self.Materials" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ModuleOperations" EntityType="Self.ModuleOperations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Modules" EntityType="Self.Modules" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoleOperations" EntityType="Self.RoleOperations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
@@ -202,6 +242,14 @@
           <AssociationSet Name="FK_ModuleOperations" Association="Self.FK_ModuleOperations">
             <End Role="Modules" EntitySet="Modules" />
             <End Role="ModuleOperations" EntitySet="ModuleOperations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projects_Client" Association="Self.FK_Projects_Client">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projects_State" Association="Self.FK_Projects_State">
+            <End Role="State" EntitySet="State" />
+            <End Role="Projects" EntitySet="Projects" />
           </AssociationSet>
           <AssociationSet Name="FK_RoleOperations_Operations" Association="Self.FK_RoleOperations_Operations">
             <End Role="ModuleOperations" EntitySet="ModuleOperations" />
@@ -265,6 +313,15 @@
           <AssociationSet Name="FK_Materials_State" Association="ArquisoftModel1.FK_Materials_State">
             <End Role="State" EntitySet="State" />
             <End Role="Materials" EntitySet="Materials" />
+          </AssociationSet>
+          <EntitySet Name="Projects" EntityType="ArquisoftModel1.Projects" />
+          <AssociationSet Name="FK_Projects_Client" Association="ArquisoftModel1.FK_Projects_Client">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Projects_State" Association="ArquisoftModel1.FK_Projects_State">
+            <End Role="State" EntitySet="State" />
+            <End Role="Projects" EntitySet="Projects" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="ModuleOperations">
@@ -349,6 +406,7 @@
           <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Users" Relationship="ArquisoftModel1.FK_IdState" FromRole="State" ToRole="Users" />
           <NavigationProperty Name="Materials" Relationship="ArquisoftModel1.FK_Materials_State" FromRole="State" ToRole="Materials" />
+          <NavigationProperty Name="Projects" Relationship="ArquisoftModel1.FK_Projects_State" FromRole="State" ToRole="Projects" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -410,6 +468,7 @@
           <Property Name="Phone" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="idState" Type="Int32" />
+          <NavigationProperty Name="Projects" Relationship="ArquisoftModel1.FK_Projects_Client" FromRole="Clients" ToRole="Projects" />
         </EntityType>
         <EntityType Name="VendorMaterials">
           <Key>
@@ -439,6 +498,47 @@
               <PropertyRef Name="idState" />
             </Principal>
             <Dependent Role="Materials">
+              <PropertyRef Name="IdState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Projects">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SiteArea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ConstructionArea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Levels" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ConstructionSystem" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="MasterBuilder" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Comments" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="IdClient" Type="Int32" />
+          <Property Name="IdState" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Clients" Relationship="ArquisoftModel1.FK_Projects_Client" FromRole="Projects" ToRole="Clients" />
+          <NavigationProperty Name="State" Relationship="ArquisoftModel1.FK_Projects_State" FromRole="Projects" ToRole="State" />
+        </EntityType>
+        <Association Name="FK_Projects_Client">
+          <End Type="ArquisoftModel1.Clients" Role="Clients" Multiplicity="0..1" />
+          <End Type="ArquisoftModel1.Projects" Role="Projects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="IdClient" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="IdClient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Projects_State">
+          <End Type="ArquisoftModel1.State" Role="State" Multiplicity="1" />
+          <End Type="ArquisoftModel1.Projects" Role="Projects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="idState" />
+            </Principal>
+            <Dependent Role="Projects">
               <PropertyRef Name="IdState" />
             </Dependent>
           </ReferentialConstraint>
@@ -558,6 +658,22 @@
                 <ScalarProperty Name="IdState" ColumnName="IdState" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="ArquisoftModel1.Projects">
+              <MappingFragment StoreEntitySet="Projects">
+                <ScalarProperty Name="IdState" ColumnName="IdState" />
+                <ScalarProperty Name="IdClient" ColumnName="IdClient" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="MasterBuilder" ColumnName="MasterBuilder" />
+                <ScalarProperty Name="ConstructionSystem" ColumnName="ConstructionSystem" />
+                <ScalarProperty Name="Levels" ColumnName="Levels" />
+                <ScalarProperty Name="ConstructionArea" ColumnName="ConstructionArea" />
+                <ScalarProperty Name="SiteArea" ColumnName="SiteArea" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

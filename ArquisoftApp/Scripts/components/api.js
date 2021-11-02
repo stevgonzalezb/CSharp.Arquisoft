@@ -170,7 +170,6 @@ class MaterialApi {
 
 
 
-
     // List all materials
     ListMaterials = async function () {
         return $.ajax({
@@ -212,4 +211,27 @@ class MaterialApi {
         });
     }
 
+}
+
+/**  Projects Maintenance API  **/
+class ProjectApi {
+    // List all clients
+    ListProjects = async function () {
+        return $.ajax({
+            url: "/ArquisoftApp/Project/ListProjects",
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
+
+    // Get general data 
+    GetGeneralData = async function (projectId) {
+        return $.ajax({
+            url: `/ArquisoftApp/Project/GetGeneralData?projectId=${projectId}`,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
 }

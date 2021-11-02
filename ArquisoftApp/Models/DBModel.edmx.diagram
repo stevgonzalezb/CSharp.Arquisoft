@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f0c237e3e9314e6c8893a93ed1078b2f" Name="Diagram1">
+      <Diagram DiagramId="f0c237e3e9314e6c8893a93ed1078b2f" Name="Diagram1" ZoomLevel="93">
         <EntityTypeShape EntityType="ArquisoftModel1.sysdiagrams" Width="1.5" PointX="9.375" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ArquisoftModel1.ModuleOperations" Width="1.5" PointX="3.375" PointY="0.75" />
         <EntityTypeShape EntityType="ArquisoftModel1.Modules" Width="1.5" PointX="4.125" PointY="5" />
@@ -22,6 +22,9 @@
         <EntityTypeShape EntityType="ArquisoftModel1.VendorMaterials" Width="1.5" PointX="6.375" PointY="6.75" />
         <EntityTypeShape EntityType="ArquisoftModel1.Materials" Width="1.5" PointX="11.125" PointY="3.875" />
         <AssociationConnector Association="ArquisoftModel1.FK_Materials_State" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Projects" Width="1.5" PointX="13.375" PointY="4.625" />
+        <AssociationConnector Association="ArquisoftModel1.FK_Projects_Client" />
+        <AssociationConnector Association="ArquisoftModel1.FK_Projects_State" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
