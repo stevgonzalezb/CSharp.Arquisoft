@@ -19,7 +19,7 @@
                     <div class="card card-secondary card-tabs">
                         <div class="card-header p-0 pt-1">
                             <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                                <li class="pt-2 px-3"><h4 class="card-title">Nuevo Proyecto</h4></li>
+                                <li class="pt-2 px-3"><h4 id="projectTitle" class="card-title">Nuevo Proyecto</h4></li>
                                 <li class="nav-item">
                                     <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill" href="#general-project" role="tab" aria-controls="custom-tabs-two-home" aria-selected="true">General</a>
                                 </li>
@@ -31,86 +31,80 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="background-color:whitesmoke;">
                             <div class="tab-content" id="custom-tabs-two-tabContent">
-                                <div class="tab-pane show active" id="general-project" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab">
-                                    <form class="form-horizontal">
+                                <div class="tab-pane show active" id="general-project" role="tabpanel" aria-labelledby="custom-tabs-two-home-tab"">
+                                    <form class="form-horizontal" id="generalForm">
+
+                                        <input type="hidden" id="txtId" />
                                         <div class="row">
                                             <div class="form-group col-12">
                                                 <label for="txtProjectName" class="col-form-label">Proyecto</label>
                                                 <input type="text" class="form-control" id="txtProjectName" placeholder="Nombre Proyecto">
                                             </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group col-12">
-                                                    <label for="">Cliente</label>
-                                                    <select class="form-control select2bs4" style="width: 100%;">
-                                                        <option selected="selected">Alabama</option>
-                                                        <option>Alaska</option>
-                                                        <option>California</option>
-                                                        <option>Delaware</option>
-                                                        <option>Tennessee</option>
-                                                        <option>Texas</option>
-                                                        <option>Washington</option>
-                                                    </select>
-                                                </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-6">
+                                                <label for="cmbClients">Cliente</label>
+                                                <select id="cmbClients" class="form-control select2bs4" style="width: 100%;">
+                                                </select>
                                             </div>
 
-                                            <div class="row">
-                                                <div class="form-group col-6">
-                                                    <label for="txtClient" class="col-form-label">Terreno(m2)</label> = <label id="siteLabelValue">100</label>
-                                                    <div class="slider-green">
-                                                        <input type="text" value="" id="sliderSite" class="slider form-control" data-slider-min="0" data-slider-max="5000"
-                                                               data-slider-step="100" data-slider-value="0" data-slider-orientation="horizontal"
-                                                               data-slider-selection="before" data-slider-tooltip="show" style="width:100%;" onchange="changeLabelText()">
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group col-6">
-                                                    <label for="txtClient" class="col-form-label">Metros Construcción(m2)</label>
-                                                    <div class="slider-blue">
-                                                        <input type="text" value="" class="slider form-control" data-slider-min="0" data-slider-max="1000"
-                                                               data-slider-step="10" data-slider-value="0" data-slider-orientation="horizontal"
-                                                               data-slider-selection="before" data-slider-tooltip="show" style="width:100%;">
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="form-group col-6">
-                                                    <label for="inputName2" class="col-form-label">No. Niveles</label>
-                                                    <input type="text" class="form-control" id="inputSkills" placeholder="Niveles de las obra">
-                                                </div>
-                                                <div class="form-group col-6">
-                                                    <label for="inputExperience" class="col-form-label">Sistema Constructivo</label>
-                                                    <select class="select2bs4" multiple="multiple" data-placeholder="Select a State" style="width: 100%;">
-                                                        <option>Sistema 1</option>
-                                                        <option>Sistema 2</option>
-                                                        <option>Sistema 3</option>
-                                                    </select>
+                                            <div class="form-group col-6">
+                                                <label for="sliderSite" class="col-form-label">Terreno(m2)</label> = <label id="siteLabelValue">0</label>
+                                                <div class="slider-green">
+                                                    <input type="text" value="0" id="sliderSite" class="slider form-control" data-slider-min="0" data-slider-max="5000"
+                                                           data-slider-step="100" data-slider-value="0" data-slider-orientation="horizontal"
+                                                           data-slider-selection="before" data-slider-tooltip="show" style="width:100%;" onchange="changeLabelSite()">
                                                 </div>
                                             </div>
+                                        </div>
 
-                                            <div class="row">
-                                                <div class="form-group col-5">
-                                                    <label for="inputSkills" class="col-form-label">Maestro de Obra</label>
-                                                    <input type="text" class="form-control" id="inputSkills" placeholder="Maestro de Obra">
-                                                </div>
-                                                <div class="form-group col-7">
-                                                    <label for="inputName2" class="col-form-label">Notas/Comentarios</label>
-                                                    <textarea class="form-control" rows="3" cols="50" id="txtDescription" name="txtDescription"></textarea>
-                                                </div>
+                                        <div class="row">
+                                            <div class="form-group col-6">
+                                                <label for="txtBuilder" class="col-form-label">Maestro de Obra</label>
+                                                <input type="text" class="form-control" id="txtBuilder" placeholder="Maestro de Obra">
                                             </div>
 
-                                            <div class="row">
-                                                <div class="form-group">
-                                                    <div class="offset-sm-2 col-sm-10">
-                                                        <button type="submit" class="btn btn-secondary">Guardar</button>
-                                                    </div>
+                                            <div class="form-group col-6">
+                                                <label for="sliderConstruction" class="col-form-label">Metros Construcción(m2)</label> = <label id="constructionLabelValue">0</label>
+                                                <div class="slider-blue">
+                                                    <input type="text" value="0" id="sliderConstruction" class="slider form-control" data-slider-min="0" data-slider-max="1000"
+                                                           data-slider-step="10" data-slider-value="0" data-slider-orientation="horizontal"
+                                                           data-slider-selection="before" data-slider-tooltip="show" style="width:100%;" onchange="changeLabelConstruction()">
                                                 </div>
                                             </div>
-</form>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-6">
+                                                <label for="txtLevels" class="col-form-label">No. Niveles</label>
+                                                <input type="text" class="form-control" id="txtLevels" placeholder="Niveles de las obra">
+                                            </div>
+                                            <div class="form-group col-6">
+                                                <label for="cmbSystems" class="col-form-label">Sistemas Constructivos</label>
+                                                <select id="cmbSystems" class="select2bs4" multiple="multiple" data-placeholder="Sistemas Constructivos" style="width: 100%;">
+                                                    <option value="1">Block</option>
+                                                    <option value="2">Master Block</option>
+                                                    <option value="3">Prefabricado</option>
+                                                    <option value="4">Liviano/Seca</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-7">
+                                                <label for="txtComments" class="col-form-label">Notas/Comentarios</label>
+                                                <textarea class="form-control" rows="3" cols="50" id="txtComments" name="txtDescription"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-6">
+                                                <button type="button" onclick="SaveProject()" class="btn btn-secondary">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                                 <div class="tab-pane" id="budget-project" role="tabpanel" aria-labelledby="custom-tabs-two-messages-tab">
                                     <table class="display nowrap col-12" id="myTable" style="width:100%" data-page-length='10'>
@@ -287,24 +281,24 @@
 
     <script>
         const api = new ProjectApi();
-
-        $(function () {
-
-            //Initialize Select2 Elements
-            $('.select2').select2()
-
-            /* BOOTSTRAP SLIDER */
-            $('.slider').bootstrapSlider()
-
-            //Initialize Select2 Elements
-            $('.select2bs4').select2({
-                theme: 'bootstrap4'
-            })
-
-        })
-
+        const apiClients = new ClientApi();
 
         $(document).ready(function () {
+
+            $(async function () {
+
+                //Initialize Select2 Elements
+                await $('.select2').select2()
+
+                /* BOOTSTRAP SLIDER */
+                //await $('.slider').bootstrapSlider()
+                await $('.slider').slider()
+
+                //Initialize Select2 Elements
+                $('.select2bs4').select2({
+                    theme: 'bootstrap4'
+                })
+            });
 
             var url = new URL(window.location.href);
             var projectId = url.searchParams.get("Id");
@@ -314,6 +308,92 @@
 
         });
 
+        function LoadGeneral(projectId) {
+            LoadClientList();
+            api.GetGeneralData(projectId).then(response => {
+                if (response.data) {
+
+                    var project = JSON.parse(response.data)
+                    $("#txtId").val(project[0].Id)
+                    $("#projectTitle").text(project[0].Name);
+                    $("#txtProjectName").val(project[0].Name);
+                    $("#sliderSite").slider('setValue', project[0].SiteArea);
+                    $("#siteLabelValue").text(project[0].SiteArea);
+                    $("#sliderConstruction").slider('setValue', project[0].ConstructionArea);
+                    $("#constructionLabelValue").text(project[0].ConstructionArea);
+                    $("#txtLevels").val(project[0].Levels);
+                    $("#txtBuilder").val(project[0].MasterBuilder);
+                    $("#txtComments").val(project[0].Comments);
+                    $("#cmbClients").val(project[0].IdClient).change();
+                    if (project[0].ConstructionSystem)
+                        $('#cmbSystems').val(project[0].ConstructionSystem.split('|')).change();
+                }
+            })
+        }
+
+        function changeLabelSite() {
+            $("#siteLabelValue").text($("#sliderSite").val());
+        }
+
+        function changeLabelConstruction() {
+            $("#constructionLabelValue").text($("#sliderConstruction").val());
+        }
+
+        function LoadClientList() {
+            apiClients.ListClients().then(clients => {
+                var $ClientSelect = $('#cmbClients');
+                $.each(clients.data, function (key, value) {
+                    var $option = $("<option/>", {
+                        value: value.IdClient,
+                        text: `${value.Name} ${value.Last_Name}`
+                    });
+
+                    $ClientSelect.append($option);
+                });
+            })
+
+        }
+
+        function SaveProject() {
+            if (true) {
+
+                var strConstructionSystem = "";
+                var conSystems = $("#cmbSystems").val();
+                if (conSystems.length > 0) {
+                    $.each(conSystems, function (key, value) {
+                        strConstructionSystem += `${value}|`
+                    })
+                }
+
+                var $data = {
+                    oProject: {
+                        Id: parseInt($("#txtId").val()),
+                        Name: $("#txtProjectName").val(),
+                        SiteArea: $("#sliderSite").val(),
+                        ConstructionArea: $("#sliderConstruction").val(),
+                        Levels: $("#txtLevels").val(),
+                        MasterBuilder: $("#txtBuilder").val(),
+                        Comments: $("#txtComments").val(),
+                        IdClient: parseInt($("#cmbClients").val()),
+                        ConstructionSystem: strConstructionSystem
+                    }
+                }
+
+                api.SaveProject($data).then(response => {
+                    if (response.result === 'OK') {
+                        toastr.success('Proyecto guardado correctamente.');
+                    } else {
+                        toastr.error(response.result);
+                    }
+
+                }).catch(err => {
+
+                    toastr.error("Ocurrió un error guardando los datos del Proyecto.");
+                })
+            }
+            else
+                toastr.error('Por favor valide los datos ingresados.');
+        }
 
         function LoadBudgets() {
             client_table = $('#myTable').DataTable({
@@ -359,20 +439,6 @@
 
             });
         }
-
-        function LoadGeneral(projectId) {
-
-            api.GetGeneralData(projectId).then(response => {
-                console.log(response.data)
-            })
-        }
-
-        function changeLabelText() {
-            
-            $("#siteLabelValue").text($("#sliderSite").val());
-
-        }
-
 
         // DropzoneJS Demo Code Start
         Dropzone.autoDiscover = false

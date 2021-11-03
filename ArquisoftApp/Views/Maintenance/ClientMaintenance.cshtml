@@ -249,6 +249,11 @@
                 return value.match(app.enums.Regex.Email);
             }, '');
 
+            // Custom methods for validations
+            $.validator.addMethod('phoneRegex', function (value, element, parameter) {
+                return value.match(app.enums.Regex.PhoneNumbers);
+            }, '');
+
             // Form validations
             var validator = $("#FormModal").validate({
                 rules: {
@@ -262,7 +267,7 @@
                     },
                     txtPhone: {
                         required: true,
-                        minlength: 8
+                        phoneRegex: true
                     },
                     txtEmail: {
                         required: true,
@@ -284,7 +289,7 @@
                     },
                     txtPhone: {
                         required: "Requerido",
-                        minlength: "Ingrese un número válido."
+                        phoneRegex: "Ingrese un número válido."
                     },
                     txtEmail: {
                         required: "Requerido",

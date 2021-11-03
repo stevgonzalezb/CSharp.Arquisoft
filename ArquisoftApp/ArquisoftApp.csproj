@@ -238,6 +238,15 @@
     <Content Include="Content\img\Help\Client\Modal_Agregar.JPG" />
     <Content Include="Content\img\Help\Client\Modal_Editar.JPG" />
     <Content Include="Content\img\Help\Client\Modal_Eliminar.jpg" />
+    <Content Include="Content\img\Help\Material\Agregar.JPG" />
+    <Content Include="Content\img\Help\Material\Editar.JPG" />
+    <Content Include="Content\img\Help\Material\Eliminar.JPG" />
+    <Content Include="Content\img\Help\Material\Modal_Agregar_Material.JPG" />
+    <Content Include="Content\img\Help\Material\Modal_Editar_Material.JPG" />
+    <Content Include="Content\img\Help\Material\Modal_Eliminar_Material.JPG" />
+    <Content Include="Content\img\Help\Material_Proveedor\Ficha_Producto.JPG" />
+    <Content Include="Content\img\Help\Material_Proveedor\Importar.JPG" />
+    <Content Include="Content\img\Help\Material_Proveedor\Ver_Ficha.JPG" />
     <Content Include="Content\img\login-bg.jpg" />
     <Content Include="Content\img\logo.png" />
     <Content Include="Content\img\profile_avatar.png" />
@@ -2291,8 +2300,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\img\Help\Material\" />
-    <Folder Include="Content\img\Help\Material_Proveedor\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

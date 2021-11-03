@@ -233,5 +233,16 @@ class ProjectApi {
             dataType: "json",
             contentType: "application/json; charset=utf-8",
         });
+    };
+
+    // Save or Update Project data
+    SaveProject = async function (data) {
+        return $.ajax({
+            url: "/ArquisoftApp/Project/Save",
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
     }
 }
