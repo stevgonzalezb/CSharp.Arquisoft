@@ -44,14 +44,14 @@
                     <div class="row">
                         <div class="form-group col-12">
                             <label for="txtName">Nombre:</label>
-                            <input type="text" class="form-control" id="txtName" placeholder="Nombre del rol">
+                            <input name="txtName" type="text" class="form-control" id="txtName" placeholder="Nombre del rol">
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group col-12">
                             <label for="txtDescription">Descripción:</label>
-                            <input type="text" class="form-control" id="txtDescription" placeholder="Descripción del rol">
+                            <input name="txtDescription" type="text" class="form-control" id="txtDescription" placeholder="Descripción del rol">
                         </div>
                     </div>
 
@@ -221,7 +221,7 @@
             });
 
             // Form validations
-            var validator = $("#FormModal").validate({
+            var validator = $("#userForm").validate({
                 rules: {
                     txtName: {
                         required: true,
@@ -280,8 +280,8 @@
         }
 
         // Submit form method
-        $("#FormModal").on("submit", function (e) {
-            if (ValidateInputs()) {
+        $("#userForm").on("submit", function (e) {
+            if ($("#userForm").valid()) {
                 var idRole = parseInt($("#txtId").val());
 
                 var $data = {

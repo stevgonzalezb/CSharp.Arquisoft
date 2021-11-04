@@ -248,7 +248,7 @@
                         var userData = user;
 
                         if (userData) {
-                            $("#chkEnable").prop('checked', userData.IdState == app.enums.States.ACTIVE ? true : false);
+                            $("#chkEnable").prop('checked', userData.IdState === app.enums.States.ACTIVE ? true : false);
                             $("#txtName").val(userData.Name);
                             $("#txtLastName").val(userData.Last_Name);
                             $("#txtEmail").val(userData.Email);
@@ -258,7 +258,7 @@
                         }
                         else
                             throw ("Data error from api");
-                        $("#chkEnable").prop('checked', true);
+                       // $("#chkEnable").prop('checked', true);
 
                     }).catch(err => {
 
