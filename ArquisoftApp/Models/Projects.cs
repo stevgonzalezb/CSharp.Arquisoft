@@ -33,11 +33,11 @@ namespace ArquisoftApp.Models
         public int IdState { get; set; }
         public string Status { get; set; }
     
-        public virtual Clients Clients { get; set; }
-        public virtual State State { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Attachments> Attachments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Budgets> Budgets { get; set; }
+        public virtual Clients Clients { get; set; }
+        public virtual State State { get; set; }
     }
 }
