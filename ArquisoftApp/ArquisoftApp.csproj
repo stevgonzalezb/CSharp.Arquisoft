@@ -253,6 +253,7 @@
     <Content Include="Content\img\Help\Material\Modal_Eliminar_Material.JPG" />
     <Content Include="Content\img\Help\Material_Proveedor\Ficha_Producto.JPG" />
     <Content Include="Content\img\Help\Material_Proveedor\Importar.JPG" />
+    <Content Include="Content\img\Help\Material_Proveedor\Menu.jpg" />
     <Content Include="Content\img\Help\Material_Proveedor\Ver_Ficha.JPG" />
     <Content Include="Content\img\login-bg.jpg" />
     <Content Include="Content\img\logo.png" />
