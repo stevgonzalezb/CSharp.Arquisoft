@@ -5,6 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ArquisoftModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Attachments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="200" />
+          <Property Name="FileSize" Type="varchar" MaxLength="50" />
+          <Property Name="ProjectId" Type="int" />
+        </EntityType>
         <EntityType Name="Audit">
           <Key>
             <PropertyRef Name="Id" />
@@ -14,6 +23,18 @@
           <Property Name="Action" Type="varchar" MaxLength="50" />
           <Property Name="User" Type="varchar" MaxLength="50" />
           <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Budgets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" />
+          <Property Name="Type" Type="varchar" MaxLength="200" />
+          <Property Name="CreationDate" Type="datetime" />
+          <Property Name="Comments" Type="varchar" MaxLength="400" />
+          <Property Name="ProjectId" Type="int" />
+          <Property Name="IdState" Type="int" />
         </EntityType>
         <EntityType Name="Clients">
           <Key>
@@ -65,6 +86,7 @@
           <Property Name="Comments" Type="varchar" MaxLength="400" />
           <Property Name="IdClient" Type="int" />
           <Property Name="IdState" Type="int" Nullable="false" />
+          <Property Name="Status" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="RoleOperations">
           <Key>
@@ -122,6 +144,42 @@
           <Property Name="ImgURL" Type="varchar" MaxLength="400" />
           <Property Name="Price" Type="varchar" MaxLength="50" />
         </EntityType>
+        <Association Name="FK_Attachments_Project">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="0..1" />
+          <End Role="Attachments" Type="Self.Attachments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Attachments">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Budgets_Projects">
+          <End Role="Projects" Type="Self.Projects" Multiplicity="0..1" />
+          <End Role="Budgets" Type="Self.Budgets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Budgets">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Budgets_State">
+          <End Role="State" Type="Self.State" Multiplicity="0..1" />
+          <End Role="Budgets" Type="Self.Budgets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="idState" />
+            </Principal>
+            <Dependent Role="Budgets">
+              <PropertyRef Name="IdState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_IdState">
           <End Role="State" Type="Self.State" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
@@ -219,7 +277,9 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ArquisoftModel1StoreContainer">
+          <EntitySet Name="Attachments" EntityType="Self.Attachments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Audit" EntityType="Self.Audit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Budgets" EntityType="Self.Budgets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Materials" EntityType="Self.Materials" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ModuleOperations" EntityType="Self.ModuleOperations" Schema="dbo" store:Type="Tables" />
@@ -231,6 +291,18 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorMaterials" EntityType="Self.VendorMaterials" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Attachments_Project" Association="Self.FK_Attachments_Project">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Attachments" EntitySet="Attachments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Budgets_Projects" Association="Self.FK_Budgets_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Budgets" EntitySet="Budgets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Budgets_State" Association="Self.FK_Budgets_State">
+            <End Role="State" EntitySet="State" />
+            <End Role="Budgets" EntitySet="Budgets" />
+          </AssociationSet>
           <AssociationSet Name="FK_IdState" Association="Self.FK_IdState">
             <End Role="State" EntitySet="State" />
             <End Role="Users" EntitySet="Users" />
@@ -323,6 +395,20 @@
             <End Role="State" EntitySet="State" />
             <End Role="Projects" EntitySet="Projects" />
           </AssociationSet>
+          <EntitySet Name="Attachments" EntityType="ArquisoftModel1.Attachments" />
+          <AssociationSet Name="FK_Attachments_Project" Association="ArquisoftModel1.FK_Attachments_Project">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Attachments" EntitySet="Attachments" />
+          </AssociationSet>
+          <EntitySet Name="Budgets" EntityType="ArquisoftModel1.Budgets" />
+          <AssociationSet Name="FK_Budgets_Projects" Association="ArquisoftModel1.FK_Budgets_Projects">
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Budgets" EntitySet="Budgets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Budgets_State" Association="ArquisoftModel1.FK_Budgets_State">
+            <End Role="State" EntitySet="State" />
+            <End Role="Budgets" EntitySet="Budgets" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="ModuleOperations">
           <Key>
@@ -407,6 +493,7 @@
           <NavigationProperty Name="Users" Relationship="ArquisoftModel1.FK_IdState" FromRole="State" ToRole="Users" />
           <NavigationProperty Name="Materials" Relationship="ArquisoftModel1.FK_Materials_State" FromRole="State" ToRole="Materials" />
           <NavigationProperty Name="Projects" Relationship="ArquisoftModel1.FK_Projects_State" FromRole="State" ToRole="Projects" />
+          <NavigationProperty Name="Budgets" Relationship="ArquisoftModel1.FK_Budgets_State" FromRole="State" ToRole="Budgets" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -518,6 +605,9 @@
           <Property Name="IdState" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Clients" Relationship="ArquisoftModel1.FK_Projects_Client" FromRole="Projects" ToRole="Clients" />
           <NavigationProperty Name="State" Relationship="ArquisoftModel1.FK_Projects_State" FromRole="Projects" ToRole="State" />
+          <NavigationProperty Name="Attachments" Relationship="ArquisoftModel1.FK_Attachments_Project" FromRole="Projects" ToRole="Attachments" />
+          <NavigationProperty Name="Budgets" Relationship="ArquisoftModel1.FK_Budgets_Projects" FromRole="Projects" ToRole="Budgets" />
+          <Property Name="Status" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <Association Name="FK_Projects_Client">
           <End Type="ArquisoftModel1.Clients" Role="Clients" Multiplicity="0..1" />
@@ -539,6 +629,66 @@
               <PropertyRef Name="idState" />
             </Principal>
             <Dependent Role="Projects">
+              <PropertyRef Name="IdState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Attachments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FileName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FileSize" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProjectId" Type="Int32" />
+          <NavigationProperty Name="Projects" Relationship="ArquisoftModel1.FK_Attachments_Project" FromRole="Attachments" ToRole="Projects" />
+        </EntityType>
+        <Association Name="FK_Attachments_Project">
+          <End Type="ArquisoftModel1.Projects" Role="Projects" Multiplicity="0..1" />
+          <End Type="ArquisoftModel1.Attachments" Role="Attachments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Attachments">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Budgets">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CreationDate" Type="DateTime" Precision="3" />
+          <Property Name="Comments" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <Property Name="ProjectId" Type="Int32" />
+          <Property Name="IdState" Type="Int32" />
+          <NavigationProperty Name="Projects" Relationship="ArquisoftModel1.FK_Budgets_Projects" FromRole="Budgets" ToRole="Projects" />
+          <NavigationProperty Name="State" Relationship="ArquisoftModel1.FK_Budgets_State" FromRole="Budgets" ToRole="State" />
+        </EntityType>
+        <Association Name="FK_Budgets_Projects">
+          <End Type="ArquisoftModel1.Projects" Role="Projects" Multiplicity="0..1" />
+          <End Type="ArquisoftModel1.Budgets" Role="Budgets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Projects">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Budgets">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Budgets_State">
+          <End Type="ArquisoftModel1.State" Role="State" Multiplicity="0..1" />
+          <End Type="ArquisoftModel1.Budgets" Role="Budgets" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="idState" />
+            </Principal>
+            <Dependent Role="Budgets">
               <PropertyRef Name="IdState" />
             </Dependent>
           </ReferentialConstraint>
@@ -665,6 +815,7 @@
           <EntitySetMapping Name="Projects">
             <EntityTypeMapping TypeName="ArquisoftModel1.Projects">
               <MappingFragment StoreEntitySet="Projects">
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="IdState" ColumnName="IdState" />
                 <ScalarProperty Name="IdClient" ColumnName="IdClient" />
                 <ScalarProperty Name="Comments" ColumnName="Comments" />
@@ -673,6 +824,29 @@
                 <ScalarProperty Name="Levels" ColumnName="Levels" />
                 <ScalarProperty Name="ConstructionArea" ColumnName="ConstructionArea" />
                 <ScalarProperty Name="SiteArea" ColumnName="SiteArea" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Attachments">
+            <EntityTypeMapping TypeName="ArquisoftModel1.Attachments">
+              <MappingFragment StoreEntitySet="Attachments">
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="FileSize" ColumnName="FileSize" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Budgets">
+            <EntityTypeMapping TypeName="ArquisoftModel1.Budgets">
+              <MappingFragment StoreEntitySet="Budgets">
+                <ScalarProperty Name="IdState" ColumnName="IdState" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

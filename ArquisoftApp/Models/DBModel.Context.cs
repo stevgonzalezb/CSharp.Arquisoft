@@ -38,5 +38,7 @@ namespace ArquisoftApp.Models
         public virtual DbSet<VendorMaterials> VendorMaterials { get; set; }
         public virtual DbSet<Materials> Materials { get; set; }
         public virtual DbSet<Projects> Projects { get; set; }
+        public virtual DbSet<Attachments> Attachments { get; set; }
+        public virtual DbSet<Budgets> Budgets { get; set; }
     }
 }

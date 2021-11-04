@@ -20,6 +20,7 @@ namespace ArquisoftApp.Models
             this.Users = new HashSet<Users>();
             this.Materials = new HashSet<Materials>();
             this.Projects = new HashSet<Projects>();
+            this.Budgets = new HashSet<Budgets>();
         }
     
         public int idState { get; set; }
@@ -31,5 +32,7 @@ namespace ArquisoftApp.Models
         public virtual ICollection<Materials> Materials { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Projects> Projects { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Budgets> Budgets { get; set; }
     }
 }

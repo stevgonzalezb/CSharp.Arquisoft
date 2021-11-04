@@ -14,6 +14,13 @@ namespace ArquisoftApp.Models
     
     public partial class Projects
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Projects()
+        {
+            this.Attachments = new HashSet<Attachments>();
+            this.Budgets = new HashSet<Budgets>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
         public string SiteArea { get; set; }
@@ -24,8 +31,13 @@ namespace ArquisoftApp.Models
         public string Comments { get; set; }
         public Nullable<int> IdClient { get; set; }
         public int IdState { get; set; }
+        public string Status { get; set; }
     
         public virtual Clients Clients { get; set; }
         public virtual State State { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Attachments> Attachments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Budgets> Budgets { get; set; }
     }
 }

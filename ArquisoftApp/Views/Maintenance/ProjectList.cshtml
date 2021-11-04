@@ -16,6 +16,7 @@
                         <th>Nombre Proyecto</th>
                         <th>Cliente</th>
                         <th>Maestro de Obra</th>
+                        <th>Status</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -71,6 +72,7 @@
     <script>
         const api = new ProjectApi();
         const apiClients = new ClientApi();
+        var project_table;
 
         var client_table;
         $(document).ready(function () {
@@ -92,27 +94,47 @@
          });
 
         function LoadTable() {
-            client_table = $('#myTable').DataTable({
+            project_table = $('#myTable').DataTable({
                 "ajax": {
                     "url": "@Url.Action("ListProjects", "Project")",
                     "dataSrc": function (json) {
-                        return JSON.parse(json.data);
+
+                        var data = JSON.parse(json.data);
+
+                        $.each(data, function (key, obj) {
+
+                            switch (obj.Status) {
+                                case "D":
+                                    obj.Status = "Detenido"
+                                    break;
+                                case "C":
+                                    obj.Status = "Crítico"
+                                    break;
+                                case "E":
+                                    obj.Status = "Ejecución"
+                                    break;
+                            }
+
+                        });
+
+                        return data;
                     }
                 },
                  "columns": [
                      { "data": "Name" },
                      { "data": "ClientName" },
-                     { "data": "MasterBuilder"},
+                     { "data": "MasterBuilder" },
+                     { "data": "Status"},
                      {
                          "data": "Id", "render": function (data) {
                              var buttons = "";
 
-                             @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.MATERIAL_EDIT))
+                             @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.PROJECT_EDIT))
                               {
                                  <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los materiales' class='btn btn-outline-secondary btn-sm' type='button' onclick='openModal(" + data + ")'>Visualizar &nbsp;<i class='fas fa-eye'></i></button>" </text>
                               }
 
-                             @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.MATERIAL_DELETE))
+                             @if(ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.PROJECT_DELETE))
                               {
                                  <text> buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de materiales' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='Delete(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>" </text>
                               }
@@ -201,6 +223,20 @@
 
                 toastr.error("Ocurrió un error guardando los datos del Proyecto.");
             })
+        }
+
+        function Delete($projectId) {
+            if (confirm("¿Realmente desea eliminar este proyecto?")) {
+
+                api.DeleteProject($projectId).then(response => {
+                    if (response.result) {
+                        project_table.ajax.reload();
+                        toastr.success('Proyecto eliminado correctamente.');
+                    }
+                }).catch(err => {
+                    toastr.error("Ocurrió un error eliminando los datos del proyecto.");
+                })
+            }
         }
 
     </script>

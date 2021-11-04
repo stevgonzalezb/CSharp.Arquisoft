@@ -245,4 +245,69 @@ class ProjectApi {
             contentType: "application/json; charset=utf-8",
         });
     }
+
+    // Delete project
+    DeleteProject = async function (projectId) {
+        return $.ajax({
+            url: `/ArquisoftApp/Project/Delete?projectId=${projectId}`,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
+
+    // Upload attachments
+    UploadAttachment = async function (fileData) {
+        return $.ajax({
+            url: "/ArquisoftApp/Project/UploadAttachment",
+            type: "POST",
+            data: fileData,
+            processData: false,  
+            contentType: false 
+        });
+    }
+
+    // Delete Attachment
+    DeleteFile = async function (id, projectId) {
+        return $.ajax({
+            url: `/ArquisoftApp/Project/DeleteFile?Id=${id}&projectId=${projectId}`,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    };
+}
+
+/**  Projects Maintenance API  **/
+class BudgetApi {
+    // List all clients
+    ListBudgets = async function (projectId) {
+        return $.ajax({
+            url: `/ArquisoftApp/Budget/ListBudgets?projectId=${projectId}`,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
+
+    // Save or Update Project data
+    SaveProject = async function (data) {
+        return $.ajax({
+            url: "/ArquisoftApp/Project/Save",
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
+
+    // Delete budget
+    DeleteBudget = async function (budgetId) {
+        return $.ajax({
+            url: `/ArquisoftApp/Budget/Delete?budgetId=${budgetId}`,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
 }
