@@ -204,7 +204,45 @@
                      "url": "@Url.Content("~/Content/datatable/idioma/datatable.es-ES.json")"
                  }
 
-             });
+            });
+            // Methods who add or remove de styled classes
+            $.validator.setDefaults({
+                //Add Error Class To Fieldset if field invalid
+                highlight: function (element) {
+                    $(element).addClass('is-invalid').removeClass('is-valid');
+                },
+                //Add Valid Class To Fieldset if field valid
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid').addClass('is-valid');
+                },
+                errorPlacement: function (error, element) {
+                    error.addClass('validation-error text-red small').insertAfter(element);
+                }
+            });
+
+            // Form validations
+            var validator = $("#FormModal").validate({
+                rules: {
+                    txtName: {
+                        required: true,
+                        minlength: 1
+                    },
+                    txtDescription: {
+                        required: true,
+                        minlength: 1
+                    }
+                },
+                messages: {
+                    txtName: {
+                        required: "Requerido",
+                        minlength: "Ingrese un nombre válido."
+                    },
+                    txtDescription: {
+                        required: "Requerido",
+                        minlength: "Ingrese una descripción válida."
+                    }
+                }
+            });
         }
 
         function openModal($RoleId, action) {

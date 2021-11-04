@@ -212,6 +212,11 @@
                 }
             });
 
+            // Custom methods for validations
+            $.validator.addMethod('OnlyNumberRegex', function (value, element, parameter) {
+                return value.match(app.enums.Regex.OnlyNumber);
+            }, '');
+
             // Form validations
             var validator = $("#FormModal").validate({
                 rules: {
@@ -221,6 +226,7 @@
                     },
                     txtPrice: {
                         required: true,
+                        OnlyNumberRegex: true,
                         minlength: 1
                     }
                 },
@@ -231,7 +237,7 @@
                     },
                     txtPrice: {
                         required: "Requerido",
-                        minlength: "Ingrese un precio válido."
+                        OnlyNumberRegex: "Ingrese un precio válido."
                     }
                 }
             });
