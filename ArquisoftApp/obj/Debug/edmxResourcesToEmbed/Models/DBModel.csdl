@@ -1,5 +1,84 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="ArquisoftModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ArquisoftEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Audit" EntityType="ArquisoftModel1.Audit" />
+    <EntitySet Name="Clients" EntityType="ArquisoftModel1.Clients" />
+    <EntitySet Name="Materials" EntityType="ArquisoftModel1.Materials" />
+    <EntitySet Name="ModuleOperations" EntityType="ArquisoftModel1.ModuleOperations" />
+    <EntitySet Name="Modules" EntityType="ArquisoftModel1.Modules" />
+    <EntitySet Name="Projects" EntityType="ArquisoftModel1.Projects" />
+    <EntitySet Name="RoleOperations" EntityType="ArquisoftModel1.RoleOperations" />
+    <EntitySet Name="Roles" EntityType="ArquisoftModel1.Roles" />
+    <EntitySet Name="State" EntityType="ArquisoftModel1.State" />
+    <EntitySet Name="sysdiagrams" EntityType="ArquisoftModel1.sysdiagrams" />
+    <EntitySet Name="Users" EntityType="ArquisoftModel1.Users" />
+    <EntitySet Name="VendorMaterials" EntityType="ArquisoftModel1.VendorMaterials" />
+    <AssociationSet Name="FK_Projects_Client" Association="ArquisoftModel1.FK_Projects_Client">
+      <End Role="Clients" EntitySet="Clients" />
+      <End Role="Projects" EntitySet="Projects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Materials_State" Association="ArquisoftModel1.FK_Materials_State">
+      <End Role="State" EntitySet="State" />
+      <End Role="Materials" EntitySet="Materials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ModuleOperations" Association="ArquisoftModel1.FK_ModuleOperations">
+      <End Role="Modules" EntitySet="Modules" />
+      <End Role="ModuleOperations" EntitySet="ModuleOperations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoleOperations_Operations" Association="ArquisoftModel1.FK_RoleOperations_Operations">
+      <End Role="ModuleOperations" EntitySet="ModuleOperations" />
+      <End Role="RoleOperations" EntitySet="RoleOperations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Projects_State" Association="ArquisoftModel1.FK_Projects_State">
+      <End Role="State" EntitySet="State" />
+      <End Role="Projects" EntitySet="Projects" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RoleOperations_Roles" Association="ArquisoftModel1.FK_RoleOperations_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="RoleOperations" EntitySet="RoleOperations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRole" Association="ArquisoftModel1.FK_UserRole">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IdState" Association="ArquisoftModel1.FK_IdState">
+      <End Role="State" EntitySet="State" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Audit">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Module" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Action" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="User" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="Clients">
+    <Key>
+      <PropertyRef Name="IdClient" />
+    </Key>
+    <Property Name="IdClient" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Last_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Phone" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="idState" Type="Int32" />
+    <NavigationProperty Name="Projects" Relationship="ArquisoftModel1.FK_Projects_Client" FromRole="Clients" ToRole="Projects" />
+  </EntityType>
+  <EntityType Name="Materials">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Price" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IdState" Type="Int32" />
+    <NavigationProperty Name="State" Relationship="ArquisoftModel1.FK_Materials_State" FromRole="Materials" ToRole="State" />
+  </EntityType>
   <EntityType Name="ModuleOperations">
     <Key>
       <PropertyRef Name="Id" />
@@ -7,8 +86,8 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="IdModule" Type="Int32" />
-    <NavigationProperty Name="Modules" Relationship="Self.FK_ModuleOperations" FromRole="ModuleOperations" ToRole="Modules" />
-    <NavigationProperty Name="RoleOperations" Relationship="Self.FK_RoleOperations_Operations" FromRole="ModuleOperations" ToRole="RoleOperations" />
+    <NavigationProperty Name="Modules" Relationship="ArquisoftModel1.FK_ModuleOperations" FromRole="ModuleOperations" ToRole="Modules" />
+    <NavigationProperty Name="RoleOperations" Relationship="ArquisoftModel1.FK_RoleOperations_Operations" FromRole="ModuleOperations" ToRole="RoleOperations" />
   </EntityType>
   <EntityType Name="Modules">
     <Key>
@@ -16,7 +95,24 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="ModuleOperations" Relationship="Self.FK_ModuleOperations" FromRole="Modules" ToRole="ModuleOperations" />
+    <NavigationProperty Name="ModuleOperations" Relationship="ArquisoftModel1.FK_ModuleOperations" FromRole="Modules" ToRole="ModuleOperations" />
+  </EntityType>
+  <EntityType Name="Projects">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="SiteArea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ConstructionArea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Levels" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="ConstructionSystem" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="MasterBuilder" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Comments" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="IdClient" Type="Int32" />
+    <Property Name="IdState" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Clients" Relationship="ArquisoftModel1.FK_Projects_Client" FromRole="Projects" ToRole="Clients" />
+    <NavigationProperty Name="State" Relationship="ArquisoftModel1.FK_Projects_State" FromRole="Projects" ToRole="State" />
   </EntityType>
   <EntityType Name="RoleOperations">
     <Key>
@@ -25,8 +121,8 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="IdRole" Type="Int32" />
     <Property Name="IdOperation" Type="Int32" />
-    <NavigationProperty Name="ModuleOperations" Relationship="Self.FK_RoleOperations_Operations" FromRole="RoleOperations" ToRole="ModuleOperations" />
-    <NavigationProperty Name="Roles" Relationship="Self.FK_RoleOperations_Roles" FromRole="RoleOperations" ToRole="Roles" />
+    <NavigationProperty Name="ModuleOperations" Relationship="ArquisoftModel1.FK_RoleOperations_Operations" FromRole="RoleOperations" ToRole="ModuleOperations" />
+    <NavigationProperty Name="Roles" Relationship="ArquisoftModel1.FK_RoleOperations_Roles" FromRole="RoleOperations" ToRole="Roles" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>
@@ -34,14 +130,25 @@
     </Key>
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="RoleOperations" Relationship="Self.FK_RoleOperations_Roles" FromRole="Roles" ToRole="RoleOperations" />
-    <NavigationProperty Name="Users" Relationship="Self.FK_UserRole" FromRole="Roles" ToRole="Users" />
+    <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="RoleOperations" Relationship="ArquisoftModel1.FK_RoleOperations_Roles" FromRole="Roles" ToRole="RoleOperations" />
+    <NavigationProperty Name="Users" Relationship="ArquisoftModel1.FK_UserRole" FromRole="Roles" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="idState" />
+    </Key>
+    <Property Name="idState" Type="Int32" Nullable="false" />
+    <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Materials" Relationship="ArquisoftModel1.FK_Materials_State" FromRole="State" ToRole="Materials" />
+    <NavigationProperty Name="Projects" Relationship="ArquisoftModel1.FK_Projects_State" FromRole="State" ToRole="Projects" />
+    <NavigationProperty Name="Users" Relationship="ArquisoftModel1.FK_IdState" FromRole="State" ToRole="Users" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
       <PropertyRef Name="diagram_id" />
     </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
     <Property Name="principal_id" Type="Int32" Nullable="false" />
     <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="version" Type="Int32" />
@@ -57,13 +164,48 @@
     <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
     <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
     <Property Name="Last_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-    <Property Name="Enable" Type="Boolean" />
     <Property Name="IdRole" Type="Int32" />
-    <NavigationProperty Name="Roles" Relationship="Self.FK_UserRole" FromRole="Users" ToRole="Roles" />
+    <Property Name="IdState" Type="Int32" />
+    <NavigationProperty Name="Roles" Relationship="ArquisoftModel1.FK_UserRole" FromRole="Users" ToRole="Roles" />
+    <NavigationProperty Name="State" Relationship="ArquisoftModel1.FK_IdState" FromRole="Users" ToRole="State" />
   </EntityType>
+  <EntityType Name="VendorMaterials">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="SiteURL" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="ImgURL" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+    <Property Name="Price" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="FK_Projects_Client">
+    <End Type="ArquisoftModel1.Clients" Role="Clients" Multiplicity="0..1" />
+    <End Type="ArquisoftModel1.Projects" Role="Projects" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clients">
+        <PropertyRef Name="IdClient" />
+      </Principal>
+      <Dependent Role="Projects">
+        <PropertyRef Name="IdClient" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Materials_State">
+    <End Type="ArquisoftModel1.State" Role="State" Multiplicity="0..1" />
+    <End Type="ArquisoftModel1.Materials" Role="Materials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="idState" />
+      </Principal>
+      <Dependent Role="Materials">
+        <PropertyRef Name="IdState" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ModuleOperations">
-    <End Role="Modules" Type="Self.Modules" Multiplicity="0..1" />
-    <End Role="ModuleOperations" Type="Self.ModuleOperations" Multiplicity="*" />
+    <End Type="ArquisoftModel1.Modules" Role="Modules" Multiplicity="0..1" />
+    <End Type="ArquisoftModel1.ModuleOperations" Role="ModuleOperations" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Modules">
         <PropertyRef Name="Id" />
@@ -74,8 +216,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_RoleOperations_Operations">
-    <End Role="ModuleOperations" Type="Self.ModuleOperations" Multiplicity="0..1" />
-    <End Role="RoleOperations" Type="Self.RoleOperations" Multiplicity="*" />
+    <End Type="ArquisoftModel1.ModuleOperations" Role="ModuleOperations" Multiplicity="0..1" />
+    <End Type="ArquisoftModel1.RoleOperations" Role="RoleOperations" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ModuleOperations">
         <PropertyRef Name="Id" />
@@ -85,9 +227,21 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Projects_State">
+    <End Type="ArquisoftModel1.State" Role="State" Multiplicity="1" />
+    <End Type="ArquisoftModel1.Projects" Role="Projects" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="idState" />
+      </Principal>
+      <Dependent Role="Projects">
+        <PropertyRef Name="IdState" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_RoleOperations_Roles">
-    <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
-    <End Role="RoleOperations" Type="Self.RoleOperations" Multiplicity="*" />
+    <End Type="ArquisoftModel1.Roles" Role="Roles" Multiplicity="0..1" />
+    <End Type="ArquisoftModel1.RoleOperations" Role="RoleOperations" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Roles">
         <PropertyRef Name="Id" />
@@ -98,8 +252,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_UserRole">
-    <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
-    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <End Type="ArquisoftModel1.Roles" Role="Roles" Multiplicity="0..1" />
+    <End Type="ArquisoftModel1.Users" Role="Users" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Roles">
         <PropertyRef Name="Id" />
@@ -109,28 +263,16 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="ArquisoftEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="ModuleOperations" EntityType="Self.ModuleOperations" />
-    <EntitySet Name="Modules" EntityType="Self.Modules" />
-    <EntitySet Name="RoleOperations" EntityType="Self.RoleOperations" />
-    <EntitySet Name="Roles" EntityType="Self.Roles" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-    <EntitySet Name="Users" EntityType="Self.Users" />
-    <AssociationSet Name="FK_ModuleOperations" Association="Self.FK_ModuleOperations">
-      <End Role="Modules" EntitySet="Modules" />
-      <End Role="ModuleOperations" EntitySet="ModuleOperations" />
-    </AssociationSet>
-    <AssociationSet Name="FK_RoleOperations_Operations" Association="Self.FK_RoleOperations_Operations">
-      <End Role="ModuleOperations" EntitySet="ModuleOperations" />
-      <End Role="RoleOperations" EntitySet="RoleOperations" />
-    </AssociationSet>
-    <AssociationSet Name="FK_RoleOperations_Roles" Association="Self.FK_RoleOperations_Roles">
-      <End Role="Roles" EntitySet="Roles" />
-      <End Role="RoleOperations" EntitySet="RoleOperations" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserRole" Association="Self.FK_UserRole">
-      <End Role="Roles" EntitySet="Roles" />
-      <End Role="Users" EntitySet="Users" />
-    </AssociationSet>
-  </EntityContainer>
+  <Association Name="FK_IdState">
+    <End Type="ArquisoftModel1.State" Role="State" Multiplicity="0..1" />
+    <End Type="ArquisoftModel1.Users" Role="Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="idState" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="IdState" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

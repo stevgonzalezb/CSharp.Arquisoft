@@ -26,17 +26,17 @@ namespace ArquisoftApp.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<Audit> Audit { get; set; }
+        public virtual DbSet<Clients> Clients { get; set; }
+        public virtual DbSet<Materials> Materials { get; set; }
         public virtual DbSet<ModuleOperations> ModuleOperations { get; set; }
         public virtual DbSet<Modules> Modules { get; set; }
+        public virtual DbSet<Projects> Projects { get; set; }
         public virtual DbSet<RoleOperations> RoleOperations { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<State> State { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Users> Users { get; set; }
-        public virtual DbSet<Audit> Audit { get; set; }
-        public virtual DbSet<Clients> Clients { get; set; }
         public virtual DbSet<VendorMaterials> VendorMaterials { get; set; }
-        public virtual DbSet<Materials> Materials { get; set; }
-        public virtual DbSet<Projects> Projects { get; set; }
     }
 }

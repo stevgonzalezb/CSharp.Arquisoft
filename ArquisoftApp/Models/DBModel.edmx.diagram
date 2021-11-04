@@ -5,27 +5,27 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="f0c237e3e9314e6c8893a93ed1078b2f" Name="Diagram1" ZoomLevel="93">
-        <EntityTypeShape EntityType="ArquisoftModel1.sysdiagrams" Width="1.5" PointX="9.375" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ArquisoftModel1.ModuleOperations" Width="1.5" PointX="3.375" PointY="0.75" />
-        <EntityTypeShape EntityType="ArquisoftModel1.Modules" Width="1.5" PointX="4.125" PointY="5" />
-        <EntityTypeShape EntityType="ArquisoftModel1.RoleOperations" Width="1.5" PointX="6.875" PointY="1" />
-        <EntityTypeShape EntityType="ArquisoftModel1.Roles" Width="1.5" PointX="6.875" PointY="3.875" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Audit" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Clients" Width="1.5" PointX="0.75" PointY="0.875" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Materials" Width="1.5" PointX="3" PointY="13" />
+        <EntityTypeShape EntityType="ArquisoftModel1.ModuleOperations" Width="1.5" PointX="3.75" PointY="9.25" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Modules" Width="1.5" PointX="1.5" PointY="9.375" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Projects" Width="1.5" PointX="3" PointY="4.5" />
+        <EntityTypeShape EntityType="ArquisoftModel1.RoleOperations" Width="1.5" PointX="6" PointY="1.25" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Roles" Width="1.5" PointX="3.75" PointY="1.25" />
+        <EntityTypeShape EntityType="ArquisoftModel1.State" Width="1.5" PointX="0.75" PointY="5.25" />
+        <EntityTypeShape EntityType="ArquisoftModel1.sysdiagrams" Width="1.5" PointX="8.75" PointY="3.75" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Users" Width="1.5" PointX="6" PointY="4.75" />
+        <EntityTypeShape EntityType="ArquisoftModel1.VendorMaterials" Width="1.5" PointX="5.75" PointY="8.75" />
+        <AssociationConnector Association="ArquisoftModel1.FK_Projects_Client" />
+        <AssociationConnector Association="ArquisoftModel1.FK_Materials_State" />
         <AssociationConnector Association="ArquisoftModel1.FK_ModuleOperations" />
         <AssociationConnector Association="ArquisoftModel1.FK_RoleOperations_Operations" />
+        <AssociationConnector Association="ArquisoftModel1.FK_Projects_State" />
         <AssociationConnector Association="ArquisoftModel1.FK_RoleOperations_Roles" />
-        <EntityTypeShape EntityType="ArquisoftModel1.State" Width="1.5" PointX="10.125" PointY="6.875" />
-        <EntityTypeShape EntityType="ArquisoftModel1.Users" Width="1.5" PointX="3.75" PointY="8.75" />
         <AssociationConnector Association="ArquisoftModel1.FK_UserRole" />
         <AssociationConnector Association="ArquisoftModel1.FK_IdState" />
-        <EntityTypeShape EntityType="ArquisoftModel1.Audit" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ArquisoftModel1.Clients" Width="1.5" PointX="15.5" PointY="3.25" />
-        <EntityTypeShape EntityType="ArquisoftModel1.VendorMaterials" Width="1.5" PointX="6.375" PointY="6.75" />
-        <EntityTypeShape EntityType="ArquisoftModel1.Materials" Width="1.5" PointX="11.125" PointY="3.875" />
-        <AssociationConnector Association="ArquisoftModel1.FK_Materials_State" />
-        <EntityTypeShape EntityType="ArquisoftModel1.Projects" Width="1.5" PointX="13.375" PointY="4.625" />
-        <AssociationConnector Association="ArquisoftModel1.FK_Projects_Client" />
-        <AssociationConnector Association="ArquisoftModel1.FK_Projects_State" />
-        </Diagram>
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
