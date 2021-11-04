@@ -4,31 +4,26 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f0c237e3e9314e6c8893a93ed1078b2f" Name="Diagram1" ZoomLevel="69">
-        <EntityTypeShape EntityType="ArquisoftModel1.sysdiagrams" Width="1.5" PointX="9.375" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ArquisoftModel1.ModuleOperations" Width="1.5" PointX="3.375" PointY="0.75" />
-        <EntityTypeShape EntityType="ArquisoftModel1.Modules" Width="1.5" PointX="4.125" PointY="5" />
-        <EntityTypeShape EntityType="ArquisoftModel1.RoleOperations" Width="1.5" PointX="6.875" PointY="1" />
-        <EntityTypeShape EntityType="ArquisoftModel1.Roles" Width="1.5" PointX="6.875" PointY="3.875" />
+      <Diagram DiagramId="f0c237e3e9314e6c8893a93ed1078b2f" Name="Diagram1" ZoomLevel="77">
+        <AssociationConnector Association="ArquisoftModel1.FK_IdState" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Attachments" Width="1.5" PointX="5.25" PointY="4.625" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Audit" Width="1.5" PointX="0.5" PointY="6.25" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Budgets" Width="1.5" PointX="5.25" PointY="1.125" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Clients" Width="1.5" PointX="0.75" PointY="2.5" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Materials" Width="1.5" PointX="2.75" PointY="7.75" />
+        <EntityTypeShape EntityType="ArquisoftModel1.ModuleOperations" Width="1.5" PointX="10" PointY="0.875" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Modules" Width="1.5" PointX="7.75" PointY="1.125" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Projects" Width="1.5" PointX="3" PointY="1.875" />
+        <EntityTypeShape EntityType="ArquisoftModel1.RoleOperations" Width="1.5" PointX="12.25" PointY="0.875" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Roles" Width="1.5" PointX="10" PointY="3.875" />
+        <EntityTypeShape EntityType="ArquisoftModel1.sysdiagrams" Width="1.5" PointX="4.75" PointY="7.75" />
+        <EntityTypeShape EntityType="ArquisoftModel1.VendorMaterials" Width="1.5" PointX="14" PointY="5.625" />
+        <AssociationConnector Association="ArquisoftModel1.FK_Attachments_Project" />
+        <AssociationConnector Association="ArquisoftModel1.FK_Budgets_Projects" />
+        <AssociationConnector Association="ArquisoftModel1.FK_Projects_Client" />
         <AssociationConnector Association="ArquisoftModel1.FK_ModuleOperations" />
         <AssociationConnector Association="ArquisoftModel1.FK_RoleOperations_Operations" />
-        <AssociationConnector Association="ArquisoftModel1.FK_Projects_State" />
         <AssociationConnector Association="ArquisoftModel1.FK_RoleOperations_Roles" />
-        <AssociationConnector Association="ArquisoftModel1.FK_UserRole" />
-        <AssociationConnector Association="ArquisoftModel1.FK_IdState" />
-        <EntityTypeShape EntityType="ArquisoftModel1.Audit" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="ArquisoftModel1.Clients" Width="1.5" PointX="15.5" PointY="3.25" />
-        <EntityTypeShape EntityType="ArquisoftModel1.VendorMaterials" Width="1.5" PointX="1.25" PointY="5.375" />
-        <EntityTypeShape EntityType="ArquisoftModel1.Materials" Width="1.5" PointX="11.125" PointY="3.875" />
-        <AssociationConnector Association="ArquisoftModel1.FK_Materials_State" />
-        <EntityTypeShape EntityType="ArquisoftModel1.Projects" Width="1.5" PointX="13.375" PointY="4.625" />
-        <AssociationConnector Association="ArquisoftModel1.FK_Projects_Client" />
-        <AssociationConnector Association="ArquisoftModel1.FK_Projects_State" />
-        <EntityTypeShape EntityType="ArquisoftModel1.Attachments" Width="1.5" PointX="15.625" PointY="7.375" />
-        <AssociationConnector Association="ArquisoftModel1.FK_Attachments_Project" />
-        <EntityTypeShape EntityType="ArquisoftModel1.Budgets" Width="1.5" PointX="13.75" PointY="10.625" />
-        <AssociationConnector Association="ArquisoftModel1.FK_Budgets_Projects" />
-        <AssociationConnector Association="ArquisoftModel1.FK_Budgets_State" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
