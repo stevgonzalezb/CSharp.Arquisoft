@@ -58,7 +58,7 @@ namespace ArquisoftApp.Controllers
         {
             var data = "[]";
             var ArquisoftConnection = AppController.GetConnectionString();
-            var queryString = @"  SELECT A.Id, A.[Name], A.SiteArea, A.ConstructionArea, A.Levels, A.ConstructionSystem, A.Comments, A.MasterBuilder, B.[Name] +' '+ B.Last_Name ClientName, A.IdClient
+            var queryString = @"  SELECT A.Id, A.[Name], A.SiteArea, A.ConstructionArea, A.Levels, A.ConstructionSystem, A.Comments, A.MasterBuilder, B.[Name] +' '+ B.Last_Name ClientName, A.IdClient, A.Status
                                     FROM Projects A INNER JOIN Clients B ON A.IdClient = B.IdClient
                                     WHERE A.Id = " + projectId+" FOR JSON PATH";
 
@@ -122,6 +122,7 @@ namespace ArquisoftApp.Controllers
                             tempProject.MasterBuilder = oProject.MasterBuilder;
                             tempProject.Comments = oProject.Comments;
                             tempProject.IdClient = oProject.IdClient;
+                            tempProject.Status = oProject.Status;
 
                             db.SaveChanges();
                         }

@@ -13,45 +13,15 @@
             <div class="row">
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
-                    <div class="small-box bg-info">
+                    <div class="small-box bg-success">
                         <div class="inner">
-                            <h3>10</h3>
+                            <h3 id="txtProjectsExec">0</h3>
                             <p>Proyectos en Ejecución</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h3>3</h3>
-
-                            <p>Proyectos Detenidos</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-success">
-                        <div class="inner">
-                            <h3>15<sup style="font-size: 20px"></sup></h3>
-
-                            <p>Presupuestos Ejecutados</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="@Url.Action("Index", "Project")" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -59,14 +29,44 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>44</h3>
+                            <h3 id="txtProjectsWarn">0</h3>
+
+                            <p>Proyectos Críticos</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-pie-graph"></i>
+                        </div>
+                        <a href="@Url.Action("Index", "Project")" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-danger">
+                        <div class="inner">
+                            <h3 id="txtProjectsStop">0</h3>
+
+                            <p>Proyectos Detenidos</p>
+                        </div>
+                        <div class="icon">
+                            <i class="ion ion-stats-bars"></i>
+                        </div>
+                        <a href="@Url.Action("Index", "Project")" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
+                    </div>
+                </div>
+                <!-- ./col -->
+                <div class="col-lg-3 col-6">
+                    <!-- small box -->
+                    <div class="small-box bg-info">
+                        <div class="inner">
+                            <h3 id="txtClientsCount">0</h3>
 
                             <p>Clientes Registrados</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="#" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="@Url.Action("Index", "Client")" class="small-box-footer">Ver más <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->
@@ -211,3 +211,42 @@
     </section>
     <!-- /.content -->
 </div>
+
+
+@section scripts{
+    <script>
+        var api = new DashboardApi();
+
+        $(document).ready(function () {
+            LoadDashboard();
+        });
+
+        function LoadDashboard() {
+            api.GetDashboardData().then(response => {
+                var data = JSON.parse(response.data);
+
+                $.each(data, function (key, record) {
+                    switch (record.Value) {
+                        case 'D':
+                            $("#txtProjectsStop").text(record.Count);
+                            break;
+                        case 'C':
+                            $("#txtProjectsWarn").text(record.Count);
+                            break;
+                        case 'E':
+                            $("#txtProjectsExec").text(record.Count);
+                            break;
+                        case 'Clientes':
+                            $("#txtClientsCount").text(record.Count);
+                            break;
+                    }
+                });
+
+
+                console.log(data)
+
+
+            })
+        }
+    </script>    
+}

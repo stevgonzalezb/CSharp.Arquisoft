@@ -2305,11 +2305,11 @@
     <Content Include="Views\Maintenance\VendorMaterialMaintenance.cshtml" />
     <Content Include="Views\Maintenance\ProjectList.cshtml" />
     <Content Include="Views\Maintenance\ProjectMaintenance.cshtml" />
+    <Content Include="Views\Maintenance\BudgetMaintenance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ProjectAttachments\" />
-    <Folder Include="Views\Budget\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

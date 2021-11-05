@@ -1,0 +1,189 @@
+﻿
+@{
+    ViewBag.Title = "BudgetMaintenance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Main content -->
+    <!-- Usuarios -->
+    <section class="content">
+        <div class="card-body p-2" style="background-color:whitesmoke">
+            <div class="row">
+                <div class="col-6">
+                    <div class="card card-dark" style="overflow-y: initial !important">
+                        <div class="card-header">
+                            <h3 class="card-title">Presupuesto</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body" style="height: 77vh; overflow-y: auto;">
+                            <table class="display responsive nowrap table-head-fixed text-nowrap" id="myTable" style="width:100%" data-page-length='10'>
+                                <thead>
+                                    <tr>
+                                        <th>Material</th>
+                                        <th>Unidad</th>
+                                        <th>Precio</th>
+                                        <th>Total</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="card card-dark">
+                        <div class="card-header">
+                            <h3 class="card-title">Materiales</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="form-group col-12">
+                                    <label for="cmbClients">Seleccione un material</label>
+                                    <select id="cmbClients" class="form-control select2bs4" style="width: 100%;">
+                                        <option data-html="<i class='fas fa-minus'></i>">Material 1</option>
+                                        <option style="background-image: url(https://img.icons8.com/external-icongeek26-flat-icongeek26/64/000000/external-url-essentials-icongeek26-flat-icongeek26.png);">Material 1</option>
+                                        <option>Material 1</option>
+                                        <option>Material 1</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="form-group col-8">
+                                    <label for="inputSpentBudget">Descripción</label>
+                                    <input type="text" id="inputSpentBudget" class="form-control" value="">
+                                </div>
+                                <div class="form-group col-2">
+                                    <label for="inputSpentBudget">Cantidad</label>
+                                    <input type="number" id="inputSpentBudget" class="form-control" value="0" step="1">
+                                </div>
+                                <div class="form-group col-2">
+                                    <label for="inputSpentBudget">Precio</label>
+                                    <input type="number" id="inputSpentBudget" class="form-control" value="0" step="1">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-6">
+                                <button type="button" onclick="" class="btn btn-secondary">Agregar</button>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+
+
+                    <div class="card card-navy">
+                        <div class="card-header">
+                            <h3 class="card-title">Totales</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="inputEstimatedBudget">IVA - 13%</label>
+                                    <input type="number" id="inputEstimatedBudget" class="form-control" value="2300">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="inputSpentBudget">Honorarios</label>
+                                    <input type="number" id="inputSpentBudget" class="form-control" value="2000" step="1">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEstimatedDuration">Total General</label>
+                                <input type="number" id="inputEstimatedDuration" class="form-control" value="20" step="0.1">
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- /.content-wrapper -->
+
+@section scripts{
+
+    <!-- Select2 -->
+    <script src="~/Scripts/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            //Initialize Select2 Elements
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
+            var url = new URL(window.location.href);
+            var budgetId = url.searchParams.get("Id");
+
+            LoadBudgetData(2);
+
+        });
+
+        function LoadBudgetData(budgetId) {
+            budget_table = $('#myTable').DataTable({
+                 "ajax": {
+                    "url": `/ArquisoftApp/Budget/ListBudgets?projectId=${budgetId}`,
+                    "dataSrc": function (json) {
+
+                        $.each(json.data, function (key, obj) {
+                            val = obj.CreationDate;
+                            obj.CreationDate = (new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10))).toLocaleDateString('en-US');;
+                        });
+
+                        return json.data;
+                    }
+                 },
+                 "columns": [
+                     { "data": "Name" },
+                     { "data": "Type" },
+                     { "data": "CreationDate" },
+                     { "data": "CreationDate" },
+                     {
+                         "data": "Id", "render": function (data) {
+                             var buttons = "";
+                             buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los materiales' class='btn btn-outline-secondary btn-sm' type='button' onclick='OpenBudget(" + data + ")'><i class='fas fa-pen'></i></button>"
+                             buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de materiales' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='DeleteBudget(" + data + ")'><i class='fa fa-trash'></i></button>"
+
+                             return buttons;
+                         },
+                         "orderable": false,
+                         "searchable": false,
+                         "width": "100px"
+                     }
+                 ],
+                dom: '<"float-left"f>rt<"bottom float-left"p><"clear">',
+                 buttons: [],
+                 "language": {
+                     "url": "@Url.Content("~/Content/datatable/idioma/datatable.es-ES.json")"
+                 }
+
+            });
+        }
+
+
+    </script>
+
+}

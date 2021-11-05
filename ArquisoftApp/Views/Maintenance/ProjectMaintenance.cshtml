@@ -101,15 +101,15 @@
                                             <div class="form-group col-6">
                                                 <label for="txtProjectName" class="col-form-label">Status Proyecto</label>
                                                 <div class="custom-control custom-radio">
-                                                    <input class="custom-control-input custom-control-input-danger" type="radio" id="rbDanger" name="rbDanger">
+                                                    <input class="custom-control-input custom-control-input-danger" type="radio" id="rbDanger" name="rbStatus">
                                                     <label for="rbDanger" class="custom-control-label">Detenido</label>
                                                 </div>
                                                 <div class="custom-control custom-radio">
-                                                    <input class="custom-control-input custom-control-input-warning" type="radio" id="rbWarning" name="rbWarning">
+                                                    <input class="custom-control-input custom-control-input-warning" type="radio" id="rbWarning" name="rbStatus">
                                                     <label for="rbWarning" class="custom-control-label">Critico</label>
                                                 </div>
                                                 <div class="custom-control custom-radio">
-                                                    <input class="custom-control-input custom-control-input-success" type="radio" id="rbSuccess" name="rbSuccess" checked>
+                                                    <input class="custom-control-input custom-control-input-success" type="radio" id="rbSuccess" name="rbStatus" checked>
                                                     <label for="rbSuccess" class="custom-control-label">Ejecución</label>
                                                 </div>
                                             </div>
@@ -173,7 +173,7 @@
                                                     </table>
                                                 </div>
                                             </div>
-                                            </div>
+                                        </div>
                                         <!-- /.card-body -->
                                     </div>
                                     <!-- /.card -->
@@ -256,6 +256,19 @@
                     $("#cmbClients").val(project[0].IdClient).change();
                     if (project[0].ConstructionSystem)
                         $('#cmbSystems').val(project[0].ConstructionSystem.split('|')).change();
+
+                    switch (project[0].Status) {
+                        case "D":
+                            $("#rbDanger").prop('checked', true);
+                            break;
+                        case "C":
+                            $("#rbWarning").prop('checked', true);
+                            break;
+                        case "E":
+                            $("#rbSuccess").prop('checked', true);
+                            break;
+
+                    }
                 }
             })
         }
@@ -287,12 +300,29 @@
             if (true) {
 
                 var strConstructionSystem = "";
+                var status = $('input[name="rbStatus"]:checked').attr('id')
+
                 var conSystems = $("#cmbSystems").val();
                 if (conSystems.length > 0) {
                     $.each(conSystems, function (key, value) {
                         strConstructionSystem += `${value}|`
                     })
                 }
+
+                switch (status) {
+                    case 'rbDanger':
+                        status = 'D';
+                        break;
+                    case 'rbWarning':
+                        status = 'C';
+                        break;
+                    case 'rbSuccess':
+                        status = 'E';
+                        break;
+                }
+
+
+
 
                 var $data = {
                     oProject: {
@@ -304,7 +334,8 @@
                         MasterBuilder: $("#txtBuilder").val(),
                         Comments: $("#txtComments").val(),
                         IdClient: parseInt($("#cmbClients").val()),
-                        ConstructionSystem: strConstructionSystem
+                        ConstructionSystem: strConstructionSystem,
+                        Status: status
                     }
                 }
 
@@ -349,8 +380,8 @@
                      {
                          "data": "Id", "render": function (data) {
                              var buttons = "";
-                                buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los materiales' class='btn btn-outline-secondary btn-sm' type='button' onclick='openModal(" + data + ", \"Editar\")'>Editar <i class='fas fa-pen'></i></button>"
-                                buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los materiales' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='openModal(" + data + ", \"Editar\")'>Descargar <i class='fas fa-download'></i></button>"
+                             buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los materiales' class='btn btn-outline-secondary btn-sm' type='button' onclick='OpenBudget(" + data + ")'>Editar <i class='fas fa-pen'></i></button>"
+                                buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los materiales' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='openModal(" + data + ")'>Descargar <i class='fas fa-download'></i></button>"
                              buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de materiales' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='DeleteBudget(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
 
                              return buttons;
@@ -367,7 +398,7 @@
                                 text: 'Crear Nuevo',
                                 attr: { class: 'btn btn-secondary btn-sm' },
                                 action: function (e, dt, node, config) {
-                                    openModal(0, "Agregar");
+                                    OpenBudget(0);
                                 }
 
                             }
@@ -392,6 +423,11 @@
                     toastr.error("Ocurrió un error eliminando los datos del presupuesto.");
                 })
             }
+        }
+
+        function OpenBudget($budgetId) {
+
+            window.location.href = `/ArquisoftApp/Budget/Instance?Id=${$budgetId}`;
         }
 
 

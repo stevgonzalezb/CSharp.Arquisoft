@@ -1,4 +1,17 @@
 ﻿
+/** Dashboard API **/
+class DashboardApi {
+    // List all clients
+    GetDashboardData = async function () {
+        return $.ajax({
+            url: `/ArquisoftApp/Home/GetDashboardData`,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        })
+    }
+}
+
 /**  User Maintenance API  **/
 class UserApi {
 

@@ -10,9 +10,10 @@ namespace ArquisoftApp.Controllers
     public class BudgetController : Controller
     {
         // GET: Budget
-        public ActionResult Index()
+        public ActionResult Instance(int Id)
         {
-            return View();
+            SetSessionData();
+            return View("~/Views/Maintenance/BudgetMaintenance.cshtml");
         }
 
         public JsonResult ListBudgets(int projectId)
@@ -51,6 +52,13 @@ namespace ArquisoftApp.Controllers
             }
 
             return Json(new { result = response }, JsonRequestBehavior.AllowGet);
+        }
+
+        private void SetSessionData()
+        {
+            var oUser = (Models.Users)System.Web.HttpContext.Current.Session["user"];
+            ViewBag.UserId = oUser.Id;
+            ViewBag.UserName = oUser.Name + " " + oUser.Last_Name;
         }
     }
 }
