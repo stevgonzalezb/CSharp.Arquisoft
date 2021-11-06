@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "BudgetMaintenance";
+    ViewBag.Title = "Presupuesto";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -53,12 +53,8 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="form-group col-12">
-                                    <label for="cmbClients">Seleccione un material</label>
-                                    <select id="cmbClients" class="form-control select2bs4" style="width: 100%;">
-                                        <option data-html="<i class='fas fa-minus'></i>">Material 1</option>
-                                        <option style="background-image: url(https://img.icons8.com/external-icongeek26-flat-icongeek26/64/000000/external-url-essentials-icongeek26-flat-icongeek26.png);">Material 1</option>
-                                        <option>Material 1</option>
-                                        <option>Material 1</option>
+                                    <label for="cmbMaterials">Seleccione un material</label>
+                                    <select id="cmbMaterials" class="form-control select2bs4">
                                     </select>
                                 </div>
                             </div>
@@ -66,26 +62,26 @@
 
                             <div class="row">
                                 <div class="form-group col-8">
-                                    <label for="inputSpentBudget">Descripción</label>
-                                    <input type="text" id="inputSpentBudget" class="form-control" value="">
+                                    <label for="txtMaterialDescription">Descripción</label>
+                                    <input type="text" id="txtMaterialDescription" class="form-control" value="">
                                 </div>
                                 <div class="form-group col-2">
-                                    <label for="inputSpentBudget">Cantidad</label>
-                                    <input type="number" id="inputSpentBudget" class="form-control" value="0" step="1">
+                                    <label for="txtQuantity">Cantidad</label>
+                                    <input type="number" id="txtQuantity" class="form-control" value="0" step="1">
                                 </div>
                                 <div class="form-group col-2">
-                                    <label for="inputSpentBudget">Precio</label>
-                                    <input type="number" id="inputSpentBudget" class="form-control" value="0" step="1">
+                                    <label for="txtPrice">Precio</label>
+                                    <input type="number" id="txtPrice" class="form-control" value="0" step="1">
                                 </div>
                             </div>
 
                             <div class="form-group col-6">
                                 <button type="button" onclick="" class="btn btn-secondary">Agregar</button>
+                                <a href="" id="btnViewVendor" class="btn btn-secondary" target="_blank" >Ver en proveedor</a>
                             </div>
                         </div>
                         <!-- /.card-body -->
                     </div>
-
 
                     <div class="card card-navy">
                         <div class="card-header">
@@ -101,16 +97,16 @@
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label for="inputEstimatedBudget">IVA - 13%</label>
-                                    <input type="number" id="inputEstimatedBudget" class="form-control" value="2300">
+                                    <input type="number" id="inputEstimatedBudget" class="form-control" value="0">
                                 </div>
                                 <div class="form-group col-6">
                                     <label for="inputSpentBudget">Honorarios</label>
-                                    <input type="number" id="inputSpentBudget" class="form-control" value="2000" step="1">
+                                    <input type="number" id="inputSpentBudget" class="form-control" value="0" step="1">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inputEstimatedDuration">Total General</label>
-                                <input type="number" id="inputEstimatedDuration" class="form-control" value="20" step="0.1">
+                                <input type="number" id="inputEstimatedDuration" class="form-control" value="0" step="0.1">
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -128,6 +124,10 @@
     <script src="~/Scripts/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
 
     <script>
+
+        var materialApi = new MaterialApi();
+        let materials = [];
+
         $(document).ready(function () {
 
             //Initialize Select2 Elements
@@ -135,32 +135,33 @@
                 theme: 'bootstrap4'
             })
 
+            $('#btnViewVendor').hide();
             var url = new URL(window.location.href);
             var budgetId = url.searchParams.get("Id");
 
-            LoadBudgetData(2);
+            LoadBudgetData(budgetId);
+            LoadMaterials();
 
         });
 
         function LoadBudgetData(budgetId) {
             budget_table = $('#myTable').DataTable({
                  "ajax": {
-                    "url": `/ArquisoftApp/Budget/ListBudgets?projectId=${budgetId}`,
+                    "url": `/ArquisoftApp/Budget/GetBudgetLines?budgetId=${budgetId}`,
                     "dataSrc": function (json) {
 
                         $.each(json.data, function (key, obj) {
-                            val = obj.CreationDate;
-                            obj.CreationDate = (new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10))).toLocaleDateString('en-US');;
+                            obj.totalLine = obj.Price * obj.Quantity;
                         });
 
                         return json.data;
                     }
                  },
                  "columns": [
-                     { "data": "Name" },
-                     { "data": "Type" },
-                     { "data": "CreationDate" },
-                     { "data": "CreationDate" },
+                     { "data": "Description" },
+                     { "data": "UOM" },
+                     { "data": "Price" },
+                     { "data": "totalLine" },
                      {
                          "data": "Id", "render": function (data) {
                              var buttons = "";
@@ -182,6 +183,55 @@
 
             });
         }
+
+        function LoadMaterials() {
+
+            var $MaterialSelect = $('#cmbMaterials');
+
+            materialApi.ListMaterials().then(res => {
+                $.each(res.data, function (key, value) {
+                    materials.push(value);
+                    var $option = $("<option/>", {
+                        value: `${value.Id}|S`,
+                        text: `${value.Description}`
+                    });
+
+                    $MaterialSelect.append($option);
+                });
+            });
+
+            materialApi.ListVendorMaterials().then(res => {
+                $.each(res.data, function (key, value) {
+                    materials.push(value);
+                    var $option = $("<option/>", {
+                        value: `${value.Id}|P`,
+                        text: `${value.Description}`
+                    });
+                    $MaterialSelect.append($option);
+                });
+            });
+        }
+
+        // Events
+        $('#cmbMaterials').on('change', function (e) {
+            var valueSelected = this.value.split('|')[0]
+            var typeSelected = this.value.split('|')[1];
+
+            $.each(materials, function (key, value) {
+                if (value.Id == valueSelected) {
+                    $("#txtMaterialDescription").val(value.Description);
+                    $("#txtQuantity").val();
+                    $("#txtPrice").val(value.Price);
+
+                    if (typeSelected === 'P') {
+                        $('#btnViewVendor').show();
+                        $("#btnViewVendor").attr("href", value.SiteURL)
+                    }
+                    else
+                        $('#btnViewVendor').hide();
+                }
+            });
+        });
 
 
     </script>

@@ -23,6 +23,8 @@
         <AssociationConnector Association="ArquisoftModel1.FK_ModuleOperations" />
         <AssociationConnector Association="ArquisoftModel1.FK_RoleOperations_Operations" />
         <AssociationConnector Association="ArquisoftModel1.FK_RoleOperations_Roles" />
+        <EntityTypeShape EntityType="ArquisoftModel1.BudgetLines" Width="1.5" PointX="7.5" PointY="10.125" />
+        <AssociationConnector Association="ArquisoftModel1.FK_BudgetLines_Budget" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

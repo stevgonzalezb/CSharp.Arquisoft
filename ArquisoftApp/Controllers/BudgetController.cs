@@ -29,6 +29,19 @@ namespace ArquisoftApp.Controllers
             return Json(new { data = attList }, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetBudgetLines(int budgetId)
+        {
+            List<BudgetLines> budgetLines = new List<BudgetLines>();
+
+            using (ArquisoftEntities db = new ArquisoftEntities())
+            {
+
+                budgetLines = (from p in db.BudgetLines.Where(b => b.BudgetId == budgetId)
+                           select p).ToList();
+            }
+            return Json(new { data = budgetLines }, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult Delete(int budgetId)
         {
             bool response = true;

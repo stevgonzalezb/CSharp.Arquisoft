@@ -303,21 +303,20 @@ class BudgetApi {
         });
     }
 
-    // Save or Update Project data
-    SaveProject = async function (data) {
+    // Delete budget
+    DeleteBudget = async function (budgetId) {
         return $.ajax({
-            url: "/ArquisoftApp/Project/Save",
-            type: "POST",
-            data: JSON.stringify(data),
+            url: `/ArquisoftApp/Budget/Delete?budgetId=${budgetId}`,
+            type: "GET",
             dataType: "json",
             contentType: "application/json; charset=utf-8",
         });
     }
 
-    // Delete budget
-    DeleteBudget = async function (budgetId) {
+    // List budget lines
+    ListBudgets = async function (budgetId) {
         return $.ajax({
-            url: `/ArquisoftApp/Budget/Delete?budgetId=${budgetId}`,
+            url: `/ArquisoftApp/Budget/GetBudgetLines?budgetId=${budgetId}`,
             type: "GET",
             dataType: "json",
             contentType: "application/json; charset=utf-8",

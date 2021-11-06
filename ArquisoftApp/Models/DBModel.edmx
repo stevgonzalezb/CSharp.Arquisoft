@@ -24,6 +24,17 @@
           <Property Name="User" Type="varchar" MaxLength="50" />
           <Property Name="Date" Type="datetime" />
         </EntityType>
+        <EntityType Name="BudgetLines">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="200" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="UOM" Type="varchar" MaxLength="50" />
+          <Property Name="BudgetId" Type="int" />
+        </EntityType>
         <EntityType Name="Budgets">
           <Key>
             <PropertyRef Name="Id" />
@@ -156,6 +167,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_BudgetLines_Budget">
+          <End Role="Budgets" Type="Self.Budgets" Multiplicity="0..1" />
+          <End Role="BudgetLines" Type="Self.BudgetLines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Budgets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BudgetLines">
+              <PropertyRef Name="BudgetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Budgets_Projects">
           <End Role="Projects" Type="Self.Projects" Multiplicity="0..1" />
           <End Role="Budgets" Type="Self.Budgets" Multiplicity="*" />
@@ -279,6 +302,7 @@
         <EntityContainer Name="ArquisoftModel1StoreContainer">
           <EntitySet Name="Attachments" EntityType="Self.Attachments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Audit" EntityType="Self.Audit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BudgetLines" EntityType="Self.BudgetLines" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Budgets" EntityType="Self.Budgets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Materials" EntityType="Self.Materials" Schema="dbo" store:Type="Tables" />
@@ -294,6 +318,10 @@
           <AssociationSet Name="FK_Attachments_Project" Association="Self.FK_Attachments_Project">
             <End Role="Projects" EntitySet="Projects" />
             <End Role="Attachments" EntitySet="Attachments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BudgetLines_Budget" Association="Self.FK_BudgetLines_Budget">
+            <End Role="Budgets" EntitySet="Budgets" />
+            <End Role="BudgetLines" EntitySet="BudgetLines" />
           </AssociationSet>
           <AssociationSet Name="FK_Budgets_Projects" Association="Self.FK_Budgets_Projects">
             <End Role="Projects" EntitySet="Projects" />
@@ -399,6 +427,11 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="BudgetLines" EntityType="ArquisoftModel1.BudgetLines" />
+          <AssociationSet Name="FK_BudgetLines_Budget" Association="ArquisoftModel1.FK_BudgetLines_Budget">
+            <End Role="Budgets" EntitySet="Budgets" />
+            <End Role="BudgetLines" EntitySet="BudgetLines" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="State">
           <Key>
@@ -471,6 +504,7 @@
           <Property Name="IdState" Type="Int32" />
           <NavigationProperty Name="Projects" Relationship="ArquisoftModel1.FK_Budgets_Projects" FromRole="Budgets" ToRole="Projects" />
           <NavigationProperty Name="State" Relationship="ArquisoftModel1.FK_Budgets_State" FromRole="Budgets" ToRole="State" />
+          <NavigationProperty Name="BudgetLines" Relationship="ArquisoftModel1.FK_BudgetLines_Budget" FromRole="Budgets" ToRole="BudgetLines" />
         </EntityType>
         <EntityType Name="Clients">
           <Key>
@@ -693,6 +727,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="BudgetLines">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="UOM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BudgetId" Type="Int32" />
+          <NavigationProperty Name="Budgets" Relationship="ArquisoftModel1.FK_BudgetLines_Budget" FromRole="BudgetLines" ToRole="Budgets" />
+        </EntityType>
+        <Association Name="FK_BudgetLines_Budget">
+          <End Type="ArquisoftModel1.Budgets" Role="Budgets" Multiplicity="0..1" />
+          <End Type="ArquisoftModel1.BudgetLines" Role="BudgetLines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Budgets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BudgetLines">
+              <PropertyRef Name="BudgetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -847,6 +905,18 @@
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="ImgURL" ColumnName="ImgURL" />
                 <ScalarProperty Name="SiteURL" ColumnName="SiteURL" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BudgetLines">
+            <EntityTypeMapping TypeName="ArquisoftModel1.BudgetLines">
+              <MappingFragment StoreEntitySet="BudgetLines">
+                <ScalarProperty Name="BudgetId" ColumnName="BudgetId" />
+                <ScalarProperty Name="UOM" ColumnName="UOM" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>

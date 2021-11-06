@@ -14,6 +14,12 @@ namespace ArquisoftApp.Models
     
     public partial class Budgets
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Budgets()
+        {
+            this.BudgetLines = new HashSet<BudgetLines>();
+        }
+    
         public int Id { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
@@ -24,5 +30,7 @@ namespace ArquisoftApp.Models
     
         public virtual Projects Projects { get; set; }
         public virtual State State { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BudgetLines> BudgetLines { get; set; }
     }
 }
