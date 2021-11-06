@@ -322,4 +322,25 @@ class BudgetApi {
             contentType: "application/json; charset=utf-8",
         });
     }
+
+    // Save or Update BudgetLine data
+    SaveBudgetLine = async function (data) {
+        return $.ajax({
+            url: "/ArquisoftApp/Budget/SaveBudgetLine",
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
+
+    // Delete budget Line
+    DeleteBudgetLine = async function (budgetLineId) {
+        return $.ajax({
+            url: `/ArquisoftApp/Budget/DeleteBudgetLine?budgetLineId=${budgetLineId}`,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
 }

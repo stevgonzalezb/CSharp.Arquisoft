@@ -11,7 +11,7 @@
     <section class="content">
         <div class="card-body p-2" style="background-color:whitesmoke">
             <div class="row">
-                <div class="col-6">
+                <div class="col-6 col-lg-8">
                     <div class="card card-dark" style="overflow-y: initial !important">
                         <div class="card-header">
                             <h3 class="card-title">Presupuesto</h3>
@@ -28,6 +28,7 @@
                                     <tr>
                                         <th>Material</th>
                                         <th>Unidad</th>
+                                        <th>Cantidad</th>
                                         <th>Precio</th>
                                         <th>Total</th>
                                         <th></th>
@@ -39,7 +40,7 @@
                     </div>
                 </div>
 
-                <div class="col-6">
+                <div class="col-6 col-lg-4">
                     <div class="card card-dark">
                         <div class="card-header">
                             <h3 class="card-title">Materiales</h3>
@@ -50,11 +51,20 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="background-color:whitesmoke">
                             <div class="row">
-                                <div class="form-group col-12">
+                                <div class="form-group col-9">
                                     <label for="cmbMaterials">Seleccione un material</label>
                                     <select id="cmbMaterials" class="form-control select2bs4">
+                                        <option>Seleccione un material...</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-3">
+                                    <label for="cmbUOM">Unidad Medida</label>
+                                    <select id="cmbUOM" class="form-control select2bs4">
+                                        <option>Kg</option>
+                                        <option>Unidad</option>
+                                        <option>Metro</option>
                                     </select>
                                 </div>
                             </div>
@@ -76,8 +86,8 @@
                             </div>
 
                             <div class="form-group col-6">
-                                <button type="button" onclick="" class="btn btn-secondary">Agregar</button>
-                                <a href="" id="btnViewVendor" class="btn btn-secondary" target="_blank" >Ver en proveedor</a>
+                                <button type="button" onclick="AddLineToBudget()" class="btn btn-secondary">Agregar</button>
+                                <a href="" id="btnViewVendor" class="btn btn-outline-secondary" target="_blank"><i class="nav-icon fas fa-truck-pickup"></i></a>
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -93,7 +103,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="background-color: lightgray">
                             <div class="row">
                                 <div class="form-group col-6">
                                     <label for="inputEstimatedBudget">IVA - 13%</label>
@@ -117,6 +127,40 @@
     </section>
 </div>
 <!-- /.content-wrapper -->
+<!-- Modal -->
+<form class="modal" id="FormModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Editar Línea</h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-8">
+                        <label for="txtMaterialDescriptionEdit">Descripción</label>
+                        <input type="text" id="txtMaterialDescriptionEdit" class="form-control" value="">
+                    </div>
+                    <div class="form-group col-2">
+                        <label for="txtQuantityEdit">Cantidad</label>
+                        <input type="number" id="txtQuantityEdit" class="form-control" value="0" step="1">
+                    </div>
+                    <div class="form-group col-2">
+                        <label for="txtPriceEdit">Precio</label>
+                        <input type="number" id="txtPriceEdit" class="form-control" value="0" step="1">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-secondary" onclick="Save()">Guardar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</form>
+<!-- /.modal -->
 
 @section scripts{
 
@@ -126,7 +170,11 @@
     <script>
 
         var materialApi = new MaterialApi();
-        let materials = [];
+        var budgetApi = new BudgetApi();
+        let materials = [],
+            budgetData = [],
+            budget_table,
+            budgetId;
 
         $(document).ready(function () {
 
@@ -137,7 +185,7 @@
 
             $('#btnViewVendor').hide();
             var url = new URL(window.location.href);
-            var budgetId = url.searchParams.get("Id");
+            budgetId = url.searchParams.get("Id");
 
             LoadBudgetData(budgetId);
             LoadMaterials();
@@ -151,8 +199,10 @@
                     "dataSrc": function (json) {
 
                         $.each(json.data, function (key, obj) {
-                            obj.totalLine = obj.Price * obj.Quantity;
+                            obj.totalLine = parseFloat(obj.Price) * parseInt(obj.Quantity);
                         });
+
+                        budgetData = json.data;
 
                         return json.data;
                     }
@@ -160,13 +210,14 @@
                  "columns": [
                      { "data": "Description" },
                      { "data": "UOM" },
+                     { "data": "Quantity" },
                      { "data": "Price" },
                      { "data": "totalLine" },
                      {
                          "data": "Id", "render": function (data) {
                              var buttons = "";
-                             buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los materiales' class='btn btn-outline-secondary btn-sm' type='button' onclick='OpenBudget(" + data + ")'><i class='fas fa-pen'></i></button>"
-                             buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de materiales' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='DeleteBudget(" + data + ")'><i class='fa fa-trash'></i></button>"
+                             buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los materiales' class='btn btn-outline-secondary btn-sm' type='button' onclick='OpenEditModal(" + data + ")'><i class='fas fa-pen'></i></button>"
+                             buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de materiales' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='DeleteBudgetLine(" + data + ")'><i class='fa fa-trash'></i></button>"
 
                              return buttons;
                          },
@@ -193,7 +244,7 @@
                     materials.push(value);
                     var $option = $("<option/>", {
                         value: `${value.Id}|S`,
-                        text: `${value.Description}`
+                        text: `${value.Description.trimEnd()}`
                     });
 
                     $MaterialSelect.append($option);
@@ -205,11 +256,73 @@
                     materials.push(value);
                     var $option = $("<option/>", {
                         value: `${value.Id}|P`,
-                        text: `${value.Description}`
+                        text: `${value.Description.trimEnd()}`
                     });
                     $MaterialSelect.append($option);
                 });
             });
+        }
+
+        function AddLineToBudget() {
+            var $data = {
+                oBudgetLine: {
+                    Id: 0,
+                    Description: $("#txtMaterialDescription").val(),
+                    Quantity: parseInt($("#txtQuantity").val()),
+                    Price: parseFloat($("#txtPrice").val()),
+                    UOM: 'kg',
+                    BudgetId: budgetId
+                }
+            }
+
+            budgetApi.SaveBudgetLine($data).then(response => {
+                if (response) {
+                    toastr.success('Linea guardada correctamente.');
+                    budget_table.ajax.reload();
+                } else {
+                    toastr.error(response.result);
+                }
+
+            }).catch(err => {
+
+                toastr.error("Ocurrió un error guardando los datos del Proyecto.");
+            })
+        }
+
+        function DeleteBudgetLine($budgetLineId) {
+            if (confirm("¿Realmente desea eliminar esta línea?")) {
+
+                budgetApi.DeleteBudgetLine($budgetLineId).then(response => {
+                    if (response.result) {
+                        budget_table.ajax.reload();
+                        toastr.success('Linea eliminada correctamente.');
+                    }
+                }).catch(err => {
+                    toastr.error("Ocurrió un error eliminando los datos de línea.");
+                })
+            }
+        }
+
+        function OpenEditModal($budgetLineId) {
+
+            if ($budgetLineId != 0) {
+
+                try {
+                    $.each(budgetData, function (key, line) {
+                        if (line.Id == $budgetLineId) {
+                            $("#txtMaterialDescriptionEdit").val(line.Description);
+                            $("#txtQuantityEdit").val(line.Quantity);
+                            $("#txtPriceEdit").val(line.Price);
+                        }
+                    })
+
+
+                } catch (err) {
+                    console.log(err);
+                    toastr.error("Ocurrió un error cargando los datos de usuario seleccionado.");
+                }
+            }
+            $('#FormModal').modal('show');
         }
 
         // Events
