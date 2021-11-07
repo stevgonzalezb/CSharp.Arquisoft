@@ -39,7 +39,7 @@
                                 </li>
                             </ul>
 
-                            <a data-target="#passwordModal" data-toggle="modal" href="#passwordModal" class="btn btn-outline-secondary btn-block"><b>Cambiar contraseña</b></a>
+                            <a data-target="#passwordModal" data-toggle="modal" href="#passwordModal" class="btn btn-outline-secondary btn-block"><b data-toggle="tooltip" data-placement="top" title="Da clic para realizar el cambio de su contraseña">Cambiar contraseña</b></a>
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -106,13 +106,38 @@
     <!-- /.content -->
 </div>
 
+@*Modal Ayuda*@
+<div class="modal" id="userProfileHelp" role="dialog">
+    <div class="modal-dialog" style="overflow-y: initial !important">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-bold text-center">Ayuda M&oacute;dulo Perfil de Usuario</h4>
+            </div>
+            <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
+                <h4 align="center"><b></b></h4>
+                <p>&nbsp;&nbsp;Este m&oacute;dulo esta desarrollado para que el usuario realice el cambio de su nombre, apellidos o cambio de contraseña.</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/User_profile/userProfile01.jpg" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>Una vez realizado los cambios necesarios se da al bot&oacute;n guardar</p>
+
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*/.modal*@
+
 @section scripts{
     <script>
 
         const api = new UserApi();
         const emailRegex = app.enums.Regex.Email;
 
-            // On load event - Initial event
+        // On load event - Initial event
+        $("#helpModalNav").attr('data-target', "#userProfileHelp");
         $(document).ready(function () {
 
 
@@ -182,17 +207,17 @@
         });
 
         function LoadUserData() {
-                api.GetSessionUser().then(user => {
-                    if (user) {
-                        $("#txtId").val(user.Id);
-                        $("#txtName").val(user.Name);
-                        $("#txtLastName").val(user.Last_Name);
-                        $("#txtEmail").val(user.Email);
-                        $("#txtUsername").val(user.Username);
-                        $("#lblNameTitle").text(`${user.Name} ${user.Last_Name}`)
-                        $("#lblRole").text(user.IdRole)
-                    }
-                });
+            api.GetSessionUser().then(user => {
+                if (user) {
+                    $("#txtId").val(user.Id);
+                    $("#txtName").val(user.Name);
+                    $("#txtLastName").val(user.Last_Name);
+                    $("#txtEmail").val(user.Email);
+                    $("#txtUsername").val(user.Username);
+                    $("#lblNameTitle").text(`${user.Name} ${user.Last_Name}`)
+                    $("#lblRole").text(user.IdRole)
+                }
+            });
         }
 
         // Submit form method
@@ -231,4 +256,4 @@
 
 
     </script>
-    }
+}
