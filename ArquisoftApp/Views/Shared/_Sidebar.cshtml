@@ -11,10 +11,10 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="~/Content/img/profile_avatar.png" class="img-circle elevation-2" alt="User Image">
+                <a href="@Url.Action("Profile", "User")" class="d-block"><img src="~/Content/img/profile_avatar.png" class="img-circle elevation-2" alt="User Image" data-toggle="tooltip" data-placement="top" title="Ingrese para ver su perfil de usuario"></a>
             </div>
             <div class="info">
-                <a href="@Url.Action("Profile", "User")" class="d-block">@ViewBag.UserName</a>
+                <a href="@Url.Action("Profile", "User")" class="d-block" data-toggle="tooltip" data-placement="top" title="Ingrese para ver su perfil de usuario">@ViewBag.UserName</a>
             </div>
         </div>
 

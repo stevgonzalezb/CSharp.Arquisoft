@@ -177,28 +177,30 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="text-dark">Cambiar Contraseña</h4>
+
                 </div>
                 <div class="modal-body">
                     <form role="form" id="passForm">
                         <div class="row">
                             <div class="form-group col-6">
                                 <label for="txtCurrentPassword">Contraseña Actual:</label>
-                                <input type="password" name="txtCurrentPassword" class="form-control" id="txtCurrentPassword">
+                                <input type="password" name="txtCurrentPassword" class="form-control" id="txtCurrentPassword" placeholder="Ingrese su contraseña actual">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="form-group col-6">
                                 <label for="txtNewPassword">Contraseña nueva:</label>
-                                <input type="password" class="form-control" name="txtNewPassword" id="txtNewPassword">
+                                <input type="password" class="form-control" name="txtNewPassword" id="txtNewPassword" placeholder="Ingrese su contraseña nueva">
                             </div>
                             <div class="form-group col-6">
                                 <label for="txtConfirmPassword">Confirmar contraseña:</label>
-                                <input type="password" class="form-control" name="txtConfirmPassword" id="txtConfirmPassword">
+                                <input type="password" class="form-control" name="txtConfirmPassword" id="txtConfirmPassword" placeholder="Confirme su contraseña nueva">
                             </div>
                         </div>
                         <div class="row">
-                            <label class="text-sm text-gray">Nota: Cuando se reestablezca la contraseña será dirigido a la pantalla de Login y deberá iniciar sesión nuevamente.</label>
+                            <label class="text-sm text-gray">Nota: Cuando se reestablezca la contraseña será dirigido a la pantalla de Login y deberá iniciar sesión nuevamente.<a class="text-gray" id="helpModalNav" data-toggle="modal" href="#changepassword" role="button" data-target=""><i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Ingrese a la ayuda del sistema"></i></a></label>
+                            
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-secondary" onclick="ChangePassword()">Guardar</button>
@@ -212,6 +214,31 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+    @*Modal Ayuda*@
+    <div class="modal" id="changepassword" role="dialog">
+        <div class="modal-dialog" style="overflow-y: initial !important">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="text-bold text-center">Ayuda cambio de contraseña</h4>
+                </div>
+                <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
+                    <h4 align="center"><b></b></h4>
+                    <p>&nbsp;&nbsp;Este m&oacute;dulo esta desarrollado para que cada  uno de los usuarios se auto gestione el cambio de contraseña en el sistema.</p>
+                    
+                    <p>&nbsp;&nbsp;En esta pantalla se completa los campos solicitados</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/User_profile/userProfile02.jpg" class="img-rounded" alt="Cinque Terre" />
+                        <p>&nbsp;&nbsp;Se debe colocar la contraseña actual, seguidamente de la contraseña nueva y la confirmaci&oacute;n de la misma.</p>
+                        <p>&nbsp;&nbsp;Una vez ingresado los datos se da al bot&oacute;n "Guardar"</p>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*/.modal*@
 
 </body>
 </html>
