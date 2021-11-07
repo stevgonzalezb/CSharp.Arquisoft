@@ -27,6 +27,8 @@ namespace ArquisoftApp.Models
         public string Comments { get; set; }
         public Nullable<int> ProjectId { get; set; }
         public Nullable<int> IdState { get; set; }
+        public Nullable<int> Fee { get; set; }
+        public Nullable<decimal> Total { get; set; }
     
         public virtual Projects Projects { get; set; }
         public virtual State State { get; set; }

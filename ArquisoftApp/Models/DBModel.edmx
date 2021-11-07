@@ -46,6 +46,8 @@
           <Property Name="Comments" Type="varchar" MaxLength="400" />
           <Property Name="ProjectId" Type="int" />
           <Property Name="IdState" Type="int" />
+          <Property Name="Fee" Type="int" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="Clients">
           <Key>
@@ -505,6 +507,8 @@
           <NavigationProperty Name="Projects" Relationship="ArquisoftModel1.FK_Budgets_Projects" FromRole="Budgets" ToRole="Projects" />
           <NavigationProperty Name="State" Relationship="ArquisoftModel1.FK_Budgets_State" FromRole="Budgets" ToRole="State" />
           <NavigationProperty Name="BudgetLines" Relationship="ArquisoftModel1.FK_BudgetLines_Budget" FromRole="Budgets" ToRole="BudgetLines" />
+          <Property Name="Fee" Type="Int32" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="Clients">
           <Key>
@@ -803,6 +807,8 @@
           <EntitySetMapping Name="Budgets">
             <EntityTypeMapping TypeName="ArquisoftModel1.Budgets">
               <MappingFragment StoreEntitySet="Budgets">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Fee" ColumnName="Fee" />
                 <ScalarProperty Name="IdState" ColumnName="IdState" />
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
                 <ScalarProperty Name="Comments" ColumnName="Comments" />

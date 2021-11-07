@@ -1,6 +1,7 @@
 ﻿using ArquisoftApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -31,15 +32,45 @@ namespace ArquisoftApp.Controllers
 
         public JsonResult GetBudgetLines(int budgetId)
         {
-            List<BudgetLines> budgetLines = new List<BudgetLines>();
 
-            using (ArquisoftEntities db = new ArquisoftEntities())
+            var data = "[]";
+            var ArquisoftConnection = AppController.GetConnectionString();
+            var queryString = string.Format(@"SELECT A.Id [Budget], A.Fee, A.Total Subtotal, CONVERT(DECIMAL(18,1), ((A.Total*(CONVERT(decimal(10,2),A.Fee)/100))+A.Total)) Total, Lines.*
+                                                FROM Budgets A 
+	                                                INNER JOIN BudgetLines Lines ON A.Id = Lines.BudgetId
+                                                WHERE A.Id = {0} 
+                                                FOR JSON AUTO", budgetId);
+
+            using (SqlConnection conn = new SqlConnection(ArquisoftConnection))
             {
+                using (SqlCommand command = new SqlCommand(queryString, conn))
+                {
+                    conn.Open();
+                    SqlDataReader reader = command.ExecuteReader();
 
-                budgetLines = (from p in db.BudgetLines.Where(b => b.BudgetId == budgetId)
-                           select p).ToList();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            data = reader.GetValue(0).ToString();
+                        }
+                    }
+                }
             }
-            return Json(new { data = budgetLines }, JsonRequestBehavior.AllowGet);
+
+            return Json(new { data }, JsonRequestBehavior.AllowGet);
+
+
+
+            //List<BudgetLines> budgetLines = new List<BudgetLines>();
+
+            //using (ArquisoftEntities db = new ArquisoftEntities())
+            //{
+
+            //    budgetLines = (from p in db.BudgetLines.Where(b => b.BudgetId == budgetId)
+            //               select p).ToList();
+            //}
+            //return Json(new { data = budgetLines }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Delete(int budgetId)
@@ -69,8 +100,9 @@ namespace ArquisoftApp.Controllers
 
 
         [HttpPost]
-        public JsonResult SaveBudgetLine(BudgetLines oBudgetLine)
+        public JsonResult SaveBudgetLine(BudgetLines oBudgetLine, Budgets oBudget)
         {
+
             String response = "";
             try
             {
@@ -82,6 +114,13 @@ namespace ArquisoftApp.Controllers
                         using (ArquisoftEntities db = new ArquisoftEntities())
                         {
                             db.BudgetLines.Add(oBudgetLine);
+
+                            Budgets tempBudget = (from c in db.Budgets.Where(x => x.Id == oBudget.Id)
+                                                  select c).FirstOrDefault();
+
+                            tempBudget.Fee = oBudget.Fee;
+                            tempBudget.Total = oBudget.Total;
+
                             db.SaveChanges();
                         }
                         AppController.AuditAction(new Audit { Module = "Linea Presupuesto", Action = "Crear", Date = DateTime.Now });
@@ -97,8 +136,14 @@ namespace ArquisoftApp.Controllers
                     {
                         using (ArquisoftEntities db = new ArquisoftEntities())
                         {
-                            BudgetLines tempBudgetLine = (from c in db.BudgetLines.Where(x => x.Id == oBudgetLine.Id)
+                            BudgetLines tempBudgetLine = (from c in db.BudgetLines.Where(x => x.Id == oBudgetLine.Id && x.BudgetId == oBudgetLine.BudgetId)
                                                           select c).FirstOrDefault();
+
+                            Budgets tempBudget = (from c in db.Budgets.Where(x => x.Id == oBudget.Id)
+                                                  select c).FirstOrDefault();
+
+                            tempBudget.Fee = oBudget.Fee;
+                            tempBudget.Total = (tempBudget.Total - (tempBudgetLine.Price* tempBudgetLine.Quantity)) + (oBudgetLine.Price * oBudgetLine.Quantity);
 
                             tempBudgetLine.Description = oBudgetLine.Description;
                             tempBudgetLine.Quantity = oBudgetLine.Quantity;
@@ -108,6 +153,7 @@ namespace ArquisoftApp.Controllers
 
                             db.SaveChanges();
                         }
+
                         AppController.AuditAction(new Audit { Module = "Linea Presupuesto", Action = "Editar", Date = DateTime.Now });
                         response = "OK";
                     }
@@ -120,9 +166,10 @@ namespace ArquisoftApp.Controllers
             return Json(new { result = response }, JsonRequestBehavior.AllowGet);
         }
 
-        
-        public JsonResult DeleteBudgetLine(int budgetLineId)
+        [HttpPost]
+        public JsonResult DeleteBudgetLine(int budgetLineId, Budgets oBudget)
         {
+
             bool response = true;
             try
             {
@@ -131,9 +178,18 @@ namespace ArquisoftApp.Controllers
                     BudgetLines oBudgetLine = new BudgetLines();
                     oBudgetLine = (from c in db.BudgetLines.Where(x => x.Id == budgetLineId)
                                select c).FirstOrDefault();
+
+                    Budgets tempBudget = (from c in db.Budgets.Where(x => x.Id == oBudget.Id)
+                                          select c).FirstOrDefault();
+
+                    tempBudget.Fee = oBudget.Fee;
+                    tempBudget.Total = tempBudget.Total - (oBudgetLine.Price*oBudgetLine.Quantity);
+
                     db.BudgetLines.Remove(oBudgetLine);
                     db.SaveChanges();
                 }
+
+
                 AppController.AuditAction(new Audit { Module = "Presupuesto", Action = "Eliminar", Date = DateTime.Now });
             }
             catch

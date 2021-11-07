@@ -335,10 +335,11 @@ class BudgetApi {
     }
 
     // Delete budget Line
-    DeleteBudgetLine = async function (budgetLineId) {
+    DeleteBudgetLine = async function (data) {
         return $.ajax({
-            url: `/ArquisoftApp/Budget/DeleteBudgetLine?budgetLineId=${budgetLineId}`,
-            type: "GET",
+            url: `/ArquisoftApp/Budget/DeleteBudgetLine`,
+            type: "POST",
+            data: JSON.stringify(data),
             dataType: "json",
             contentType: "application/json; charset=utf-8",
         });

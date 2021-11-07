@@ -11,7 +11,7 @@
     <section class="content">
         <div class="card-body p-2" style="background-color:whitesmoke">
             <div class="row">
-                <div class="col-6 col-lg-8">
+                <div class="col-7">
                     <div class="card card-dark" style="overflow-y: initial !important">
                         <div class="card-header">
                             <h3 class="card-title">Presupuesto</h3>
@@ -40,7 +40,7 @@
                     </div>
                 </div>
 
-                <div class="col-6 col-lg-4">
+                <div class="col-5">
                     <div class="card card-dark">
                         <div class="card-header">
                             <h3 class="card-title">Materiales</h3>
@@ -56,19 +56,19 @@
                                 <div class="form-group col-9">
                                     <label for="cmbMaterials">Seleccione un material</label>
                                     <select id="cmbMaterials" class="form-control select2bs4">
-                                        <option>Seleccione un material...</option>
+                                        <option value="0">Seleccione un material...</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-3">
-                                    <label for="cmbUOM">Unidad Medida</label>
-                                    <select id="cmbUOM" class="form-control select2bs4">
+                                    <label for="cmbUOM">U. Medida</label>
+                                    <select id="cmbUOM" class="form-control select2">
+                                        <option value="0">Seleccione unidad...</option>
                                         <option>Kg</option>
                                         <option>Unidad</option>
                                         <option>Metro</option>
                                     </select>
                                 </div>
                             </div>
-
 
                             <div class="row">
                                 <div class="form-group col-8">
@@ -80,14 +80,24 @@
                                     <input type="number" id="txtQuantity" class="form-control" value="0" step="1">
                                 </div>
                                 <div class="form-group col-2">
-                                    <label for="txtPrice">Precio</label>
-                                    <input type="number" id="txtPrice" class="form-control" value="0" step="1">
+                                    <label for="txtPrice">Precio(₡)</label>
+                                    <input type="number" id="txtPrice" class="form-control" value="0" step="5">
                                 </div>
                             </div>
-
-                            <div class="form-group col-6">
-                                <button type="button" onclick="AddLineToBudget()" class="btn btn-secondary">Agregar</button>
-                                <a href="" id="btnViewVendor" class="btn btn-outline-secondary" target="_blank"><i class="nav-icon fas fa-truck-pickup"></i></a>
+                            <hr />
+                            <div class="row">
+                                <div class="form-group col-4">
+                                    <label for="txtPreSubtotal">Total Línea</label>
+                                    <input type="text" id="txtTotalLine" class="form-control" value="₡0" disabled>
+                                </div>
+                                <div class="form-group col-4">
+                                    <label for="txtPreFinalTotal">Subtotal</label>
+                                    <input type="text" id="txtPreSubtotal" class="form-control" value="₡0" disabled>
+                                </div>
+                                <div class="form-group col-4 align-self-end">
+                                    <button type="button" onclick="SaveBudgetLine('A')" class="btn btn-secondary">Agregar</button>
+                                    <a href="" id="btnViewVendor" class="btn btn-outline-secondary " target="_blank"><i class="nav-icon fas fa-truck-pickup"></i></a>
+                                </div>
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -105,18 +115,25 @@
                         </div>
                         <div class="card-body" style="background-color: lightgray">
                             <div class="row">
-                                <div class="form-group col-6">
-                                    <label for="inputEstimatedBudget">IVA - 13%</label>
-                                    <input type="number" id="inputEstimatedBudget" class="form-control" value="0">
+                                <div class="form-group col-4">
+                                    <label for="txtSubtotal">Subtotal</label>
+                                    <input type="text" id="txtSubtotal" class="form-control" value="₡0" disabled>
+                                </div>
+                                <div class="form-group col-2">
+                                    <label for="txtFees">Honorarios(%)</label>
+                                    <input type="number" id="txtFees" class="form-control" value="0" step="1">
                                 </div>
                                 <div class="form-group col-6">
-                                    <label for="inputSpentBudget">Honorarios</label>
-                                    <input type="number" id="inputSpentBudget" class="form-control" value="0" step="1">
+                                    <label for="txtFinalTotal">Total General</label>
+                                    <input type="text" id="txtFinalTotal" class="form-control" value="₡0" disabled>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="inputEstimatedDuration">Total General</label>
-                                <input type="number" id="inputEstimatedDuration" class="form-control" value="0" step="0.1">
+                            <hr />
+                            <div class="row">
+                                <div class="form-group col-12 align-self-end">
+                                    <button type="button" onclick="" class="btn btn-secondary">Guardar Presupuesto</button>
+                                    <button type="button" onclick="" class="btn btn-secondary">Generar PDF</button>
+                                </div>
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -128,38 +145,49 @@
 </div>
 <!-- /.content-wrapper -->
 <!-- Modal -->
-<form class="modal" id="FormModal">
-    <div class="modal-dialog">
+<div class="modal" id="FormModal" role="dialog">
+    <div class="modal-dialog modal-lg"> 
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Editar Línea</h4>
 
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="form-group col-8">
-                        <label for="txtMaterialDescriptionEdit">Descripción</label>
-                        <input type="text" id="txtMaterialDescriptionEdit" class="form-control" value="">
+                <form id="frmModal" role="form">
+                    <input type="hidden" id="txtBudgetLineId" />
+                    <div class="row">
+                        <div class="form-group col-8 col-lg-6">
+                            <label for="txtMaterialDescriptionEdit">Descripción</label>
+                            <input type="text" id="txtMaterialDescriptionEdit" class="form-control" value="">
+                        </div>
+                        <div class="form-group col-3 col-lg-2">
+                            <label for="cmbUOM">Unidad Medida</label>
+                            <select id="cmbUOM" class="form-control select2bs4">
+                                <option>Kg</option>
+                                <option>Unidad</option>
+                                <option>Metro</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-2 col-lg-2">
+                            <label for="txtQuantityEdit">Cantidad</label>
+                            <input type="number" id="txtQuantityEdit" class="form-control" value="0" step="1">
+                        </div>
+                        <div class="form-group col-2 col-lg-2">
+                            <label for="txtPriceEdit">Precio</label>
+                            <input type="number" id="txtPriceEdit" class="form-control" value="0" step="1">
+                        </div>
                     </div>
-                    <div class="form-group col-2">
-                        <label for="txtQuantityEdit">Cantidad</label>
-                        <input type="number" id="txtQuantityEdit" class="form-control" value="0" step="1">
-                    </div>
-                    <div class="form-group col-2">
-                        <label for="txtPriceEdit">Precio</label>
-                        <input type="number" id="txtPriceEdit" class="form-control" value="0" step="1">
-                    </div>
-                </div>
+                </form>
             </div>
             <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-secondary" onclick="Save()">Guardar</button>
+                <button type="button" class="btn btn-secondary" onclick="SaveBudgetLine('E')">Guardar</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
-</form>
+</div>
 <!-- /.modal -->
 
 @section scripts{
@@ -174,9 +202,22 @@
         let materials = [],
             budgetData = [],
             budget_table,
-            budgetId;
+            budgetId,
+            preCalcs = {
+                TotalLine: 0,
+                PreSubtotal: 0,
+                PreFinalTotal: 0
+            },
+            totalsData = {
+                Fee: 0,
+                Subtotal: 0,
+                FinalTotal: 0
+            };
 
         $(document).ready(function () {
+
+            //Initialize Select2 Elements
+            $('.select2').select2()
 
             //Initialize Select2 Elements
             $('.select2bs4').select2({
@@ -198,13 +239,22 @@
                     "url": `/ArquisoftApp/Budget/GetBudgetLines?budgetId=${budgetId}`,
                     "dataSrc": function (json) {
 
-                        $.each(json.data, function (key, obj) {
+                        let JsonBudgetData = JSON.parse(json.data);
+                        JsonBudgetData = JsonBudgetData[0];
+
+                        totalsData.Fee = JsonBudgetData.Fee;
+                        totalsData.Subtotal = JsonBudgetData.Subtotal;
+                        totalsData.FinalTotal = JsonBudgetData.Total;
+
+                        $.each(JsonBudgetData.Lines, function (key, obj) {
                             obj.totalLine = parseFloat(obj.Price) * parseInt(obj.Quantity);
+                            obj.totalLine = `₡${obj.totalLine}`;
+                            obj.Price = `₡${obj.Price}`;
                         });
 
-                        budgetData = json.data;
-
-                        return json.data;
+                        budgetData = JsonBudgetData.Lines;
+                        LoadTotalCard();
+                        return JsonBudgetData.Lines;
                     }
                  },
                  "columns": [
@@ -263,15 +313,20 @@
             });
         }
 
-        function AddLineToBudget() {
+        function SaveBudgetLine(action) {
             var $data = {
                 oBudgetLine: {
-                    Id: 0,
-                    Description: $("#txtMaterialDescription").val(),
-                    Quantity: parseInt($("#txtQuantity").val()),
-                    Price: parseFloat($("#txtPrice").val()),
+                    Id: action == 'A' ? 0 : parseInt($("#txtBudgetLineId").val()),
+                    Description: action == 'A' ? $("#txtMaterialDescription").val() : $("#txtMaterialDescriptionEdit").val(),
+                    Quantity: action == 'A' ? parseInt($("#txtQuantity").val()) : parseInt($("#txtQuantityEdit").val()),
+                    Price: action == 'A' ? parseFloat($("#txtPrice").val()) : parseFloat($("#txtPriceEdit").val()),
                     UOM: 'kg',
                     BudgetId: budgetId
+                },
+                oBudget: {
+                    Id: budgetId,
+                    Fee: totalsData.Fee,
+                    Total: preCalcs.PreSubtotal
                 }
             }
 
@@ -279,6 +334,20 @@
                 if (response) {
                     toastr.success('Linea guardada correctamente.');
                     budget_table.ajax.reload();
+
+                    if (action == 'E')
+                        $('#FormModal').modal('hide');
+                    else {
+                        $("#txtMaterialDescription").val('');
+                        $("#txtQuantity").val('0');
+                        $("#txtPrice").val('0');
+                        $("#cmbMaterials").val();
+                        $("#cmbUOM").val(0);
+                        $("#txtTotalLine").val(`₡0`);
+                        $("#txtPreSubtotal").val(`₡0`);
+                    }
+
+                    LoadTotalCard();
                 } else {
                     toastr.error(response.result);
                 }
@@ -292,10 +361,21 @@
         function DeleteBudgetLine($budgetLineId) {
             if (confirm("¿Realmente desea eliminar esta línea?")) {
 
-                budgetApi.DeleteBudgetLine($budgetLineId).then(response => {
+                var $data = {
+                    budgetLineId: $budgetLineId,
+                    oBudget: {
+                        Id: budgetId,
+                        Fee: totalsData.Fee,
+                        Total: preCalcs.PreSubtotal
+                    }
+                }
+
+                budgetApi.DeleteBudgetLine($data).then(response => {
                     if (response.result) {
                         budget_table.ajax.reload();
                         toastr.success('Linea eliminada correctamente.');
+                        LoadTotalCard();
+                        //LoadBudgetData(budgetId)
                     }
                 }).catch(err => {
                     toastr.error("Ocurrió un error eliminando los datos de línea.");
@@ -310,9 +390,10 @@
                 try {
                     $.each(budgetData, function (key, line) {
                         if (line.Id == $budgetLineId) {
+                            $("#txtBudgetLineId").val(line.Id);
                             $("#txtMaterialDescriptionEdit").val(line.Description);
                             $("#txtQuantityEdit").val(line.Quantity);
-                            $("#txtPriceEdit").val(line.Price);
+                            $("#txtPriceEdit").val(line.Price.replace('₡', ''));
                         }
                     })
 
@@ -325,6 +406,30 @@
             $('#FormModal').modal('show');
         }
 
+        function LoadTotalCard() {
+
+            $("#txtFees").val(totalsData.Fee);
+            $("#txtSubtotal").val(`₡${totalsData.Subtotal}`);
+            $("#txtFinalTotal").val(`₡${totalsData.FinalTotal}`);
+
+
+        }
+
+        function LoadPreCalc(action) {
+
+            var itemPrice = action == 'N' ? parseFloat($("#txtPrice").val()) : parseFloat($("#txtPriceEdit").val());
+            var itemQuantity = action == 'N' ? parseInt($("#txtQuantity").val()) : parseFloat($("#txtQuantityEdit").val());
+
+            preCalcs.TotalLine = itemPrice * itemQuantity
+            preCalcs.PreSubtotal = totalsData.Subtotal + preCalcs.TotalLine;
+            preCalcs.PreFinalTotal = (preCalcs.PreSubtotal * (totalsData.Fee / 100)) + preCalcs.PreSubtotal;
+
+            if (action == 'N') {
+                $("#txtTotalLine").val(`₡${preCalcs.TotalLine}`);
+                $("#txtPreSubtotal").val(`₡${preCalcs.PreSubtotal}`);
+            }
+        }
+
         // Events
         $('#cmbMaterials').on('change', function (e) {
             var valueSelected = this.value.split('|')[0]
@@ -335,6 +440,8 @@
                     $("#txtMaterialDescription").val(value.Description);
                     $("#txtQuantity").val();
                     $("#txtPrice").val(value.Price);
+                    $("#txtPreSubtotal").val(0);
+                    $("#txtPreFinalTotal").val(0);
 
                     if (typeSelected === 'P') {
                         $('#btnViewVendor').show();
@@ -344,6 +451,33 @@
                         $('#btnViewVendor').hide();
                 }
             });
+        }); 
+
+
+        $('#txtFees').on('change', function (e) {
+
+            var currentSubtotal = totalsData.Subtotal;
+            var fee = parseInt($("#txtFees").val());
+            totalsData.Fee = fee;
+
+            $("#txtFinalTotal").val(`₡${(currentSubtotal * (fee / 100)) + currentSubtotal}`);
+        });
+
+
+        $('#txtQuantity').on('change', function (e) {
+            LoadPreCalc('N');
+        });
+
+        $('#txtPrice').on('change', function (e) {
+            LoadPreCalc('N');
+        });
+
+        $('#txtQuantityEdit').on('change', function (e) {
+            LoadPreCalc('E');
+        });
+
+        $('#txtPriceEdit').on('change', function (e) {
+            LoadPreCalc('E');
         });
 
 
