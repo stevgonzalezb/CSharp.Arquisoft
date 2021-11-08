@@ -17,6 +17,38 @@ namespace ArquisoftApp.Controllers
             return View("~/Views/Maintenance/BudgetMaintenance.cshtml");
         }
 
+        public JsonResult SaveBudget(Budgets oBudget)
+        {
+            String response = "";
+
+            try
+            {
+                if (oBudget.Id == 0)
+                {
+                    if (AppController.IsAuthorized(Common.AppEnums.Permissions.PROJECT_ADD))
+                    {
+                        using (ArquisoftEntities db = new ArquisoftEntities())
+                        {
+                            oBudget.CreationDate = DateTime.Now;
+                            db.Budgets.Add(oBudget);
+                            db.SaveChanges();
+                        }
+                        AppController.AuditAction(new Audit { Module = "Presupuestos", Action = "Crear", Date = DateTime.Now });
+                        response = oBudget.Id.ToString();
+
+                    }
+                    else
+                        Redirect("~/Views/Error/NotAuthorized.cshtml");
+                }
+            }
+            catch(Exception e)
+            {
+                response = "Ocurrió un error en el proceso de almacenado.";
+            }
+
+            return Json(new { result = response }, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult ListBudgets(int projectId)
         {
             List<Budgets> attList = new List<Budgets>();
@@ -37,7 +69,7 @@ namespace ArquisoftApp.Controllers
             var ArquisoftConnection = AppController.GetConnectionString();
             var queryString = string.Format(@"SELECT A.Id [Budget], A.Fee, A.Total Subtotal, CONVERT(DECIMAL(18,1), ((A.Total*(CONVERT(decimal(10,2),A.Fee)/100))+A.Total)) Total, Lines.*
                                                 FROM Budgets A 
-	                                                INNER JOIN BudgetLines Lines ON A.Id = Lines.BudgetId
+	                                                LEFT JOIN BudgetLines Lines ON A.Id = Lines.BudgetId
                                                 WHERE A.Id = {0} 
                                                 FOR JSON AUTO", budgetId);
 

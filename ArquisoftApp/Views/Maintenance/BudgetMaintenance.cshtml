@@ -128,13 +128,13 @@
                                     <input type="text" id="txtFinalTotal" class="form-control" value="₡0" disabled>
                                 </div>
                             </div>
-                            <hr />
+                            @*<hr />
                             <div class="row">
                                 <div class="form-group col-12 align-self-end">
                                     <button type="button" onclick="" class="btn btn-secondary">Guardar Presupuesto</button>
                                     <button type="button" onclick="" class="btn btn-secondary">Generar PDF</button>
                                 </div>
-                            </div>
+                            </div>*@
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -254,11 +254,18 @@
                         totalsData.Subtotal = JsonBudgetData.Subtotal;
                         totalsData.FinalTotal = JsonBudgetData.Total;
 
-                        $.each(JsonBudgetData.Lines, function (key, obj) {
-                            obj.totalLine = parseFloat(obj.Price) * parseInt(obj.Quantity);
-                            obj.totalLine = `₡${obj.totalLine}`;
-                            obj.Price = `₡${obj.Price}`;
-                        });
+                        if (JsonBudgetData.Lines[0].Id) {
+                            $.each(JsonBudgetData.Lines, function (key, obj) {
+                                if (obj.Id) {
+                                    obj.totalLine = parseFloat(obj.Price) * parseInt(obj.Quantity);
+                                    obj.totalLine = `₡${obj.totalLine}`;
+                                    obj.Price = `₡${obj.Price}`;
+                                }
+                            });
+                        }
+                        else
+                            JsonBudgetData.Lines = [];
+
 
                         budgetData = JsonBudgetData.Lines;
                         LoadTotalCard();

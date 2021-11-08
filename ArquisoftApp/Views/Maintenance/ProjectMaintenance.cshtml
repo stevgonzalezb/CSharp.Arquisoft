@@ -189,6 +189,39 @@
     <!-- /.content -->
 </div>
 
+<form class="modal" id="FormModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Nuevo Presupuesto</h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-12">
+                        <label for="txtBudgetName">Nombre del Presupuesto</label>
+                        <input type="text" class="form-control" id="txtBudgetName" name="txtProjectName">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-12">
+                        <label for="txtBudgetType">Tipo de Presupuesto</label>
+                        <input type="text" class="form-control" id="txtBudgetType" name="txtProjectName" value="Materiales" disabled>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-secondary" onclick="SaveBudget()">Crear</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</form>
+
 
 @section scripts{
 
@@ -428,7 +461,46 @@
 
         function OpenBudget($budgetId) {
 
-            window.location.href = `/ArquisoftApp/Budget/Instance?Id=${$budgetId}`;
+            if ($budgetId == 0) {
+                $('#FormModal').modal('show');
+            }
+            else
+                window.location.href = `/ArquisoftApp/Budget/Instance?Id=${$budgetId}`;
+        }
+
+        function SaveBudget() {
+            if (true) {
+
+                var oUrl = new URL(window.location.href);
+                var oProjectId = oUrl.searchParams.get("Id");
+
+                var $data = {
+                    oBudget: {
+                        Id: 0,
+                        Name: $("#txtBudgetName").val(),
+                        Type: 'Materiales',
+                        Fee: 0,
+                        Total: 0,
+                        ProjectId: oProjectId,
+                        IdState: app.enums.States.ACTIVE
+                    }
+                }
+
+                apiBudget.SaveBudget($data).then(response => {
+                    if (response) {
+                        toastr.success('Presupuesto creado correctamente.');
+                        window.location.href = `/ArquisoftApp/Budget/Instance?Id=${response.result}`;
+                    } else {
+                        toastr.error(response.result);
+                    }
+
+                }).catch(err => {
+
+                    toastr.error("Ocurrió un error guardando el presupuesto.");
+                })
+            }
+            else
+                toastr.error('Por favor valide los datos ingresados.');
         }
 
 

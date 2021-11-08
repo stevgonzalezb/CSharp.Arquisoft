@@ -323,6 +323,17 @@ class BudgetApi {
         });
     }
 
+    // Save or Update Budget
+    SaveBudget = async function (data) {
+        return $.ajax({
+            url: "/ArquisoftApp/Budget/SaveBudget",
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
+
     // Save or Update BudgetLine data
     SaveBudgetLine = async function (data) {
         return $.ajax({
