@@ -189,6 +189,7 @@
     <!-- /.content -->
 </div>
 
+
 @section scripts{
 
     <!-- Bootstrap slider -->
@@ -380,9 +381,9 @@
                      {
                          "data": "Id", "render": function (data) {
                              var buttons = "";
-                             buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los materiales' class='btn btn-outline-secondary btn-sm' type='button' onclick='OpenBudget(" + data + ")'>Editar <i class='fas fa-pen'></i></button>"
-                                buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los materiales' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='openModal(" + data + ")'>Descargar <i class='fas fa-download'></i></button>"
-                             buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de materiales' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='DeleteBudget(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
+                             buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos del presupuesto' class='btn btn-outline-secondary btn-sm' type='button' onclick='OpenBudget(" + data + ")'>Editar <i class='fas fa-pen'></i></button>"
+                                buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para descargar este presupuesto' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='openModal(" + data + ")'>Descargar <i class='fas fa-download'></i></button>"
+                             buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de presupuestos' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='DeleteBudget(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
 
                              return buttons;
                          },
@@ -445,8 +446,8 @@
                     {
                         "data": "Id", "render": function (data) {
                             var buttons = "";
-                            buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los materiales' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='DownloadFile(" + data + ")'>Descargar <i class='fas fa-download'></i></button>"
-                            buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de materiales' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='DeleteFile(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
+                            buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para descargar este adjunto a la maquina' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='DownloadFile(" + data + ")'>Descargar <i class='fas fa-download'></i></button>"
+                            buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de adjuntos' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='DeleteFile(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
 
                             return buttons;
                         },
@@ -498,10 +499,17 @@
         function DeleteFile(attId) {
             let projectId = parseInt($("#txtId").val());
 
-            api.DeleteFile(attId, projectId).then(res => {
-                toastr.success("Adjunto eliminado correctamente");
-                attachment_table.ajax.reload();
-            })
+            if (confirm("¿Realmente desea eliminar este adjunto?")) {
+                api.DeleteFile(attId, projectId).then(res => {
+                    if (res.result) {
+                        attachment_table.ajax.reload();
+                        toastr.success("Adjunto eliminado correctamente");
+                    }
+                }).catch(err => {
+                    toastr.error("Ocurrió un error eliminando los datos del material.");
+                })
+            }
+
         }
 
     </script>

@@ -302,7 +302,7 @@
         }
 
         function Delete($materialId) {
-            if (confirm("¿Realmente desea eliminar?")) {
+            if (confirm("¿Realmente desea eliminar este material?")) {
 
                 api.DeleteMaterial($materialId).then(response => {
                     if (response.result) {
@@ -310,7 +310,7 @@
                         toastr.success('Material eliminado correctamente.');
                     }
                 }).catch(err => {
-                    toastr.error("Ocurrió un error eliminando los datos del cliente.");
+                    toastr.error("Ocurrió un error eliminando los datos del material.");
                 })
             }
         }
