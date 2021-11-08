@@ -258,6 +258,11 @@
     <Content Include="Content\img\Help\Material_Proveedor\Importar.JPG" />
     <Content Include="Content\img\Help\Material_Proveedor\Menu.jpg" />
     <Content Include="Content\img\Help\Material_Proveedor\Ver_Ficha.JPG" />
+    <Content Include="Content\img\Help\Projects\projects01.JPG" />
+    <Content Include="Content\img\Help\Projects\projects02.JPG" />
+    <Content Include="Content\img\Help\Projects\projects03.JPG" />
+    <Content Include="Content\img\Help\Projects\projects04.JPG" />
+    <Content Include="Content\img\Help\Projects\projects05.JPG" />
     <Content Include="Content\img\Help\User_profile\userProfile01.JPG" />
     <Content Include="Content\img\Help\User_profile\userProfile02.JPG" />
     <Content Include="Content\img\login-bg.jpg" />

@@ -13,12 +13,15 @@ namespace ArquisoftApp.Controllers
     public class ProjectController : Controller
     {
         // GET: Project
+
+        [Filters.VerifyRole(Permission = Common.AppEnums.Permissions.PROJECT_READ)]
         public ActionResult Index()
         {
             SetSessionData();
             return View("~/Views/Maintenance/ProjectList.cshtml");
         }
 
+        [Filters.VerifyRole(Permission = Common.AppEnums.Permissions.PROJECT_READ)]
         public ActionResult Instance(int Id)
         {
             SetSessionData();

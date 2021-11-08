@@ -61,6 +61,61 @@
     <!-- /.modal-dialog -->
 </form>
 <!-- /.modal -->
+@*Modal Ayuda*@
+<div class="modal" id="projectsModalHelp" role="dialog">
+    <div class="modal-dialog" style="overflow-y: initial !important">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-bold text-center">Ayuda Proceso Lista Proyectos</h4>
+            </div>
+            <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
+                <h4 align="center"><b></b></h4>
+                @*Ayuda Agregar Proyectos*@
+
+                <h5><b>&nbsp;&nbsp;Gu&iacute;a para agregar un proyecto nuevo:</b></h5>
+                <p>&nbsp;&nbsp;1- Se da clic al bot&oacute;n “Agregar Nuevo”</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Projects/projects04.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp;2- Se completa la siguiente informaci&oacute;n</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Projects/projects01.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp; <b>1:</b>&nbsp;&nbsp;Nombre del proyecto a realizar.</p>
+                <p>&nbsp;&nbsp; <b>2:</b>&nbsp;&nbsp;Cliente correspondiente al proyecto.</p>
+                <p>&nbsp;&nbsp; <b>3:</b>&nbsp;&nbsp;Crear proyecto.</p>
+                <p>&nbsp;&nbsp; <b>4:</b>&nbsp;&nbsp;Cerrar, no se crea el proyecto.</p>
+                <br />
+                @*Ayuda Visualizar Proyectos*@
+
+                <h5><b>&nbsp;&nbsp;Gu&iacute;a para visualizar un proyecto:</b></h5>
+                <p>&nbsp;&nbsp;1- Se da click al bot&oacute;n “Visualizar” en la fila del proyecto que se desea visualizar.</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Projects/projects02.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+
+                @*Ayuda Eliminar Proyectos*@
+
+                <h5><b>&nbsp;&nbsp;Gu&iacute;a para eliminar un proyecto:</b></h5>
+                <p>&nbsp;&nbsp;1- Se da clic al bot&oacute;n “Eliminar”</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Projects/projects05.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp;2- Saldr&aacute; el siguiente mensaje para confirmar la eliminaci&oacute;n</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Projects/Projects03.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp; <b>1:</b>&nbsp;&nbsp;Se confirma la eliminaci&oacute;n del cliente.</p>
+                <p>&nbsp;&nbsp; <b>2:</b>&nbsp;&nbsp;No se confirma la eliminaci&oacute;n del cliente, no se realizan cambios.</p>
+
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*/.modal*@
 
 
 @section scripts{
@@ -88,6 +143,7 @@
                 })
             });
 
+            $("#helpModalNav").attr('data-target', "#projectsModalHelp");
              LoadTable();
              LoadClientList();
 
@@ -186,10 +242,14 @@
             apiClients.ListClients().then(clients => {
                 var $ClientSelect = $('#cmbClients');
                 $.each(clients.data, function (key, value) {
-                    var $option = $("<option/>", {
-                        value: value.IdClient,
-                        text: `${value.Name} ${value.Last_Name}`
-                    });
+
+                    if (value.idState=='1') {
+                        var $option = $("<option/>", {
+                            value: value.IdClient,
+                            text: `${value.Name} ${value.Last_Name}`
+                        });
+                    }
+                                      
 
                     $ClientSelect.append($option);
                 });

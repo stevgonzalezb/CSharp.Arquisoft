@@ -93,6 +93,11 @@
                     return $("#txtNewPassword").val() === value //value.match(passwordRegex);
                 }, '');
 
+                $.validator.addMethod('confirmPasswordNewOld', function (value, element, parameter) {
+
+                    return $("#txtCurrentPassword").val() !== value //value.match(passwordRegex);
+                }, '');
+
                 // Form validations
                 $("#passForm").validate({
                     rules: {
@@ -103,11 +108,13 @@
                         txtNewPassword: {
                             required: true,
                             passwordRegex: true,
+                            confirmPasswordNewOld: true,
                         },
                         txtConfirmPassword: {
                             required: true,
                             passwordRegex: true,
-                            confirmPassword: true
+                            confirmPassword: true,
+                            confirmPasswordNewOld: true,
                         }
                     },
                     messages: {
@@ -117,13 +124,15 @@
                         },
                         txtNewPassword: {
                             required: "Requerido",
-                            passwordRegex: "La contraseña debe cumplir con: mínimo 8 caracteres, al menos una letra mayúscula, una letra minúscula y un número."
+                            passwordRegex: "La contraseña debe cumplir con: mínimo 8 caracteres, al menos una letra mayúscula, una letra minúscula y un número.",
+                            confirmPasswordNewOld: "La contraseña actual y la nueva no pueden ser la misma"
                         },
                         txtConfirmPassword: {
                             required: "Requerido",
                             passwordRegex: "La contraseña debe cumplir con: mínimo 8 caracteres, al menos una letra mayúscula, una letra minúscula y un número.",
-                            confirmPassword: "Las contraseñas no coinciden."
-                        }
+                            confirmPassword: "Las contraseñas no coinciden.",
+                            confirmPasswordNewOld: "La contraseña actual y la nueva no pueden ser la misma"
+                        },
                     }
                 });
             });
@@ -154,17 +163,26 @@
                 }
                 else
                     toastr.error('Por favor valide los datos ingresados.');
+                CleanModal();
             }
 
             function CleanModal() {
 
+             
                 $("#txtCurrentPassword").removeClass("is-valid");
                 $("#txtNewPassword").removeClass("is-valid");
                 $("#txtConfirmPassword").removeClass("is-valid");
+                $("#txtCurrentPassword").removeClass("is-invalid");
+                $("#txtNewPassword").removeClass("is-invalid");
+                $("#txtConfirmPassword").removeClass("is-invalid");
                 $("#txtCurrentPassword").val("");
                 $("#txtNewPassword").val("");
                 $("#txtConfirmPassword").val("");
+                $('.validation-error').remove();
             }
+
+        $('#passwordModal').on('hidden', function () {            CleanModal();        });
+
 
     </script>
 
@@ -204,7 +222,7 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-secondary" onclick="ChangePassword()">Guardar</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="CleanModal()">Cerrar</button>
                         </div>
                     </form>
                 </div>

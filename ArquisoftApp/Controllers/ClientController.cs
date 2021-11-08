@@ -152,19 +152,11 @@ namespace ArquisoftApp.Controllers
             {
                 using (ArquisoftEntities db = new ArquisoftEntities())
                 {
-                    isValidClient = (from c in db.Clients
-                                     where c.Name.ToLower() == oClient.Name.ToLower()
-                                     select c).FirstOrDefault();
 
                     isValidEmail = (from c in db.Clients
                                     where c.Email.ToLower() == oClient.Email.ToLower()
                                     select c).FirstOrDefault();
 
-                }
-
-                if (isValidClient != null)
-                {
-                    returnString = "El nombre de cliente ya existe en el sistema.";
                 }
 
                 if (isValidEmail != null)
