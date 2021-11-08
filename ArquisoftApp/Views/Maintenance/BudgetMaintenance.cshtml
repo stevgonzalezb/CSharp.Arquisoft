@@ -146,7 +146,7 @@
 <!-- /.content-wrapper -->
 <!-- Modal -->
 <div class="modal" id="FormModal" role="dialog">
-    <div class="modal-dialog modal-lg"> 
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Editar Línea</h4>
@@ -194,6 +194,14 @@
 
     <!-- Select2 -->
     <script src="~/Scripts/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
+
+    <script src="~/Scripts/AdminLTE/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="~/Scripts/AdminLTE/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="~/Scripts/AdminLTE/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/Scripts/AdminLTE/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/Scripts/AdminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
 
     <script>
 
@@ -276,11 +284,15 @@
                          "width": "100px"
                      }
                  ],
-                dom: '<"float-left"f>rt<"bottom float-left"p><"clear">',
-                 buttons: [],
-                 "language": {
+                //dom: 'Bfrtip',//'<"float-left"f>rt<"bottom float-left"pb><"clear">',
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
+                ],
+                //buttons: [],
+                "language": {
                      "url": "@Url.Content("~/Content/datatable/idioma/datatable.es-ES.json")"
-                 }
+                }
 
             });
         }
@@ -451,7 +463,7 @@
                         $('#btnViewVendor').hide();
                 }
             });
-        }); 
+        });
 
 
         $('#txtFees').on('change', function (e) {
