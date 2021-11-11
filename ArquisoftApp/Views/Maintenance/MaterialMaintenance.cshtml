@@ -135,6 +135,11 @@
     <script>
         const api = new MaterialApi();
         var client_table;
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'CRC',
+        });
+
          $(document).ready( function () {
 
              $("#helpModalNav").attr('data-target', "#materialesModalAyuda");
@@ -145,13 +150,29 @@
         function LoadTable() {
             client_table = $('#myTable').DataTable({
                  "ajax": {
-                     "url": "@Url.Action("ListMaterials", "Material")",
-                     "type": "GET",
-                     "datatype": "json"
+                    "url": "@Url.Action("ListMaterials", "Material")",
+                    "dataSrc": function (json) {
+
+                        let JsonBudgetData = json.data;
+
+                        if (JsonBudgetData) {
+                            $.each(JsonBudgetData, function (key, obj) {
+                                if (obj.Id) {
+                                    obj.Price = `${formatter.format(obj.Price).replace('CRC', '₡')}`;
+                                }
+                            });
+                        }
+                        else
+                            JsonBudgetData = [];
+
+                        return JsonBudgetData;
+                    }
+                     //"type": "GET",
+                     //"datatype": "json"
                  },
-                 "columns": [
+                "columns": [
                      { "data": "Description" },
-                     { "data": "Price" },
+                     { "data": "Price", className: "text-right" },
                      {
                          "data": "Id", "render": function (data) {
                              var buttons = "";

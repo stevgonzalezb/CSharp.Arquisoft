@@ -94,7 +94,7 @@
                                     <label for="txtPreFinalTotal">Subtotal</label>
                                     <input type="text" id="txtPreSubtotal" class="form-control" value="₡0" disabled>
                                 </div>
-                                <div class="form-group col-4 align-self-end">
+                                <div class="form-group col-md-4 align-self-end">
                                     <button type="button" onclick="SaveBudgetLine('A')" class="btn btn-secondary">Agregar</button>
                                     <a href="" id="btnViewVendor" class="btn btn-outline-secondary " target="_blank"><i class="nav-icon fas fa-truck-pickup"></i></a>
                                 </div>
@@ -115,26 +115,26 @@
                         </div>
                         <div class="card-body" style="background-color: lightgray">
                             <div class="row">
-                                <div class="form-group col-4">
+                                <div class="form-group col-md-4">
                                     <label for="txtSubtotal">Subtotal</label>
                                     <input type="text" id="txtSubtotal" class="form-control" value="₡0" disabled>
                                 </div>
-                                <div class="form-group col-2">
+                                <div class="form-group col-md-3">
                                     <label for="txtFees">Honorarios(%)</label>
                                     <input type="number" id="txtFees" class="form-control" value="0" step="1">
                                 </div>
-                                <div class="form-group col-6">
+                                <div class="form-group col-md-5">
                                     <label for="txtFinalTotal">Total General</label>
                                     <input type="text" id="txtFinalTotal" class="form-control" value="₡0" disabled>
                                 </div>
                             </div>
-                            @*<hr />
+                            @*<hr />*@
                             <div class="row">
                                 <div class="form-group col-12 align-self-end">
                                     <button type="button" onclick="" class="btn btn-secondary">Guardar Presupuesto</button>
-                                    <button type="button" onclick="" class="btn btn-secondary">Generar PDF</button>
+                                    <button type="button" onclick="CreateReport()" class="btn btn-secondary">Generar PDF</button>
                                 </div>
-                            </div>*@
+                            </div>
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -212,15 +212,34 @@
             budget_table,
             budgetId,
             preCalcs = {
-                TotalLine: 0,
-                PreSubtotal: 0,
-                PreFinalTotal: 0
+                TotalLine: {
+                    Value: 0,
+                    DisplayValue: '',
+                },
+                PreSubtotal: {
+                    Value: 0,
+                    DisplayValue: '',
+                },
+                PreFinalTotal: {
+                    Value: 0,
+                    DisplayValue: '',
+                }
             },
             totalsData = {
                 Fee: 0,
-                Subtotal: 0,
-                FinalTotal: 0
+                Subtotal: {
+                    Value: 0,
+                    DisplayValue: '',
+                },
+                FinalTotal: {
+                    Value: 0,
+                    DisplayValue: '',
+                }
             };
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'CRC',
+            });
 
         $(document).ready(function () {
 
@@ -251,15 +270,18 @@
                         JsonBudgetData = JsonBudgetData[0];
 
                         totalsData.Fee = JsonBudgetData.Fee;
-                        totalsData.Subtotal = JsonBudgetData.Subtotal;
-                        totalsData.FinalTotal = JsonBudgetData.Total;
+                        totalsData.Subtotal.Value = JsonBudgetData.Subtotal;
+                        totalsData.Subtotal.DisplayValue = formatter.format(JsonBudgetData.Subtotal).replace('CRC', '₡');
+
+                        totalsData.FinalTotal.Value = JsonBudgetData.Total;
+                        totalsData.FinalTotal.DisplayValue = formatter.format(JsonBudgetData.Total).replace('CRC', '₡');
 
                         if (JsonBudgetData.Lines[0].Id) {
                             $.each(JsonBudgetData.Lines, function (key, obj) {
                                 if (obj.Id) {
                                     obj.totalLine = parseFloat(obj.Price) * parseInt(obj.Quantity);
-                                    obj.totalLine = `₡${obj.totalLine}`;
-                                    obj.Price = `₡${obj.Price}`;
+                                    obj.totalLine = `${formatter.format(obj.totalLine).replace('CRC', '₡')}`;
+                                    obj.Price = `${formatter.format(obj.Price).replace('CRC', '₡')}`;
                                 }
                             });
                         }
@@ -345,7 +367,7 @@
                 oBudget: {
                     Id: budgetId,
                     Fee: totalsData.Fee,
-                    Total: preCalcs.PreSubtotal
+                    Total: preCalcs.PreSubtotal.Value
                 }
             }
 
@@ -385,7 +407,7 @@
                     oBudget: {
                         Id: budgetId,
                         Fee: totalsData.Fee,
-                        Total: preCalcs.PreSubtotal
+                        Total: preCalcs.PreSubtotal.Value
                     }
                 }
 
@@ -428,8 +450,8 @@
         function LoadTotalCard() {
 
             $("#txtFees").val(totalsData.Fee);
-            $("#txtSubtotal").val(`₡${totalsData.Subtotal}`);
-            $("#txtFinalTotal").val(`₡${totalsData.FinalTotal}`);
+            $("#txtSubtotal").val(`${totalsData.Subtotal.DisplayValue}`);
+            $("#txtFinalTotal").val(`${totalsData.FinalTotal.DisplayValue}`);
 
 
         }
@@ -439,14 +461,30 @@
             var itemPrice = action == 'N' ? parseFloat($("#txtPrice").val()) : parseFloat($("#txtPriceEdit").val());
             var itemQuantity = action == 'N' ? parseInt($("#txtQuantity").val()) : parseFloat($("#txtQuantityEdit").val());
 
-            preCalcs.TotalLine = itemPrice * itemQuantity
-            preCalcs.PreSubtotal = totalsData.Subtotal + preCalcs.TotalLine;
-            preCalcs.PreFinalTotal = (preCalcs.PreSubtotal * (totalsData.Fee / 100)) + preCalcs.PreSubtotal;
+            preCalcs.TotalLine.Value = itemPrice * itemQuantity
+            preCalcs.TotalLine.DisplayValue = formatter.format(preCalcs.TotalLine.Value).replace('CRC', '₡');
+
+            preCalcs.PreSubtotal.Value = totalsData.Subtotal.Value + preCalcs.TotalLine.Value;
+            preCalcs.PreSubtotal.DisplayValue = formatter.format(preCalcs.PreSubtotal.Value).replace('CRC', '₡');
+
+
+            preCalcs.PreFinalTotal.Value = (preCalcs.PreSubtotal.Value * (totalsData.Fee / 100)) + preCalcs.PreSubtotal.Value;
+            preCalcs.PreFinalTotal.DisplayValue = formatter.format(preCalcs.PreFinalTotal.Value).replace('CRC', '₡');
 
             if (action == 'N') {
-                $("#txtTotalLine").val(`₡${preCalcs.TotalLine}`);
-                $("#txtPreSubtotal").val(`₡${preCalcs.PreSubtotal}`);
+
+
+                
+                $("#txtTotalLine").val(preCalcs.TotalLine.DisplayValue);
+                $("#txtPreSubtotal").val(preCalcs.PreSubtotal.DisplayValue);
             }
+        }
+
+        function CreateReport() {
+
+            window.open(`/ArquisoftApp/Budget/Report?Id=9`, '_blank').focus();
+
+            //window.location.href = `/ArquisoftApp/Budget/Report?Id=9`;
         }
 
         // Events
@@ -475,7 +513,7 @@
 
         $('#txtFees').on('change', function (e) {
 
-            var currentSubtotal = totalsData.Subtotal;
+            var currentSubtotal = totalsData.Subtotal.Value;
             var fee = parseInt($("#txtFees").val());
             totalsData.Fee = fee;
 

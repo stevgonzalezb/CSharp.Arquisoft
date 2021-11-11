@@ -17,6 +17,12 @@ namespace ArquisoftApp.Controllers
             return View("~/Views/Maintenance/BudgetMaintenance.cshtml");
         }
 
+        public ActionResult Report(int Id)
+        {
+            //SetSessionData();
+            return View("~/Views/Reports/_BudgetReport.cshtml");
+        }
+
         public JsonResult SaveBudget(Budgets oBudget)
         {
             String response = "";
