@@ -2,13 +2,12 @@
 var app = app || {};
 
 
-app.fomatter = {
-
-    FormatCurrency = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'CRC',
-    })
-}
+//app.fomatter = {
+//    FormatCurrency = new Intl.NumberFormat('en-US', {
+//        style: 'currency',
+//        currency: 'CRC',
+//    })
+//}
 
 app.enums = {
     Regex: {
