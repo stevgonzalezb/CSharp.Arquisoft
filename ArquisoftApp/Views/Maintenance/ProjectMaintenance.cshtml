@@ -422,8 +422,9 @@
                 var proyecto = document.getElementById("txtProjectName").value
                 var maestro = document.getElementById("txtBuilder").value
                 var niveles = document.getElementById("txtLevels").value
+                var sistemas = document.getElementById("cmbSystems").value
 
-                if (proyecto == "" || maestro == "" || niveles == "") {
+                if (proyecto == "" || maestro == "" || niveles == "" || sistemas == "") {
                     toastr.error("Imposible guardar los datos, campos vacíos")
                     return false
                 } else {
