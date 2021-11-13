@@ -40,7 +40,7 @@
                                         <div class="row">
                                             <div class="form-group col-10">
                                                 <label for="txtProjectName" class="col-form-label">Proyecto</label>
-                                                <input type="text" class="form-control" id="txtProjectName" placeholder="Nombre Proyecto">
+                                                <input type="text" class="form-control" id="txtProjectName" placeholder="Nombre Proyecto" maxlength="200" required>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -63,7 +63,7 @@
                                         <div class="row">
                                             <div class="form-group col-6">
                                                 <label for="txtBuilder" class="col-form-label">Maestro de Obra</label>
-                                                <input type="text" class="form-control" id="txtBuilder" placeholder="Maestro de Obra">
+                                                <input type="text" class="form-control" id="txtBuilder" placeholder="Maestro de Obra" maxlength="200" required>
                                             </div>
 
                                             <div class="form-group col-6">
@@ -79,7 +79,7 @@
                                         <div class="row">
                                             <div class="form-group col-6">
                                                 <label for="txtLevels" class="col-form-label">No. Niveles</label>
-                                                <input type="text" class="form-control" id="txtLevels" placeholder="Niveles de las obra">
+                                                <input type="number" min="1" class="form-control" id="txtLevels" placeholder="Niveles de las obra" maxlength="200" required>
                                             </div>
                                             <div class="form-group col-6">
                                                 <label for="cmbSystems" class="col-form-label">Sistemas Constructivos</label>
@@ -95,7 +95,7 @@
                                         <div class="row">
                                             <div class="form-group col-6">
                                                 <label for="txtComments" class="col-form-label">Notas/Comentarios</label>
-                                                <textarea class="form-control" rows="3" cols="50" id="txtComments" name="txtDescription"></textarea>
+                                                <textarea class="form-control" rows="3" cols="50" id="txtComments" name="txtDescription" maxlength="400"></textarea>
                                             </div>
 
                                             <div class="form-group col-6">
@@ -305,6 +305,68 @@
                     }
                 }
             })
+
+            // Methods who add or remove de styled classes
+            $.validator.setDefaults({
+                //Add Error Class To Fieldset if field invalid
+                highlight: function (element) {
+                    $(element).addClass('is-invalid').removeClass('is-valid');
+                },
+                //Add Valid Class To Fieldset if field valid
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid').addClass('is-valid');
+                }
+            });
+
+            // Form validations
+            var validator = $("#FormModal").validate({
+                rules: {
+                    txtName: {
+                        required: true,
+                        minlength: 1
+                    },
+                    txtLastName: {
+                        required: true,
+                        minlength: 1
+                    },
+                    txtPhone: {
+                        required: true,
+                        phoneRegex: true
+                    },
+                    txtEmail: {
+                        required: true,
+                        emailRegex: true
+                    },
+                    txtAddress: {
+                        required: true,
+                        minlength: 1
+                    }
+                },
+                messages: {
+                    txtName: {
+                        required: "Requerido",
+                        minlength: "Ingrese un nombre válido."
+                    },
+                    txtLastName: {
+                        required: "Requerido",
+                        minlength: "Ingrese un apellido válido."
+                    },
+                    txtPhone: {
+                        required: "Requerido",
+                        phoneRegex: "Ingrese un número válido."
+                    },
+                    txtEmail: {
+                        required: "Requerido",
+                        emailRegex: "Ingrese un correo válido"
+                    },
+                    txtAddress: {
+                        required: "Requedido",
+                        minlength: "Ingrese una dirección válida."
+                    }
+                }
+            });
+
+
         }
 
         function changeLabelSite() {
@@ -331,6 +393,7 @@
         }
 
         function SaveProject() {
+            /*validarCampos();*/
             if (true) {
 
                 var strConstructionSystem = "";
@@ -356,22 +419,31 @@
                 }
 
 
+                var proyecto = document.getElementById("txtProjectName").value
+                var maestro = document.getElementById("txtBuilder").value
+                var niveles = document.getElementById("txtLevels").value
 
-
-                var $data = {
-                    oProject: {
-                        Id: parseInt($("#txtId").val()),
-                        Name: $("#txtProjectName").val(),
-                        SiteArea: $("#sliderSite").val(),
-                        ConstructionArea: $("#sliderConstruction").val(),
-                        Levels: $("#txtLevels").val(),
-                        MasterBuilder: $("#txtBuilder").val(),
-                        Comments: $("#txtComments").val(),
-                        IdClient: parseInt($("#cmbClients").val()),
-                        ConstructionSystem: strConstructionSystem,
-                        Status: status
+                if (proyecto == "" || maestro == "" || niveles == "") {
+                    toastr.error("Imposible guardar los datos, campos vacíos")
+                    return false
+                } else {
+                    var $data = {
+                        oProject: {
+                            Id: parseInt($("#txtId").val()),
+                            Name: $("#txtProjectName").val(),
+                            SiteArea: $("#sliderSite").val(),
+                            ConstructionArea: $("#sliderConstruction").val(),
+                            Levels: $("#txtLevels").val(),
+                            MasterBuilder: $("#txtBuilder").val(),
+                            Comments: $("#txtComments").val(),
+                            IdClient: parseInt($("#cmbClients").val()),
+                            ConstructionSystem: strConstructionSystem,
+                            Status: status
+                        }
                     }
                 }
+
+               
 
                 api.SaveProject($data).then(response => {
                     if (response.result === 'OK') {
@@ -582,6 +654,14 @@
                 })
             }
 
+        }
+
+        function validarCampos() {
+            var elemento = document.getElementById("txtProjectName").value
+            if (elemento == "") {
+                toastr.error("Debes llenar el campo")
+                return false
+            } 
         }
 
     </script>
