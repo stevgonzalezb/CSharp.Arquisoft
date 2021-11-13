@@ -96,6 +96,64 @@
     </div>
 
     <!-- /.modal -->
+    @*Modal Ayuda*@
+    <div class="modal" id="userModalHelp" role="dialog">
+        <div class="modal-dialog" style="overflow-y: initial !important">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="text-bold text-center">Ayuda Proceso Usuario del Sistema</h4>
+                </div>
+                @*Ayuda Agregar Proyectos*@
+                <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
+                    <h4><b>&nbsp;&nbsp;Gu&iacute;a para agregar un usuario nuevo:</b></h4>
+                    <p>&nbsp;&nbsp;1- Da clic al bot&oacute;n “Agregar Nuevo”</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/User/User01.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <p>&nbsp;&nbsp;2- Completa la informaci&oacute;n que se solicita en la pantalla</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/User/User02.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <p>&nbsp;&nbsp; <b>1:</b>&nbsp;&nbsp;Nombre del usuario.</p>
+                    <p>&nbsp;&nbsp; <b>2:</b>&nbsp;&nbsp;Apellidos del usuario.</p>
+                    <p>&nbsp;&nbsp; <b>3:</b>&nbsp;&nbsp;Usuario a utilizar en el sistema.</p>
+                    <p>&nbsp;&nbsp; <b>4:</b>&nbsp;&nbsp;Contraseña para ingresar al sistema.</p>
+                    <p>&nbsp;&nbsp; <b>5:</b>&nbsp;&nbsp;Correo electr&oacute;nico del usuario.</p>
+                    <p>&nbsp;&nbsp; <b>6:</b>&nbsp;&nbsp;Rol que va a tener este usuario.</p>
+                    <br />
+                    <p>&nbsp;&nbsp;3-	Una vez completada la informaci&oacute;n da clic al bot&oacute;n "Guardar"</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/User/User03.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <br />
+                    @*Ayuda Visualizar Proyectos*@
+
+                    <h4><b>&nbsp;&nbsp;Gu&iacute;a para editar un usuario:</b></h4>
+                    <p>&nbsp;&nbsp;1- Da clic al bot&oacute;n “Editar”.</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/User/User04.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <br />
+                    <p>&nbsp;&nbsp;2- Completa la información a editar.</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/User/User05.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <br />
+                    <p>&nbsp;&nbsp;3- Una vez realizado los cambios que se requieren da clic al bot&oacute;n "Guardar".</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/User/User03.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <br />
+
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*/.modal*@
+
 
 
 
@@ -114,6 +172,7 @@
 
             // On load event - Initial event
             $(document).ready(function () {
+                $("#helpModalNav").attr('data-target', "#userModalHelp");
                 LoadTable();
                 LoadRoles();
             });
@@ -265,7 +324,7 @@
                         console.log(err);
                         toastr.error("Ocurrió un error cargando los datos de usuario seleccionado.");
                     })
-                } 
+                }
                 $('#usersModal').modal('show');
 
         }
