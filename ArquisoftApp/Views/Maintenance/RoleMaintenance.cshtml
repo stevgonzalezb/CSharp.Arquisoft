@@ -159,7 +159,68 @@
     </div>
 </div>
 
-<!-- /.modal -->
+
+@*Modal Ayuda*@
+<div class="modal" id="roleModalHelp" role="dialog">
+    <div class="modal-dialog" style="overflow-y: initial !important">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-bold text-center">Ayuda Proceso Rol y Permiso Usuario</h4>
+            </div>
+            @*Ayuda Agregar Proyectos*@
+            <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
+                <h4><b>&nbsp;&nbsp;Gu&iacute;a para agregar un rol nuevo y sus permisos:</b></h4>
+                <p>&nbsp;&nbsp;1- Da clic al bot&oacute;n “Agregar Nuevo”</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Role/Role01.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp;2- Completa la siguiente informaci&oacute;n</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Role/Role02.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp; <b>1:</b>&nbsp;&nbsp;Nombre del Rol a crear.</p>
+                <p>&nbsp;&nbsp; <b>2:</b>&nbsp;&nbsp;Descripción de que acciones va a tener este rol.</p>
+                <br />
+                <p>&nbsp;&nbsp;3- Selecciona los permisos que este rol va a tener en el sistema</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Role/Role03.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <br />
+                <p>&nbsp;&nbsp;4- Una vez completada la informaci&oacute;n se da clic al bot&oacute;n "Guardar".</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Role/Role04.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <br />
+                @*Ayuda Visualizar Proyectos*@
+
+                <h4><b>&nbsp;&nbsp;Gu&iacute;a para editar un rol y sus permisos:</b></h4>
+                <p>&nbsp;&nbsp;1- Da click al bot&oacute;n “Editar Privilegios” en la fila del rol que se desea modificar.</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Role/Role05.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <br />
+                <p>&nbsp;&nbsp;2- Se editan los datos que se requieren, esto pueden ser Nombre, Descripci&oacute;n, y permisos en los diferentes m&oacute;dulos.</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Role/Role06.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <br />
+                <p>&nbsp;&nbsp;3- Una vez realizado los cambios que se requieren se da al bot&oacute;n "Guardar".</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Role/Role04.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <br />
+
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*/.modal*@
+
+
+
 
 @section scripts{
     <script>
@@ -167,6 +228,7 @@
         var role_table;
 
         $(document).ready(function () {
+            $("#helpModalNav").attr('data-target', "#roleModalHelp");
             LoadTable();
         });
 

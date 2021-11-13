@@ -266,6 +266,12 @@
     <Content Include="Content\img\Help\Projects\projects03.JPG" />
     <Content Include="Content\img\Help\Projects\projects04.JPG" />
     <Content Include="Content\img\Help\Projects\projects05.JPG" />
+    <Content Include="Content\img\Help\Role\Role01.JPG" />
+    <Content Include="Content\img\Help\Role\Role02.JPG" />
+    <Content Include="Content\img\Help\Role\Role03.JPG" />
+    <Content Include="Content\img\Help\Role\Role04.JPG" />
+    <Content Include="Content\img\Help\Role\Role05.JPG" />
+    <Content Include="Content\img\Help\Role\Role06.JPG" />
     <Content Include="Content\img\Help\User_profile\userProfile01.JPG" />
     <Content Include="Content\img\Help\User_profile\userProfile02.JPG" />
     <Content Include="Content\img\login-bg.jpg" />
@@ -2323,6 +2329,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\img\Help\User\" />
     <Folder Include="ProjectAttachments\" />
   </ItemGroup>
   <ItemGroup>
