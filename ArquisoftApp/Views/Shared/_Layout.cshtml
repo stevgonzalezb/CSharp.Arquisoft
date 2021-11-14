@@ -168,7 +168,7 @@
 
             function CleanModal() {
 
-             
+
                 $("#txtCurrentPassword").removeClass("is-valid");
                 $("#txtNewPassword").removeClass("is-valid");
                 $("#txtConfirmPassword").removeClass("is-valid");
@@ -181,7 +181,9 @@
                 $('.validation-error').remove();
             }
 
-        $('#passwordModal').on('hidden', function () {            CleanModal();        });
+        $('#passwordModal').on('hidden', function () {
+            CleanModal();
+        });
 
 
     </script>
@@ -218,7 +220,7 @@
                         </div>
                         <div class="row">
                             <label class="text-sm text-gray">Nota: Cuando se reestablezca la contraseña será dirigido a la pantalla de Login y deberá iniciar sesión nuevamente.<a class="text-gray" id="helpModalNav" data-toggle="modal" href="#changepassword" role="button" data-target=""><i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Ingrese a la ayuda de cambio de contraseña"></i></a></label>
-                            
+
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-secondary" onclick="ChangePassword()">Guardar</button>
@@ -242,7 +244,7 @@
                 <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
                     <h4 align="center"><b></b></h4>
                     <p>&nbsp;&nbsp;Este m&oacute;dulo esta desarrollado para que cada  uno de los usuarios se auto gestione el cambio de contraseña en el sistema.</p>
-                    
+
                     <p>&nbsp;&nbsp;En esta pantalla se completa los campos solicitados</p>
                     <div class="modal-body" align="left">
                         <img src="~/Content/img/Help/User_profile/userProfile02.jpg" class="img-rounded" alt="Cinque Terre" />
@@ -257,6 +259,133 @@
         </div>
     </div>
     @*/.modal*@
+
+
+    @*Modal Ayuda*@
+    <div class="modal" id="AttachmentsModalHelp" role="dialog">
+        <div class="modal-dialog" style="overflow-y: initial !important">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="text-bold text-center">Ayuda Proceso Adjunto</h4>
+                </div>
+                @*Ayuda Agregar Proyectos*@
+                <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
+                    <h4 align="center"><b></b></h4>
+                    <h4><b>&nbsp;&nbsp;Gu&iacute;a para agregar un adjunto nuevo:</b></h4>
+                    <p>&nbsp;&nbsp;1- Una vez ingresado en el proyecto que requiere agregar documentos, da clic a la pestaña ”Adjuntos:</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/Attachments/Attachments01.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <p>&nbsp;&nbsp;2- Da clic al campo “Seleccione un archivo” o al bot&oacute;n “Browse”.</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/Attachments/Attachments02.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <p>&nbsp;&nbsp;3- Se busca el documento o imagen que se desea adjuntar al proyecto.<p>
+                        <div class="modal-body" align="left">
+                            <img src="~/Content/img/Help/Attachments/Attachments03.JPG" class="img-rounded" alt="Cinque Terre" />
+                        </div>
+                    <p>&nbsp;&nbsp;4- Da clic al bot&oacute;n guardar, para finalizar la carga del documento.<p>
+                        <div class="modal-body" align="left">
+                            <img src="~/Content/img/Help/Attachments/Attachments04.JPG" class="img-rounded" alt="Cinque Terre" />
+                        </div>
+                    <p>&nbsp;&nbsp;5- El sistema mostrar&aacute; el documento que se carg&oacute;.<p>
+                        <div class="modal-body" align="left">
+                            <img src="~/Content/img/Help/Attachments/Attachments05.JPG" class="img-rounded" alt="Cinque Terre" />
+                        </div>
+                        <br />
+                        @*Ayuda Eliminar Clientes*@
+
+                        <h4><b>&nbsp;&nbsp;Gu&iacute;a para eliminar un adjunto:</b></h4>
+                    <p>&nbsp;&nbsp;1- En la pestaña “Adjuntos” se da clic al bot&oacute;n “Eliminar” del adjunto.</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/Attachments/Attachments06.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <p>&nbsp;&nbsp;2- Saldr&aacute; el siguiente mensaje para confirmar la eliminaci&oacute;n</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/Attachments/Attachments07.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <p>&nbsp;&nbsp; <b>1:</b>&nbsp;&nbsp;Se confirma la eliminaci&oacute;n del adjunto.</p>
+                    <p>&nbsp;&nbsp; <b>2:</b>&nbsp;&nbsp;No se confirma la eliminaci&oacute;n del adjunto, no se realizan cambios.</p>
+                    <br />
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*/.modal*@
+
+
+    @*Modal Ayuda*@
+    <div class="modal" id="projectGeneralModalHelp" role="dialog">
+        <div class="modal-dialog" style="overflow-y: initial !important">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="text-bold text-center">Ayuda Proceso Proyectos</h4>
+                </div>
+                @*Ayuda Agregar Proyectos*@
+                <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
+                    <h4 align="center"><b></b></h4>
+                    <h4><b>&nbsp;&nbsp;Gu&iacute;a para modificar un proyecto:</b></h4>
+                    <p>&nbsp;&nbsp;1- Al ingresar al m&oacute;dulo de proyectos despu&eacute;s de haber creado el mismo, se mostrar&aacute; la siguiente pantalla donde tendr&aacute; cargado el nombre del proyecto y cliente.</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/ProjectsGeneral/ProjectsGeneral01.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <p>&nbsp;&nbsp;A continuaci&oacute;n se debe de completar la informaci&oacute;n adicional para completar el proyecto.</p>
+                    <p>&nbsp;&nbsp; <b>1:</b>&nbsp;&nbsp;Nombre del proyecto (Si se desea cambiar).</p>
+                    <p>&nbsp;&nbsp; <b>2:</b>&nbsp;&nbsp;Cliente (Si se desea cambiar).</p>
+                    <p>&nbsp;&nbsp; <b>3:</b>&nbsp;&nbsp;Nombre del maestro de obra.</p>
+                    <p>&nbsp;&nbsp; <b>4:</b>&nbsp;&nbsp;Número de niveles de la obra</p>
+                    <p>&nbsp;&nbsp; <b>5:</b>&nbsp;&nbsp;Notas/Comentarios para realizar al proyecto</p>
+                    <p>&nbsp;&nbsp; <b>6:</b>&nbsp;&nbsp;Terreno (Se selecciona por medio del slider).</p>
+                    <p>&nbsp;&nbsp; <b>7:</b>&nbsp;&nbsp;Metros de construcción (Se selecciona por medio del slider).</p>
+                    <p>&nbsp;&nbsp; <b>8:</b>&nbsp;&nbsp;Sistemas constructivos (Puede ser uno o varios).</p>
+                    <p>&nbsp;&nbsp; <b>9:</b>&nbsp;&nbsp;Status del proyecto.</p>
+                    <p>&nbsp;&nbsp;2- Una vez finalizado la incorporaci&oacute;n o cambios que se desean se da clic al bot&oacute;n “Guardar” para registrar los cambios.</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/ProjectsGeneral/ProjectsGeneral02.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <br />
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*/.modal*@
+
+
+
+    @*Modal Ayuda*@
+    <div class="modal" id="projectPrincipalModalHelp" role="dialog">
+        <div class="modal-dialog" style="overflow-y: initial !important">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="text-bold text-center">Ayuda Proceso Proyectos</h4>
+                </div>
+                @*Ayuda Agregar Proyectos*@
+                <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
+                    <h4 align="center"><b></b></h4>
+                    <h4><b>&nbsp;&nbsp;Gu&iacute;a para pantalla proyecto:</b></h4>
+                    <p>&nbsp;&nbsp;1- Al ingresar al m&oacute;dulo de proyectos se mostrar&aacute;n las opciones para completar el proyecto.</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/ProjectPrincipal/ProjectPrincipal01.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <br />
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*/.modal*@
+
+
+
+
 
 </body>
 </html>

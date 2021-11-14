@@ -39,7 +39,7 @@
                                         <input type="hidden" id="txtId" />
                                         <div class="row">
                                             <div class="form-group col-10">
-                                                <label for="txtProjectName" class="col-form-label">Proyecto</label>
+                                                <label for="txtProjectName" class="col-form-label">Proyecto  <a class="text-gray" id="helpModalNav2" data-toggle="modal" href="#projectGeneralModalHelp" role="button" data-target=""><i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Ingrese a la ayuda de cambio de contraseña"></i></a></label>
                                                 <input type="text" class="form-control" id="txtProjectName" placeholder="Nombre Proyecto" maxlength="200" required>
                                             </div>
                                         </div>
@@ -146,7 +146,7 @@
                                             <form id="frmAttachments">
                                                 <div class="row">
                                                     <div class="form-group col-6">
-                                                        <label for="exampleInputFile">Subir adjunto</label>
+                                                        <label for="exampleInputFile">Subir adjunto <a class="text-gray" id="helpModalNav2" data-toggle="modal" href="#AttachmentsModalHelp" role="button" data-target=""><i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Ingrese a la ayuda de cambio de contraseña"></i></a></label>
                                                         <div class="input-group">
                                                             <div class="custom-file">
                                                                 <input type="file" class="custom-file-input" id="objInputFile">
@@ -264,6 +264,7 @@
             var url = new URL(window.location.href);
             var projectId = url.searchParams.get("Id");
 
+            $("#helpModalNav").attr('data-target', "#projectPrincipalModalHelp");
             LoadGeneral(projectId);
             LoadBudgets(projectId);
             LoadAttachmentList(projectId);
@@ -444,7 +445,7 @@
                     }
                 }
 
-               
+
 
                 api.SaveProject($data).then(response => {
                     if (response.result === 'OK') {
@@ -662,7 +663,7 @@
             if (elemento == "") {
                 toastr.error("Debes llenar el campo")
                 return false
-            } 
+            }
         }
 
     </script>
