@@ -391,6 +391,7 @@
             $("#txtDescription").removeClass("is-invalid");
             $("#txtDescription").removeClass("is-valid");
             $('.permissions-boxes').find('input:checkbox').prop('checked', false);
+            $('.validation-error').remove();
         }
 
         function LoadPermissions($RoleId) {
