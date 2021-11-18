@@ -1,4 +1,5 @@
 ﻿using ArquisoftApp.Models;
+using ArquisoftApp.Models.ReportsModel;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -19,8 +20,39 @@ namespace ArquisoftApp.Controllers
 
         public ActionResult Report(int Id)
         {
+
+            Settings CompanyData = null;
+            BudgetReport oReport = new BudgetReport();
+            oReport.CurrentUser = AppController.GetSessionUser();
+
+            using (ArquisoftEntities db = new ArquisoftEntities())
+            {
+
+                oReport.Budget = (from p in db.Budgets.Where(b => b.Id == Id && b.IdState == (int)Common.AppEnums.States.ACTIVE)
+                           select p).FirstOrDefault();
+
+                oReport.Project = (from p in db.Projects.Where(b => b.Id == oReport.Budget.ProjectId && b.IdState == (int)Common.AppEnums.States.ACTIVE)
+                                  select p).FirstOrDefault();
+
+                oReport.BudgetLines = (from p in db.BudgetLines.Where(b => b.BudgetId == Id)
+                                       select p).ToList();
+
+                oReport.Customer = (from p in db.Clients.Where(b => b.IdClient == oReport.Project.IdClient && b.idState == (int)Common.AppEnums.States.ACTIVE)
+                                    select p).FirstOrDefault();
+
+                CompanyData = (from p in db.Settings
+                               select p).FirstOrDefault();
+            }
+
+            oReport.CompanyName = CompanyData.CompanyName;
+            oReport.CompanyEmail = CompanyData.CompanyEmail;
+            oReport.CompanyAddress = CompanyData.CompanyAddress;
+            oReport.CompanyId = CompanyData.CompanyId;
+            oReport.CompanyPhone = CompanyData.CompanyPhone;
+
+
             //SetSessionData();
-            return View("~/Views/Reports/_BudgetReport.cshtml");
+            return View("~/Views/Reports/_BudgetReport.cshtml", oReport);
         }
 
         public JsonResult SaveBudget(Budgets oBudget)

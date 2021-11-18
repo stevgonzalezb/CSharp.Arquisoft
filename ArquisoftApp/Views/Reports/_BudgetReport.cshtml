@@ -1,4 +1,4 @@
-﻿
+﻿@model ArquisoftApp.Models.ReportsModel.BudgetReport
 @{
     Layout = null;
 }
@@ -25,8 +25,9 @@
             <div class="row">
                 <div class="col-12">
                     <h2 class="page-header">
-                        <i class="fas fa-globe"></i> AdminLTE, Inc.
-                        <small class="float-right">Date: 2/10/2014</small>
+                        @*<i class="fas fa-globe"></i> AdminLTE, Inc.*@
+                        <img src="~/Content/img/logo-inverted.png" alt="Arquisoft Logo" class="brand-image-xl " style="opacity: .8">
+                        @*<small class="float-right">@DateTime.Now</small>*@
                     </h2>
                 </div>
                 <!-- /.col -->
@@ -34,36 +35,37 @@
             <!-- info row -->
             <div class="row invoice-info">
                 <div class="col-sm-4 invoice-col">
-                    From
-                    <address>
-                        <strong>Admin, Inc.</strong><br>
-                        795 Folsom Ave, Suite 600<br>
-                        San Francisco, CA 94107<br>
-                        Phone: (804) 123-5432<br>
-                        Email: info@almasaeedstudio.com
-                    </address>
+                    <div>
+                        <strong>@Model.CompanyName</strong><br>
+                        @Model.CompanyId<br>
+                        @Model.CompanyAddress<br>
+                        @Model.CompanyEmail<br>
+                        @Model.CompanyPhone
+                    </div>
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
-                    To
-                    <address>
-                        <strong>John Doe</strong><br>
-                        795 Folsom Ave, Suite 600<br>
-                        San Francisco, CA 94107<br>
-                        Phone: (555) 539-1037<br>
-                        Email: john.doe@example.com
-                    </address>
+                    <div>
+                        <strong>@Model.Project.Name</strong><br>
+                        Cliente: @Model.Customer.Name @Model.Customer.Last_Name<br>
+                        Área Terreno: @Model.Project.SiteArea m<sup>2</sup><br>
+                        Área contrucción: @Model.Project.ConstructionArea m<sup>2</sup><br>
+
+                        @*Phone: (555) 539-1037<br>
+                        Email: john.doe@example.com*@
+                    </div>
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
-                    <b>Invoice #007612</b><br>
-                    <br>
-                    <b>Order ID:</b> 4F3S8J<br>
-                    <b>Payment Due:</b> 2/22/2014<br>
-                    <b>Account:</b> 968-34567
+                    <b>Presupuesto #@Model.Budget.Id</b><br>
+                    <b>@Model.Budget.Name</b><br>
+                    <b>Generado por:</b> @Model.CurrentUser.Name @Model.CurrentUser.Last_Name<br>
+                    <b>Fecha:</b> @DateTime.Now<br>
+                    @*<b>Account:</b> 968-34567*@
                 </div>
                 <!-- /.col -->
             </div>
+            <br />
             <!-- /.row -->
             <!-- Table row -->
             <div class="row">
@@ -71,224 +73,25 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Qty</th>
-                                <th>Product</th>
-                                <th>Serial #</th>
-                                <th>Description</th>
-                                <th>Subtotal</th>
+                                <th>Descripción</th>
+                                <th>Cantidad</th>
+                                <th>Unidad Medida</th>
+                                <th>Precio</th>
+                                <th>Total Línea</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach(var oReportLines in Model.BudgetLines)
+                            {
+                                var totalLine = oReportLines.Quantity * oReportLines.Price;
                             <tr>
-                                <td>1</td>
-                                <td>Call of Duty</td>
-                                <td>455-981-221</td>
-                                <td>El snort testosterone trophy driving gloves handsome</td>
-                                <td>$64.50</td>
+                                <td>@oReportLines.Description</td>
+                                <td>@oReportLines.Quantity</td>
+                                <td>@oReportLines.UOM</td>
+                                <td>@Decimal.Parse(oReportLines.Price.ToString()).ToString("C")</td>
+                                <td>@Decimal.Parse(totalLine.ToString()).ToString("C") </td>
                             </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Need for Speed IV</td>
-                                <td>247-925-726</td>
-                                <td>Wes Anderson umami biodiesel</td>
-                                <td>$50.00</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Monsters DVD</td>
-                                <td>735-845-642</td>
-                                <td>Terry Richardson helvetica tousled street art master</td>
-                                <td>$10.70</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Grown Ups Blue Ray</td>
-                                <td>422-568-642</td>
-                                <td>Tousled lomo letterpress</td>
-                                <td>$25.99</td>
-                            </tr>
+                             }
 
                         </tbody>
                     </table>
@@ -296,42 +99,41 @@
                 <!-- /.col -->
             </div>
             <!-- /.row -->
-
+            <hr />
             <div class="row">
                 <!-- accepted payments column -->
                 <div class="col-6">
-                    <p class="lead">Payment Methods:</p>
-                    <img src="~/Scripts/AdminLTE/dist/img/credit/visa.png" alt="Visa">
+                    <p class="lead">Comentarios:</p>
+                    @*<img src="~/Scripts/AdminLTE/dist/img/credit/visa.png" alt="Visa">
                     <img src="~/Scripts/AdminLTE/dist/img/credit/mastercard.png" alt="Mastercard">
                     <img src="~/Scripts/AdminLTE/dist/img/credit/american-express.png" alt="American Express">
-                    <img src="~/Scripts/AdminLTE/dist/img/credit/paypal2.png" alt="Paypal">
+                    <img src="~/Scripts/AdminLTE/dist/img/credit/paypal2.png" alt="Paypal">*@
 
                     <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
-                        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr
-                        jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
+                        @Model.Project.Comments
                     </p>
                 </div>
                 <!-- /.col -->
                 <div class="col-6">
-                    <p class="lead">Amount Due 2/22/2014</p>
+                    @*<p class="lead">Amount Due 2/22/2014</p>*@
 
                     <div class="table-responsive">
+                        @{ decimal fee = Decimal.Parse(Model.Budget.Fee.ToString()) / 100;
+                            var finalTotal = (Model.Budget.Total * fee) + Model.Budget.Total;  
+                         }
+
                         <table class="table">
                             <tr>
                                 <th style="width:50%">Subtotal:</th>
-                                <td>$250.30</td>
+                                <td>@Decimal.Parse(Model.Budget.Total.ToString()).ToString("C")</td>
                             </tr>
                             <tr>
-                                <th>Tax (9.3%)</th>
-                                <td>$10.34</td>
-                            </tr>
-                            <tr>
-                                <th>Shipping:</th>
-                                <td>$5.80</td>
+                                <th>Honorarios(%)</th>
+                                <td>@Model.Budget.Fee%</td>
                             </tr>
                             <tr>
                                 <th>Total:</th>
-                                <td>$265.24</td>
+                                <td>@Decimal.Parse(finalTotal.ToString()).ToString("C")</td>
                             </tr>
                         </table>
                     </div>

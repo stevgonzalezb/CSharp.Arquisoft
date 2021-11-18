@@ -25,6 +25,7 @@
         <AssociationConnector Association="ArquisoftModel1.FK_RoleOperations_Roles" />
         <EntityTypeShape EntityType="ArquisoftModel1.BudgetLines" Width="1.5" PointX="7.5" PointY="10.125" />
         <AssociationConnector Association="ArquisoftModel1.FK_BudgetLines_Budget" />
+        <EntityTypeShape EntityType="ArquisoftModel1.Settings" Width="1.5" PointX="0.75" PointY="10.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
