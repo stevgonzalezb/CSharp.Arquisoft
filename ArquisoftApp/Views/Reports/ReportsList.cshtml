@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewBag.Title = "Reportes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-9 d-flex flex-column justify-content-center">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">Reportes del Sistema</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row col-12">
+                            <div class="col-md-4">
+                                <label for="inputEstimatedBudget">Proyectos por Cliente:</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="number" id="inputEstimatedBudget" class="form-control" value="2300" step="1">
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-secondary">Generar</button>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row col-12">
+                            <div class="col-md-4">
+                                <label for="inputEstimatedBudget">Materiales usados entre fechas:</label>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control float-right" id="reservation">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-secondary">Generar</button>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row col-12">
+                            <div class="col-md-4">
+                                <label for="inputEstimatedBudget">Presupuestos entre fechas:</label>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control float-right" id="reservationll">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-secondary">Generar</button>
+                            </div>
+                        </div>
+                        <hr />
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+@section scripts{
+
+
+    <script src="~/Scripts/AdminLTE/plugins/moment/moment.min.js"></script>
+    <!-- date-range-picker -->
+    <script src="~/Scripts/AdminLTE/plugins/daterangepicker/daterangepicker.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            //Date range picker
+            $('#reservation').daterangepicker()
+
+        })
+    </script>
+
+
+}

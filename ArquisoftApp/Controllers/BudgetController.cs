@@ -50,8 +50,6 @@ namespace ArquisoftApp.Controllers
             oReport.CompanyId = CompanyData.CompanyId;
             oReport.CompanyPhone = CompanyData.CompanyPhone;
 
-
-            //SetSessionData();
             return View("~/Views/Reports/_BudgetReport.cshtml", oReport);
         }
 
@@ -167,7 +165,6 @@ namespace ArquisoftApp.Controllers
 
             return Json(new { result = response }, JsonRequestBehavior.AllowGet);
         }
-
 
         [HttpPost]
         public JsonResult SaveBudgetLine(BudgetLines oBudgetLine, Budgets oBudget)

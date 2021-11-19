@@ -158,6 +158,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MaterialController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\VerifyRole.cs" />
@@ -2347,6 +2348,7 @@
     <Content Include="Views\Maintenance\ProjectMaintenance.cshtml" />
     <Content Include="Views\Maintenance\BudgetMaintenance.cshtml" />
     <Content Include="Views\Reports\_BudgetReport.cshtml" />
+    <Content Include="Views\Reports\ReportsList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
