@@ -209,6 +209,9 @@
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ReportsModel\BudgetReport.cs" />
+    <Compile Include="Models\ReportsModel\BudgetsCreated.cs" />
+    <Compile Include="Models\ReportsModel\ProjectsByCustomer.cs" />
+    <Compile Include="Models\ReportsModel\UsedMaterials.cs" />
     <Compile Include="Models\RoleOperations.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -2349,6 +2352,9 @@
     <Content Include="Views\Maintenance\BudgetMaintenance.cshtml" />
     <Content Include="Views\Reports\_BudgetReport.cshtml" />
     <Content Include="Views\Reports\ReportsList.cshtml" />
+    <Content Include="Views\Reports\_ProjectsByCustomer.cshtml" />
+    <Content Include="Views\Reports\_UsedMaterials.cshtml" />
+    <Content Include="Views\Reports\_BudgetsCreated.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
