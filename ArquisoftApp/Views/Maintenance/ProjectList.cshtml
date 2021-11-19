@@ -37,17 +37,18 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="form-group col-12">
-                        <label for="txtProjectName">Nombre del Proyecto</label>
-                        <input type="text" class="form-control" id="txtProjectName" name="txtProjectName">
+                        <label for="txtProjectName">Nombre del Proyecto: *</label>
+                        <input type="text" class="form-control" id="txtProjectName" name="txtProjectName" placeholder="Nombre del nuevo proyecto">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-12">
-                        <label for="cmbClients">Cliente</label>
+                        <label for="cmbClients">Cliente:</label>
                         <select id="cmbClients" class="form-control select2bs4" style="width: 100%;">
                         </select>
                     </div>
+                    <p>* Campos requeridos</p>
                 </div>
 
             </div>
@@ -226,10 +227,28 @@
 
             });
 
+            // Form validations
+            var validator = $("#FormModal").validate({
+                rules: {
+                    txtProjectName: {
+                        required: true,
+                        minlength: 1
+                    }
+                },
+                messages: {
+                    txtProjectName: {
+                        required: "Requerido",
+                        minlength: "Ingrese un nombre válido."
+                    }
+                }
+            });
+
+
         }
 
         function openModal($projectId) {
 
+            CleanModal();
             if ($projectId == 0) {
                 $('#FormModal').modal('show');
             }
@@ -259,30 +278,37 @@
 
         function Save() {
 
-            var $data = {
-                oProject: {
-                    Id: 0,
-                    Name: $("#txtProjectName").val(),
-                    SiteArea: '0',
-                    ConstructionArea: '0',
-                    MasterBuilder: ' ',
-                    IdClient: parseInt($("#cmbClients").val()),
-                    IdState: app.enums.States.ACTIVE
+            if ($("#FormModal").valid()) {
+                var $data = {
+                    oProject: {
+                        Id: 0,
+                        Name: $("#txtProjectName").val(),
+                        SiteArea: '0',
+                        ConstructionArea: '0',
+                        MasterBuilder: '',
+                        IdClient: parseInt($("#cmbClients").val()),
+                        IdState: app.enums.States.ACTIVE
+                    }
                 }
+
+                api.SaveProject($data).then(response => {
+                    if (response) {
+                        toastr.success('Proyecto guardado correctamente.');
+                        window.location.href = `Instance?Id=${response.result}`;
+                    } else {
+                        toastr.error(response.result);
+                    }
+
+                }).catch(err => {
+
+                    toastr.error("Ocurrió un error guardando los datos del Proyecto.");
+                })
+            } else {
+                toastr.error('Por favor valide los datos ingresados.')
             }
+            
 
-            api.SaveProject($data).then(response => {
-                if (response) {
-                    toastr.success('Proyecto guardado correctamente.');
-                    window.location.href = `Instance?Id=${response.result}`;
-                } else {
-                    toastr.error(response.result);
-                }
-
-            }).catch(err => {
-
-                toastr.error("Ocurrió un error guardando los datos del Proyecto.");
-            })
+            
         }
 
         function Delete($projectId) {
@@ -297,6 +323,17 @@
                     toastr.error("Ocurrió un error eliminando los datos del proyecto.");
                 })
             }
+        }
+
+        function CleanModal() {
+
+            $("#txtProjectName").removeClass("is-invalid");
+            $("#txtProjectName").removeClass("is-valid");
+            $('.validation-error').remove();
+
+
+            $("#txtProjectName").val("");
+
         }
 
     </script>

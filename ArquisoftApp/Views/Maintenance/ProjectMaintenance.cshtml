@@ -39,8 +39,8 @@
                                         <input type="hidden" id="txtId" />
                                         <div class="row">
                                             <div class="form-group col-10">
-                                                <label for="txtProjectName" class="col-form-label">Proyecto  <a class="text-gray" id="helpModalNav2" data-toggle="modal" href="#projectGeneralModalHelp" role="button" data-target=""><i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Ingrese a la ayuda de cambio de contraseña"></i></a></label>
-                                                <input type="text" class="form-control" id="txtProjectName" placeholder="Nombre Proyecto" maxlength="200" required>
+                                                <label for="txtProjectName" class="col-form-label">Proyecto</label>
+                                                <input type="text" name="txtProjectName" class="form-control" id="txtProjectName" placeholder="Nombre Proyecto" maxlength="200" required>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -61,17 +61,17 @@
                                         </div>
 
                                         <div class="row">
+                                            
                                             <div class="form-group col-6">
-                                                <label for="txtBuilder" class="col-form-label">Maestro de Obra</label>
-                                                <input type="text" class="form-control" id="txtBuilder" placeholder="Maestro de Obra" maxlength="200" required>
+                                                <label for="txtConstructor" class="col-form-label">Maestro de obras</label>
+                                                <input type="text" name="txtConstructor" class="form-control" id="txtConstructor" placeholder="Maestro de Obra" maxlength="200" required>
                                             </div>
-
                                             <div class="form-group col-6">
                                                 <label for="sliderConstruction" class="col-form-label">Metros Construcción(m2)</label> = <label id="constructionLabelValue">0</label>
                                                 <div class="slider-blue">
                                                     <input type="text" value="0" id="sliderConstruction" class="slider form-control" data-slider-min="0" data-slider-max="1000"
                                                            data-slider-step="10" data-slider-value="0" data-slider-orientation="horizontal"
-                                                           data-slider-selection="before" data-slider-tooltip="show" style="width:100%;" onchange="changeLabelConstruction()">
+                                                           data-slider-selection="before" data-slider-tooltip="show" style="width:100%;" onchange="changeLabelConstruction()" />
                                                 </div>
                                             </div>
                                         </div>
@@ -79,11 +79,11 @@
                                         <div class="row">
                                             <div class="form-group col-6">
                                                 <label for="txtLevels" class="col-form-label">No. Niveles</label>
-                                                <input type="number" min="1" class="form-control" id="txtLevels" placeholder="Niveles de las obra" maxlength="200" required>
+                                                <input type="text" class="form-control" name="txtLevels" id="txtLevels" placeholder="Niveles de las obra" maxlength="200" required>
                                             </div>
                                             <div class="form-group col-6">
                                                 <label for="cmbSystems" class="col-form-label">Sistemas Constructivos</label>
-                                                <select id="cmbSystems" class="select2bs4" multiple="multiple" data-placeholder="Sistemas Constructivos" style="width: 100%;">
+                                                <select id="cmbSystems" name="cmbSystems" class="select2bs4" multiple="multiple" data-placeholder="Sistemas Constructivos" style="width: 100%;">
                                                     <option value="1">Block</option>
                                                     <option value="2">Master Block</option>
                                                     <option value="3">Prefabricado</option>
@@ -146,7 +146,7 @@
                                             <form id="frmAttachments">
                                                 <div class="row">
                                                     <div class="form-group col-6">
-                                                        <label for="exampleInputFile">Subir adjunto <a class="text-gray" id="helpModalNav2" data-toggle="modal" href="#AttachmentsModalHelp" role="button" data-target=""><i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Ingrese a la ayuda de cambio de contraseña"></i></a></label>
+                                                        <label for="exampleInputFile">Subir adjunto</label>
                                                         <div class="input-group">
                                                             <div class="custom-file">
                                                                 <input type="file" class="custom-file-input" id="objInputFile">
@@ -223,6 +223,8 @@
 </form>
 
 
+
+
 @section scripts{
 
     <!-- Bootstrap slider -->
@@ -264,7 +266,7 @@
             var url = new URL(window.location.href);
             var projectId = url.searchParams.get("Id");
 
-            $("#helpModalNav").attr('data-target', "#projectPrincipalModalHelp");
+            $("#helpModalNav").attr('data-target', "#projectPrincipalHelp");
             LoadGeneral(projectId);
             LoadBudgets(projectId);
             LoadAttachmentList(projectId);
@@ -286,7 +288,7 @@
                     $("#sliderConstruction").slider('setValue', project[0].ConstructionArea);
                     $("#constructionLabelValue").text(project[0].ConstructionArea);
                     $("#txtLevels").val(project[0].Levels);
-                    $("#txtBuilder").val(project[0].MasterBuilder);
+                    $("#txtConstructor").val(project[0].MasterBuilder);
                     $("#txtComments").val(project[0].Comments);
                     $("#cmbClients").val(project[0].IdClient).change();
                     if (project[0].ConstructionSystem)
@@ -319,54 +321,45 @@
                 }
             });
 
-            // Form validations
-            var validator = $("#FormModal").validate({
+            // Form validationsgeneralForm
+            var validator = $("#generalForm").validate({
                 rules: {
-                    txtName: {
+                    txtProjectName: {
                         required: true,
                         minlength: 1
                     },
-                    txtLastName: {
+                    txtLevels: {
                         required: true,
                         minlength: 1
                     },
-                    txtPhone: {
+                    cmbSystems: {
                         required: true,
-                        phoneRegex: true
+                        minlength: 1
                     },
-                    txtEmail: {
-                        required: true,
-                        emailRegex: true
-                    },
-                    txtAddress: {
+                    txtConstructor: {
                         required: true,
                         minlength: 1
                     }
                 },
                 messages: {
-                    txtName: {
+                    txtProjectName: {
                         required: "Requerido",
                         minlength: "Ingrese un nombre válido."
                     },
-                    txtLastName: {
+                    txtLevels: {
                         required: "Requerido",
-                        minlength: "Ingrese un apellido válido."
+                        minlength: "Ingrese un nivel de obra válido."
                     },
-                    txtPhone: {
+                    cmbSystems: {
                         required: "Requerido",
-                        phoneRegex: "Ingrese un número válido."
+                        minlength: "Ingrese un sistema cosntructivo válido."
                     },
-                    txtEmail: {
+                    txtConstructor: {
                         required: "Requerido",
-                        emailRegex: "Ingrese un correo válido"
-                    },
-                    txtAddress: {
-                        required: "Requedido",
-                        minlength: "Ingrese una dirección válida."
+                        minlength: "Ingrese coon."
                     }
                 }
             });
-
 
         }
 
@@ -395,40 +388,34 @@
 
         function SaveProject() {
             /*validarCampos();*/
-            if (true) {
 
-                var strConstructionSystem = "";
-                var status = $('input[name="rbStatus"]:checked').attr('id')
+            if ($("#generalForm").valid()) {
 
-                var conSystems = $("#cmbSystems").val();
-                if (conSystems.length > 0) {
-                    $.each(conSystems, function (key, value) {
-                        strConstructionSystem += `${value}|`
-                    })
-                }
+                if (true) {
 
-                switch (status) {
-                    case 'rbDanger':
-                        status = 'D';
-                        break;
-                    case 'rbWarning':
-                        status = 'C';
-                        break;
-                    case 'rbSuccess':
-                        status = 'E';
-                        break;
-                }
+                    var strConstructionSystem = "";
+                    var status = $('input[name="rbStatus"]:checked').attr('id')
+
+                    var conSystems = $("#cmbSystems").val();
+                    if (conSystems.length > 0) {
+                        $.each(conSystems, function (key, value) {
+                            strConstructionSystem += `${value}|`
+                        })
+                    }
+
+                    switch (status) {
+                        case 'rbDanger':
+                            status = 'D';
+                            break;
+                        case 'rbWarning':
+                            status = 'C';
+                            break;
+                        case 'rbSuccess':
+                            status = 'E';
+                            break;
+                    }
 
 
-                var proyecto = document.getElementById("txtProjectName").value
-                var maestro = document.getElementById("txtBuilder").value
-                var niveles = document.getElementById("txtLevels").value
-                var sistemas = document.getElementById("cmbSystems").value
-
-                if (proyecto == "" || maestro == "" || niveles == "" || sistemas == "") {
-                    toastr.error("Imposible guardar los datos, campos vacíos")
-                    return false
-                } else {
                     var $data = {
                         oProject: {
                             Id: parseInt($("#txtId").val()),
@@ -436,31 +423,34 @@
                             SiteArea: $("#sliderSite").val(),
                             ConstructionArea: $("#sliderConstruction").val(),
                             Levels: $("#txtLevels").val(),
-                            MasterBuilder: $("#txtBuilder").val(),
+                            MasterBuilder:$("#txtConstructor").val(),
                             Comments: $("#txtComments").val(),
                             IdClient: parseInt($("#cmbClients").val()),
                             ConstructionSystem: strConstructionSystem,
                             Status: status
                         }
                     }
+
+
+
+                    api.SaveProject($data).then(response => {
+                        if (response.result === 'OK') {
+                            toastr.success('Proyecto guardado correctamente.');
+                        } else {
+                            toastr.error(response.result);
+                        }
+
+                    }).catch(err => {
+
+                        toastr.error("Ocurrió un error guardando los datos del Proyecto.");
+                    })
                 }
-
-
-
-                api.SaveProject($data).then(response => {
-                    if (response.result === 'OK') {
-                        toastr.success('Proyecto guardado correctamente.');
-                    } else {
-                        toastr.error(response.result);
-                    }
-
-                }).catch(err => {
-
-                    toastr.error("Ocurrió un error guardando los datos del Proyecto.");
-                })
+                else
+                    toastr.error('Por favor valide los datos ingresados.');
+            } else {
+                toastr.error('Por favor valide los datos ingresados.')
             }
-            else
-                toastr.error('Por favor valide los datos ingresados.');
+            
         }
 
 

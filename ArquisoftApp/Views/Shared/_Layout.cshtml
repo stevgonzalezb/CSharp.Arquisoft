@@ -203,24 +203,24 @@
                     <form role="form" id="passForm">
                         <div class="row">
                             <div class="form-group col-6">
-                                <label for="txtCurrentPassword">Contraseña Actual:</label>
+                                <label for="txtCurrentPassword">Contraseña actual: *</label>
                                 <input type="password" name="txtCurrentPassword" class="form-control" id="txtCurrentPassword" placeholder="Ingrese su contraseña actual">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="form-group col-6">
-                                <label for="txtNewPassword">Contraseña nueva:</label>
+                                <label for="txtNewPassword">Contraseña nueva: *</label>
                                 <input type="password" class="form-control" name="txtNewPassword" id="txtNewPassword" placeholder="Ingrese su contraseña nueva">
                             </div>
                             <div class="form-group col-6">
-                                <label for="txtConfirmPassword">Confirmar contraseña:</label>
+                                <label for="txtConfirmPassword">Confirmar contraseña: *</label>
                                 <input type="password" class="form-control" name="txtConfirmPassword" id="txtConfirmPassword" placeholder="Confirme su contraseña nueva">
                             </div>
                         </div>
                         <div class="row">
                             <label class="text-sm text-gray">Nota: Cuando se reestablezca la contraseña será dirigido a la pantalla de Login y deberá iniciar sesión nuevamente.<a class="text-gray" id="helpModalNav" data-toggle="modal" href="#changepassword" role="button" data-target=""><i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Ingrese a la ayuda de cambio de contraseña"></i></a></label>
-
+                            <label class="text-sm text-gray">* Campos requeridos</label>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-secondary" onclick="ChangePassword()">Guardar</button>
@@ -233,6 +233,9 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+
+
+
     <!-- /.modal -->
     @*Modal Ayuda*@
     <div class="modal" id="changepassword" role="dialog">
@@ -261,15 +264,86 @@
     @*/.modal*@
 
 
+
     @*Modal Ayuda*@
-    <div class="modal" id="AttachmentsModalHelp" role="dialog">
+    <div class="modal" id="projectPrincipalHelp" role="dialog">
         <div class="modal-dialog" style="overflow-y: initial !important">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="text-bold text-center">Ayuda Proceso Adjunto</h4>
+                    <h4 class="text-bold text-center">Ayuda Proceso Proyectos</h4>
                 </div>
-                @*Ayuda Agregar Proyectos*@
+                @*Ayuda pantalla Proyectos*@
                 <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
+                    <h4 align="center"><b></b></h4>
+                    <h4><b>&nbsp;&nbsp;Gu&iacute;a para pantalla proyecto:</b></h4>
+                    <p>&nbsp;&nbsp;1- Al ingresar al m&oacute;dulo de proyectos se mostrar&aacute;n las opciones para completar el proyecto.</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/ProjectPrincipal/ProjectPrincipal01.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <br />
+                    @*Ayuda modificar Proyectos*@
+                    <h4 align="center"><b></b></h4>
+                    <h4><b>&nbsp;&nbsp;Gu&iacute;a para modificar un proyecto:</b></h4>
+                    <p>&nbsp;&nbsp;1- Al ingresar al m&oacute;dulo de proyectos despu&eacute;s de haber creado el mismo, se mostrar&aacute; la siguiente pantalla donde tendr&aacute; cargado el nombre del proyecto y cliente.</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/ProjectsGeneral/ProjectsGeneral01.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <p>&nbsp;&nbsp;A continuaci&oacute;n se debe de completar la informaci&oacute;n adicional para completar el proyecto.</p>
+                    <p>&nbsp;&nbsp; <b>1:</b>&nbsp;&nbsp;Nombre del proyecto (Si se desea cambiar).</p>
+                    <p>&nbsp;&nbsp; <b>2:</b>&nbsp;&nbsp;Cliente (Si se desea cambiar).</p>
+                    <p>&nbsp;&nbsp; <b>3:</b>&nbsp;&nbsp;Nombre del maestro de obra.</p>
+                    <p>&nbsp;&nbsp; <b>4:</b>&nbsp;&nbsp;Número de niveles de la obra</p>
+                    <p>&nbsp;&nbsp; <b>5:</b>&nbsp;&nbsp;Notas/Comentarios para realizar al proyecto</p>
+                    <p>&nbsp;&nbsp; <b>6:</b>&nbsp;&nbsp;Terreno (Se selecciona por medio del slider).</p>
+                    <p>&nbsp;&nbsp; <b>7:</b>&nbsp;&nbsp;Metros de construcción (Se selecciona por medio del slider).</p>
+                    <p>&nbsp;&nbsp; <b>8:</b>&nbsp;&nbsp;Sistemas constructivos (Puede ser uno o varios).</p>
+                    <p>&nbsp;&nbsp; <b>9:</b>&nbsp;&nbsp;Status del proyecto.</p>
+                    <p>&nbsp;&nbsp;2- Una vez finalizado la incorporaci&oacute;n o cambios que se desean se da clic al bot&oacute;n “Guardar” para registrar los cambios.</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/ProjectsGeneral/ProjectsGeneral02.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <br />
+                    @*Ayuda proceso presupuesto*@
+                    <h4 align="center"><b></b></h4>
+                    <h4><b>&nbsp;&nbsp;Gu&iacute;a para generar un presupuesto:</b></h4>
+                    <p>&nbsp;&nbsp;1- Una vez ingresado en el proyecto que requiere un presupuesto, se ingresa a la pestaña ”Presupuesto”</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/Budget/Budget01.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <p>&nbsp;&nbsp;2- Da clic al botón “Crear Nuevo”.</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/Budget/Budget02.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <p>&nbsp;&nbsp;3- Coloca el nombre del presupuesto a generar y da clic al bot&oacute;n "Crear".</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/Budget/Budget03.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <p>&nbsp;&nbsp;4- El presupuesto aparece vacío.</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/Budget/Budget04.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <p>&nbsp;&nbsp;5- Selecciona el monto del honorario.</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/Budget/Budget05.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <p>&nbsp;&nbsp;6- En la parte “Materiales”, se selecciona el material que tendr&aacute; el presupuesto, la unidad de medida, cantidad y precio.</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/Budget/Budget06.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <p>&nbsp;&nbsp;7- Una vez completo lo datos, da clic al bot&oacute;n “Agregar”</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/Budget/Budget07.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <p>&nbsp;&nbsp;8- Aparecer&aacute;  en el parte de “Presupuesto” los materiales que se van agregando.</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/Budget/Budget08.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <p>&nbsp;&nbsp;9- Una vez finalizado el presupuesto, da clic en “Guardar Presupuesto” para guardar el mismo, y en el bot&oacute;n “Generar PDF” si se requiere generarlo para enviar.</p>
+                    <div class="modal-body" align="left">
+                        <img src="~/Content/img/Help/Budget/Budget09.JPG" class="img-rounded" alt="Cinque Terre" />
+                    </div>
+                    <br />
+                    @*Ayuda agregar adjuntos*@
                     <h4 align="center"><b></b></h4>
                     <h4><b>&nbsp;&nbsp;Gu&iacute;a para agregar un adjunto nuevo:</b></h4>
                     <p>&nbsp;&nbsp;1- Una vez ingresado en el proyecto que requiere agregar documentos, da clic a la pestaña ”Adjuntos:</p>
@@ -293,7 +367,7 @@
                             <img src="~/Content/img/Help/Attachments/Attachments05.JPG" class="img-rounded" alt="Cinque Terre" />
                         </div>
                         <br />
-                        @*Ayuda Eliminar Clientes*@
+                        @*Ayuda elimianr adjuntos*@
 
                         <h4><b>&nbsp;&nbsp;Gu&iacute;a para eliminar un adjunto:</b></h4>
                     <p>&nbsp;&nbsp;1- En la pestaña “Adjuntos” se da clic al bot&oacute;n “Eliminar” del adjunto.</p>
@@ -315,76 +389,6 @@
         </div>
     </div>
     @*/.modal*@
-
-
-    @*Modal Ayuda*@
-    <div class="modal" id="projectGeneralModalHelp" role="dialog">
-        <div class="modal-dialog" style="overflow-y: initial !important">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="text-bold text-center">Ayuda Proceso Proyectos</h4>
-                </div>
-                @*Ayuda Agregar Proyectos*@
-                <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
-                    <h4 align="center"><b></b></h4>
-                    <h4><b>&nbsp;&nbsp;Gu&iacute;a para modificar un proyecto:</b></h4>
-                    <p>&nbsp;&nbsp;1- Al ingresar al m&oacute;dulo de proyectos despu&eacute;s de haber creado el mismo, se mostrar&aacute; la siguiente pantalla donde tendr&aacute; cargado el nombre del proyecto y cliente.</p>
-                    <div class="modal-body" align="left">
-                        <img src="~/Content/img/Help/ProjectsGeneral/ProjectsGeneral01.JPG" class="img-rounded" alt="Cinque Terre" />
-                    </div>
-                    <p>&nbsp;&nbsp;A continuaci&oacute;n se debe de completar la informaci&oacute;n adicional para completar el proyecto.</p>
-                    <p>&nbsp;&nbsp; <b>1:</b>&nbsp;&nbsp;Nombre del proyecto (Si se desea cambiar).</p>
-                    <p>&nbsp;&nbsp; <b>2:</b>&nbsp;&nbsp;Cliente (Si se desea cambiar).</p>
-                    <p>&nbsp;&nbsp; <b>3:</b>&nbsp;&nbsp;Nombre del maestro de obra.</p>
-                    <p>&nbsp;&nbsp; <b>4:</b>&nbsp;&nbsp;Número de niveles de la obra</p>
-                    <p>&nbsp;&nbsp; <b>5:</b>&nbsp;&nbsp;Notas/Comentarios para realizar al proyecto</p>
-                    <p>&nbsp;&nbsp; <b>6:</b>&nbsp;&nbsp;Terreno (Se selecciona por medio del slider).</p>
-                    <p>&nbsp;&nbsp; <b>7:</b>&nbsp;&nbsp;Metros de construcción (Se selecciona por medio del slider).</p>
-                    <p>&nbsp;&nbsp; <b>8:</b>&nbsp;&nbsp;Sistemas constructivos (Puede ser uno o varios).</p>
-                    <p>&nbsp;&nbsp; <b>9:</b>&nbsp;&nbsp;Status del proyecto.</p>
-                    <p>&nbsp;&nbsp;2- Una vez finalizado la incorporaci&oacute;n o cambios que se desean se da clic al bot&oacute;n “Guardar” para registrar los cambios.</p>
-                    <div class="modal-body" align="left">
-                        <img src="~/Content/img/Help/ProjectsGeneral/ProjectsGeneral02.JPG" class="img-rounded" alt="Cinque Terre" />
-                    </div>
-                    <br />
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    @*/.modal*@
-
-
-
-    @*Modal Ayuda*@
-    <div class="modal" id="projectPrincipalModalHelp" role="dialog">
-        <div class="modal-dialog" style="overflow-y: initial !important">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="text-bold text-center">Ayuda Proceso Proyectos</h4>
-                </div>
-                @*Ayuda Agregar Proyectos*@
-                <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
-                    <h4 align="center"><b></b></h4>
-                    <h4><b>&nbsp;&nbsp;Gu&iacute;a para pantalla proyecto:</b></h4>
-                    <p>&nbsp;&nbsp;1- Al ingresar al m&oacute;dulo de proyectos se mostrar&aacute;n las opciones para completar el proyecto.</p>
-                    <div class="modal-body" align="left">
-                        <img src="~/Content/img/Help/ProjectPrincipal/ProjectPrincipal01.JPG" class="img-rounded" alt="Cinque Terre" />
-                    </div>
-                    <br />
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    @*/.modal*@
-
-
-
 
 
 </body>
