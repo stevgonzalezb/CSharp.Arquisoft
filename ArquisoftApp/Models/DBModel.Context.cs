@@ -41,5 +41,6 @@ namespace ArquisoftApp.Models
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<VendorMaterials> VendorMaterials { get; set; }
         public virtual DbSet<BudgetLines> BudgetLines { get; set; }
+        public virtual DbSet<Settings> Settings { get; set; }
     }
 }
