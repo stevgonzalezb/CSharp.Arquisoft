@@ -3,6 +3,7 @@ using ArquisoftApp.Models.ReportsModel;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -14,6 +15,7 @@ namespace ArquisoftApp.Controllers
         // GET: Report
         public ActionResult Index()
         {
+            SetSessionData();
             return View("~/Views/Reports/ReportsList.cshtml");
         }
 
@@ -48,9 +50,14 @@ namespace ArquisoftApp.Controllers
         public ActionResult _UsedMaterials(string dates)
         {
 
+            var startDate = Convert.ToDateTime(dates.Split('-')[0]).ToString("yyyy-MM-dd");
+            var endDate = Convert.ToDateTime(dates.Split('-')[1]).ToString("yyyy-MM-dd");
+
             var queryString = string.Format(@"SELECT [Description], COUNT(BudgetId) 'Cantidad'
-                                                FROM BudgetLines
-                                                GROUP BY [Description]");
+                                                FROM BudgetLines A 
+	                                                INNER JOIN Budgets B ON A.BudgetId = B.Id
+                                                WHERE B.CreationDate >= '{0}' AND B.CreationDate <= '{1}'
+                                                GROUP BY [Description]", startDate, endDate);
 
             Settings CompanyData = null;
             UsedMaterials oReport = new UsedMaterials();
@@ -93,6 +100,10 @@ namespace ArquisoftApp.Controllers
 
         public ActionResult _BudgetsCreated(string dates)
         {
+
+            var startDate = Convert.ToDateTime(dates.Split('-')[0]);
+            var endDate = Convert.ToDateTime(dates.Split('-')[1]);
+
             Settings CompanyData = null;
             BudgetsCreated oReport = new BudgetsCreated();
             oReport.CurrentUser = AppController.GetSessionUser();
@@ -100,7 +111,7 @@ namespace ArquisoftApp.Controllers
             using (ArquisoftEntities db = new ArquisoftEntities())
             {
 
-                oReport.Budgets = (from p in db.Budgets.Where(b => b.IdState == (int)Common.AppEnums.States.ACTIVE)
+                oReport.Budgets = (from p in db.Budgets.Where(b => b.IdState == (int)Common.AppEnums.States.ACTIVE && (b.CreationDate >= startDate && b.CreationDate <= endDate))
                                     select p).ToList();
 
                 CompanyData = (from p in db.Settings
@@ -114,6 +125,13 @@ namespace ArquisoftApp.Controllers
             oReport.CompanyPhone = CompanyData.CompanyPhone;
 
             return View("~/Views/Reports/_BudgetsCreated.cshtml", oReport);
+        }
+
+        private void SetSessionData()
+        {
+            var oUser = (Models.Users)System.Web.HttpContext.Current.Session["user"];
+            ViewBag.UserId = oUser.Id;
+            ViewBag.UserName = oUser.Name + " " + oUser.Last_Name;
         }
     }
 }

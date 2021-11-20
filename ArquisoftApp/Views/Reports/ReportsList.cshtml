@@ -16,7 +16,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
-            <div class="col-md-9 d-flex flex-column justify-content-center">
+            <div class="col-md-12 d-flex flex-column justify-content-center">
                 <div class="card card-secondary">
                     <div class="card-header">
                         <h3 class="card-title">Reportes del Sistema</h3>
@@ -104,7 +104,11 @@
         $(document).ready(function () {
 
             //Date range picker
-            $('.range-datetime').daterangepicker();
+            $('.range-datetime').daterangepicker({
+                locale: {
+                    format: 'DD/MM/YYYY'
+                }
+            });
             LoadClientList();
 
         });
