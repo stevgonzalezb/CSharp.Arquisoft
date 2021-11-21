@@ -88,6 +88,48 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+@*Modal Ayuda*@
+<div class="modal" id="reportsModalAyuda" role="dialog">
+    <div class="modal-dialog" style="overflow-y: initial !important">
+        <div class="modal-content"  style="width: 50vw;">
+            <div class="modal-header">
+                <h4 class="text-bold text-center">Ayuda Proceso Generar Reportes</h4>
+            </div>
+            <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
+                <h4 align="center"><b></b></h4>
+                <p>&nbsp;&nbsp;Este módulo está desarrollado para generar varios tipos de reportes</p>
+
+                @*Ayuda reportes*@
+
+                <p>&nbsp;&nbsp;1- Selecciona el cliente del cual se requiere genera algún tipo de reporte.</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Reports/Reports01.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp;2- Se contará con 2 tipos de reportes.</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Reports/Reports02.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp; <b>1:</b>&nbsp;&nbsp;Materiales usuarios en los presupuestos generados al usuario, en un rango de fecha.</p>
+                <p>&nbsp;&nbsp; <b>2:</b>&nbsp;&nbsp;Cantidad de presupuestos que se le han realizado al cliente, en un rango de fecha.</p>
+                <p>&nbsp;&nbsp;3- Para ambos reportes, seleccione el rango de fecha del calendario que se despliega.</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Reports/Reports03.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp;3- Da clic al botón “Generar”</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Reports/Reports04.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+
+                <br />
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*/.modal*@
+
 
 @section scripts{
 
@@ -109,6 +151,7 @@
                     format: 'DD/MM/YYYY'
                 }
             });
+            $("#helpModalNav").attr('data-target', "#reportsModalAyuda");
             LoadClientList();
 
         });

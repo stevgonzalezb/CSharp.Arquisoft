@@ -302,6 +302,10 @@
     <Content Include="Content\img\Help\Projects\projects03.JPG" />
     <Content Include="Content\img\Help\Projects\projects04.JPG" />
     <Content Include="Content\img\Help\Projects\projects05.JPG" />
+    <Content Include="Content\img\Help\Reports\Reports01.JPG" />
+    <Content Include="Content\img\Help\Reports\Reports02.JPG" />
+    <Content Include="Content\img\Help\Reports\Reports03.JPG" />
+    <Content Include="Content\img\Help\Reports\Reports04.JPG" />
     <Content Include="Content\img\Help\Role\Role01.JPG" />
     <Content Include="Content\img\Help\Role\Role02.JPG" />
     <Content Include="Content\img\Help\Role\Role03.JPG" />
