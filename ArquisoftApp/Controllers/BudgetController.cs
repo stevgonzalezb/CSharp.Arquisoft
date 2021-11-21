@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 
@@ -20,39 +21,36 @@ namespace ArquisoftApp.Controllers
 
         public ActionResult Report(int Id)
         {
+            BudgetReport oReport = BuildReportModel(Id);
 
-            Settings CompanyData = null;
-            BudgetReport oReport = new BudgetReport();
-            oReport.CurrentUser = AppController.GetSessionUser();
-
-            using (ArquisoftEntities db = new ArquisoftEntities())
-            {
-
-                oReport.Budget = (from p in db.Budgets.Where(b => b.Id == Id && b.IdState == (int)Common.AppEnums.States.ACTIVE)
-                           select p).FirstOrDefault();
-
-                oReport.Project = (from p in db.Projects.Where(b => b.Id == oReport.Budget.ProjectId && b.IdState == (int)Common.AppEnums.States.ACTIVE)
-                                  select p).FirstOrDefault();
-
-                oReport.BudgetLines = (from p in db.BudgetLines.Where(b => b.BudgetId == Id)
-                                       select p).ToList();
-
-                oReport.Customer = (from p in db.Clients.Where(b => b.IdClient == oReport.Project.IdClient && b.idState == (int)Common.AppEnums.States.ACTIVE)
-                                    select p).FirstOrDefault();
-
-                CompanyData = (from p in db.Settings
-                               select p).FirstOrDefault();
-            }
-
-            oReport.CompanyName = CompanyData.CompanyName;
-            oReport.CompanyEmail = CompanyData.CompanyEmail;
-            oReport.CompanyAddress = CompanyData.CompanyAddress;
-            oReport.CompanyId = CompanyData.CompanyId;
-            oReport.CompanyPhone = CompanyData.CompanyPhone;
-
-
-            //SetSessionData();
             return View("~/Views/Reports/_BudgetReport.cshtml", oReport);
+        }
+
+        public void SendReportToEmail()
+        {
+            System.Diagnostics.Debugger.Launch();
+            System.Diagnostics.Debugger.Break();
+
+            BudgetReport oReport = BuildReportModel(1);
+            string HTMLStringWithModel = ArquisoftApp.Common.RazorViewToStringHelper.RenderViewToString(this, "~/Views/Reports/_BudgetReport.cshtml", oReport);
+
+            MailMessage Msg = new MailMessage();
+            Msg.From = new MailAddress("arquisoft@drys.tech", "Arquisoft");// replace with valid value
+            Msg.Subject = "Contact";
+            Msg.To.Add("stevengonzalez957@gmail.com"); //replace with correct values
+
+            Msg.Body = HTMLStringWithModel; //here is the razor view body
+
+            Msg.IsBodyHtml = true;
+            Msg.Priority = MailPriority.High;
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "mail.drys.tech";
+            smtp.Port = 26;
+            smtp.Credentials = new System.Net.NetworkCredential("arquisoft@drys.tech", "Noviembre2021");// replace with valid value
+            smtp.EnableSsl = true;
+            smtp.Timeout = 50000;
+
+            smtp.Send(Msg);
         }
 
         public JsonResult SaveBudget(Budgets oBudget)
@@ -168,7 +166,6 @@ namespace ArquisoftApp.Controllers
             return Json(new { result = response }, JsonRequestBehavior.AllowGet);
         }
 
-
         [HttpPost]
         public JsonResult SaveBudgetLine(BudgetLines oBudgetLine, Budgets oBudget)
         {
@@ -275,6 +272,40 @@ namespace ArquisoftApp.Controllers
             var oUser = (Models.Users)System.Web.HttpContext.Current.Session["user"];
             ViewBag.UserId = oUser.Id;
             ViewBag.UserName = oUser.Name + " " + oUser.Last_Name;
+        }
+
+        private BudgetReport BuildReportModel(int Id)
+        {
+            Settings CompanyData = null;
+            BudgetReport oReport = new BudgetReport();
+            oReport.CurrentUser = AppController.GetSessionUser();
+
+            using (ArquisoftEntities db = new ArquisoftEntities())
+            {
+
+                oReport.Budget = (from p in db.Budgets.Where(b => b.Id == Id && b.IdState == (int)Common.AppEnums.States.ACTIVE)
+                                  select p).FirstOrDefault();
+
+                oReport.Project = (from p in db.Projects.Where(b => b.Id == oReport.Budget.ProjectId && b.IdState == (int)Common.AppEnums.States.ACTIVE)
+                                   select p).FirstOrDefault();
+
+                oReport.BudgetLines = (from p in db.BudgetLines.Where(b => b.BudgetId == Id)
+                                       select p).ToList();
+
+                oReport.Customer = (from p in db.Clients.Where(b => b.IdClient == oReport.Project.IdClient && b.idState == (int)Common.AppEnums.States.ACTIVE)
+                                    select p).FirstOrDefault();
+
+                CompanyData = (from p in db.Settings
+                               select p).FirstOrDefault();
+            }
+
+            oReport.CompanyName = CompanyData.CompanyName;
+            oReport.CompanyEmail = CompanyData.CompanyEmail;
+            oReport.CompanyAddress = CompanyData.CompanyAddress;
+            oReport.CompanyId = CompanyData.CompanyId;
+            oReport.CompanyPhone = CompanyData.CompanyPhone;
+
+            return oReport;
         }
     }
 }

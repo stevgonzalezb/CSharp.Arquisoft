@@ -1,0 +1,157 @@
+﻿
+@{
+    ViewBag.Title = "Reportes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12 d-flex flex-column justify-content-center">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">Reportes del Sistema</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row col-12">
+                            <div class="col-md-4">
+                                <label for="inputEstimatedBudget">Proyectos por Cliente:</label>
+                            </div>
+                            <div class="col-md-4">
+                                <select id="cmbClients" class="form-control select2bs4" style="width: 100%;">
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-secondary" onclick="Generate_ProjectsByCustomer()">Generar</button>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row col-12">
+                            <div class="col-md-4">
+                                <label for="inputEstimatedBudget">Materiales usados entre fechas:</label>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="range-datetime form-control float-right" id="materialsReportDates">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-secondary" onclick="Generate_UsedMaterials()">Generar</button>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row col-12">
+                            <div class="col-md-4">
+                                <label for="inputEstimatedBudget">Presupuestos entre fechas:</label>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="range-datetime form-control float-right" id="budgetsReportDates">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-secondary" onclick="Generate_BudgetsCreated()">Generar</button>
+                            </div>
+                        </div>
+                        <hr />
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+@section scripts{
+
+    <!-- Select2 -->
+    <script src="~/Scripts/AdminLTE/plugins/select2/js/select2.full.min.js"></script>
+    <script src="~/Scripts/AdminLTE/plugins/moment/moment.min.js"></script>
+    <!-- date-range-picker -->
+    <script src="~/Scripts/AdminLTE/plugins/daterangepicker/daterangepicker.js"></script>
+
+    <script>
+
+        const apiClients = new ClientApi();
+
+        $(document).ready(function () {
+
+            //Date range picker
+            $('.range-datetime').daterangepicker({
+                locale: {
+                    format: 'DD/MM/YYYY'
+                }
+            });
+            LoadClientList();
+
+        });
+
+        function LoadClientList() {
+            apiClients.ListClients().then(clients => {
+                var $ClientSelect = $('#cmbClients');
+                $.each(clients.data, function (key, value) {
+
+                    if (value.idState == '1') {
+                        var $option = $("<option/>", {
+                            value: value.IdClient,
+                            text: `${value.Name} ${value.Last_Name}`
+                        });
+                    }
+
+
+                    $ClientSelect.append($option);
+                });
+            })
+
+        }
+
+        function Generate_ProjectsByCustomer() {
+
+            var cId = parseInt($("#cmbClients").val());
+            window.open(`/ArquisoftApp/Report/_ProjectsByCustomer?cId=${cId}`, '_blank').focus();
+        }
+
+        function Generate_UsedMaterials() {
+
+            var dates = $("#materialsReportDates").val();
+            window.open(`/ArquisoftApp/Report/_UsedMaterials?dates=${dates}`, '_blank').focus();
+        }
+
+        function Generate_BudgetsCreated() {
+
+            var dates = $("#budgetsReportDates").val();
+            window.open(`/ArquisoftApp/Report/_BudgetsCreated?dates=${dates}`, '_blank').focus();
+        }
+
+
+    </script>
+
+
+}
