@@ -116,11 +116,12 @@
             </div>
             <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
                 <h4 align="center"><b></b></h4>
-                <p>&nbsp;&nbsp;Este m&oacute;dulo esta desarrollado para que el usuario realice el cambio de su nombre, apellidos o cambio de contraseña.</p>
+                <p>&nbsp;&nbsp;Este m&oacute;dulo está desarrollado para que el usuario realice el cambio de su nombre, apellidos o cambio de contraseña.</p>
                 <div class="modal-body" align="left">
                     <img src="~/Content/img/Help/User_profile/userProfile01.jpg" class="img-rounded" alt="Cinque Terre" />
                 </div>
-                <p>Una vez realizado los cambios necesarios se da al bot&oacute;n guardar</p>
+                <p>Una vez efectuado los cambios necesarios se da al bot&oacute;n guardar
+                </p>
 
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -223,7 +224,7 @@
 
         // Submit form method
         $("#userForm").on("submit", function (e) {
-            if (ValidateInputs()) {
+            if ($("#userForm").valid()) {
                 var $data = {
                     oUser: {
                         Id: parseInt($("#txtId").val()),

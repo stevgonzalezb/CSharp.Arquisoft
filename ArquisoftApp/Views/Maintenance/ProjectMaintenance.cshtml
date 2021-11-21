@@ -39,7 +39,7 @@
                                         <input type="hidden" id="txtId" />
                                         <div class="row">
                                             <div class="form-group col-10">
-                                                <label for="txtProjectName" class="col-form-label">Proyecto</label>
+                                                <label for="txtProjectName" class="col-form-label">Proyecto *</label>
                                                 <input type="text" name="txtProjectName" class="form-control" id="txtProjectName" placeholder="Nombre Proyecto" maxlength="200" required>
                                             </div>
                                         </div>
@@ -63,7 +63,7 @@
                                         <div class="row">
                                             
                                             <div class="form-group col-6">
-                                                <label for="txtConstructor" class="col-form-label">Maestro de obras</label>
+                                                <label for="txtConstructor" class="col-form-label">Maestro de obras *</label>
                                                 <input type="text" name="txtConstructor" class="form-control" id="txtConstructor" placeholder="Maestro de Obra" maxlength="200" required>
                                             </div>
                                             <div class="form-group col-6">
@@ -78,11 +78,11 @@
 
                                         <div class="row">
                                             <div class="form-group col-6">
-                                                <label for="txtLevels" class="col-form-label">No. Niveles</label>
+                                                <label for="txtLevels" class="col-form-label">No. Niveles *</label>
                                                 <input type="text" class="form-control" name="txtLevels" id="txtLevels" placeholder="Niveles de las obra" maxlength="200" required>
                                             </div>
                                             <div class="form-group col-6">
-                                                <label for="cmbSystems" class="col-form-label">Sistemas Constructivos</label>
+                                                <label for="cmbSystems" class="col-form-label">Sistemas Constructivos *</label>
                                                 <select id="cmbSystems" name="cmbSystems" class="select2bs4" multiple="multiple" data-placeholder="Sistemas Constructivos" style="width: 100%;">
                                                     <option value="1">Block</option>
                                                     <option value="2">Master Block</option>
@@ -96,6 +96,7 @@
                                             <div class="form-group col-6">
                                                 <label for="txtComments" class="col-form-label">Notas/Comentarios</label>
                                                 <textarea class="form-control" rows="3" cols="50" id="txtComments" name="txtDescription" maxlength="400"></textarea>
+                                                <p>* Campos requeridos</p>
                                             </div>
 
                                             <div class="form-group col-6">
@@ -199,8 +200,8 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="form-group col-12">
-                        <label for="txtBudgetName">Nombre del Presupuesto</label>
-                        <input type="text" class="form-control" id="txtBudgetName" name="txtProjectName">
+                        <label for="txtBudgetName">Nombre del Presupuesto *</label>
+                        <input type="text" class="form-control" id="txtBudgetName" name="txtBudgetName">
                     </div>
                 </div>
 
@@ -208,6 +209,7 @@
                     <div class="form-group col-12">
                         <label for="txtBudgetType">Tipo de Presupuesto</label>
                         <input type="text" class="form-control" id="txtBudgetType" name="txtProjectName" value="Materiales" disabled>
+                        <p>* Campos requeridos</p>
                     </div>
                 </div>
 
@@ -361,6 +363,22 @@
                 }
             });
 
+            // Form validationsgeneralForm
+            var validator = $("#FormModal").validate({
+                rules: {
+                    txtBudgetName: {
+                        required: true,
+                        minlength: 1
+                    }
+                },
+                messages: {
+                    txtBudgetName: {
+                        required: "Requerido",
+                        minlength: "Ingrese un nombddre válido."
+                    }
+                }
+            });
+
         }
 
         function changeLabelSite() {
@@ -436,6 +454,7 @@
                     api.SaveProject($data).then(response => {
                         if (response.result === 'OK') {
                             toastr.success('Proyecto guardado correctamente.');
+                            cleanValidatorProject();
                         } else {
                             toastr.error(response.result);
                         }
@@ -524,7 +543,7 @@
         }
 
         function OpenBudget($budgetId) {
-
+            CleanModalNewBudget();
             if ($budgetId == 0) {
                 $('#FormModal').modal('show');
             }
@@ -533,38 +552,45 @@
         }
 
         function SaveBudget() {
-            if (true) {
 
-                var oUrl = new URL(window.location.href);
-                var oProjectId = oUrl.searchParams.get("Id");
+            if ($("#FormModal").valid()) {
+                if (true) {
 
-                var $data = {
-                    oBudget: {
-                        Id: 0,
-                        Name: $("#txtBudgetName").val(),
-                        Type: 'Materiales',
-                        Fee: 0,
-                        Total: 0,
-                        ProjectId: oProjectId,
-                        IdState: app.enums.States.ACTIVE
+                    var oUrl = new URL(window.location.href);
+                    var oProjectId = oUrl.searchParams.get("Id");
+
+                    var $data = {
+                        oBudget: {
+                            Id: 0,
+                            Name: $("#txtBudgetName").val(),
+                            Type: 'Materiales',
+                            Fee: 0,
+                            Total: 0,
+                            ProjectId: oProjectId,
+                            IdState: app.enums.States.ACTIVE
+                        }
                     }
+
+                    apiBudget.SaveBudget($data).then(response => {
+                        if (response) {
+                            toastr.success('Presupuesto creado correctamente.');
+                            window.location.href = `/ArquisoftApp/Budget/Instance?Id=${response.result}`;
+                        } else {
+                            toastr.error(response.result);
+                        }
+
+                    }).catch(err => {
+
+                        toastr.error("Ocurrió un error guardando el presupuesto.");
+                    })
                 }
-
-                apiBudget.SaveBudget($data).then(response => {
-                    if (response) {
-                        toastr.success('Presupuesto creado correctamente.');
-                        window.location.href = `/ArquisoftApp/Budget/Instance?Id=${response.result}`;
-                    } else {
-                        toastr.error(response.result);
-                    }
-
-                }).catch(err => {
-
-                    toastr.error("Ocurrió un error guardando el presupuesto.");
-                })
+                else
+                    toastr.error('Por favor valide los datos ingresados.');
+            } else {
+                toastr.error('Por favor valide los datos ingresados.')
             }
-            else
-                toastr.error('Por favor valide los datos ingresados.');
+
+            
         }
 
 
@@ -654,6 +680,33 @@
                 toastr.error("Debes llenar el campo")
                 return false
             }
+        }
+
+        function CleanModalNewBudget() {
+
+            $("#txtBudgetName").removeClass("is-invalid");
+            $("#txtBudgetName").removeClass("is-valid");
+            $('.validation-error').remove();
+
+
+            $("#txtBudgetName").val("");
+        }
+
+        function cleanValidatorProject() {
+
+            $("#txtProjectName").removeClass("is-invalid");
+            $("#txtProjectName").removeClass("is-valid");
+            $("#txtConstructor").removeClass("is-invalid");
+            $("#txtConstructor").removeClass("is-valid");
+            $("#txtLevels").removeClass("is-invalid");
+            $("#txtLevels").removeClass("is-valid");
+            $("#cmbSystems").removeClass("is-invalid");
+            $("#cmbSystems").removeClass("is-valid");
+            $("#txtComments").removeClass("is-invalid");
+            $("#txtComments").removeClass("is-valid");
+            $('.validation-error').remove();
+
+
         }
 
     </script>

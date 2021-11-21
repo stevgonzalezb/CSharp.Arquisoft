@@ -249,6 +249,7 @@
     <Content Include="Content\datatable\js\dataTables.responsive.min.js" />
     <Content Include="Content\datatable\js\jquery.dataTables.min.js" />
     <Content Include="Content\datatable\js\jquery.js" />
+    <Content Include="Content\img\Acerca_De\Acerca01.JPG" />
     <Content Include="Content\img\Help\Attachments\Attachments00.JPG" />
     <Content Include="Content\img\Help\Attachments\Attachments01.JPG" />
     <Content Include="Content\img\Help\Attachments\Attachments02.JPG" />
@@ -257,6 +258,20 @@
     <Content Include="Content\img\Help\Attachments\Attachments05.JPG" />
     <Content Include="Content\img\Help\Attachments\Attachments06.JPG" />
     <Content Include="Content\img\Help\Attachments\Attachments07.JPG" />
+    <Content Include="Content\img\Help\Budget\Budget01.JPG" />
+    <Content Include="Content\img\Help\Budget\Budget02.JPG" />
+    <Content Include="Content\img\Help\Budget\Budget03.JPG" />
+    <Content Include="Content\img\Help\Budget\Budget04.JPG" />
+    <Content Include="Content\img\Help\Budget\Budget05.JPG" />
+    <Content Include="Content\img\Help\Budget\Budget06.JPG" />
+    <Content Include="Content\img\Help\Budget\Budget07.JPG" />
+    <Content Include="Content\img\Help\Budget\Budget08.JPG" />
+    <Content Include="Content\img\Help\Budget\Budget09.JPG" />
+    <Content Include="Content\img\Help\Budget\Budget10.JPG" />
+    <Content Include="Content\img\Help\Budget\Budget11.JPG" />
+    <Content Include="Content\img\Help\Budget\Budget12.JPG" />
+    <Content Include="Content\img\Help\Budget\Budget13.JPG" />
+    <Content Include="Content\img\Help\Budget\Budget14.JPG" />
     <Content Include="Content\img\Help\Client\Agregar.JPG" />
     <Content Include="Content\img\Help\Client\Editar.JPG" />
     <Content Include="Content\img\Help\Client\Eliminar.JPG" />
@@ -2350,7 +2365,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\img\Help\Budget\" />
     <Folder Include="ProjectAttachments\" />
   </ItemGroup>
   <ItemGroup>

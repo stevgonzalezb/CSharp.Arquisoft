@@ -56,13 +56,13 @@
                                 <div class="row">
                                     <div class="form-group col-9">
                                         <label for="cmbMaterials">Seleccione un material</label>
-                                        <select id="cmbMaterials" class="form-control select2bs4">
+                                        <select id="cmbMaterials" name="cmbMaterials" class="form-control select2bs4">
                                             <option value="0">Seleccione un material...</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-3">
                                         <label for="cmbUOM">U. Medida</label>
-                                        <select id="cmbUOM" class="form-control select2">
+                                        <select id="cmbUOM" name="cmbUOM" class="form-control select2">
                                             <option value="0">Seleccione unidad...</option>
                                             <option>Kg</option>
                                             <option>Unidad</option>
@@ -78,7 +78,7 @@
                                     </div>
                                     <div class="form-group col-2">
                                         <label for="txtQuantity">Cantidad</label>
-                                        <input type="number" min="1" name="txtQuantity" id="txtQuantity" class="form-control" value="1" step="1">
+                                        <input type="number" min="0" name="txtQuantity" id="txtQuantity" class="form-control" value="0" step="1">
                                     </div>
                                     <div class="form-group col-2">
                                         <label for="txtPrice">Precio(₡)</label>
@@ -122,7 +122,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="txtFees">Honorarios(%)</label>
-                                        <input type="number" id="txtFees" class="form-control" value="0" step="1">
+                                        <input type="number" min="0" name="txtFees" id="txtFees" class="form-control" value="0" step="1">
                                     </div>
                                     <div class="form-group col-md-5">
                                         <label for="txtFinalTotal">Total General</label>
@@ -144,7 +144,7 @@
             </div>
         </section>
     </form>
-    
+
 </div>
 <!-- /.content-wrapper -->
 <!-- Modal -->
@@ -160,30 +160,31 @@
                     <input type="hidden" id="txtBudgetLineId" />
                     <div class="row">
                         <div class="form-group col-8 col-lg-6">
-                            <label for="txtMaterialDescriptionEdit">Descripción</label>
-                            <input type="text" id="txtMaterialDescriptionEdit" class="form-control" value="">
+                            <label for="txtMaterialDescriptionEdit">Descripción *</label>
+                            <input type="text" name="txtMaterialDescriptionEdit" id="txtMaterialDescriptionEdit" class="form-control" value="">
                         </div>
                         <div class="form-group col-3 col-lg-2">
                             <label for="cmbUOM">Unidad Medida</label>
-                            <select id="cmbUOM" class="form-control select2bs4">
+                            <select id="cmbUOMEdit" name="cmbUOMEdit" class="form-control select2bs4">
                                 <option>Kg</option>
                                 <option>Unidad</option>
                                 <option>Metro</option>
                             </select>
                         </div>
                         <div class="form-group col-2 col-lg-2">
-                            <label for="txtQuantityEdit">Cantidad</label>
-                            <input type="number" id="txtQuantityEdit" class="form-control" value="0" step="1">
+                            <label for="txtQuantityEdit">Cantidad *</label>
+                            <input type="number" name="txtQuantityEdit" id="txtQuantityEdit" class="form-control" value="0" step="1">
                         </div>
                         <div class="form-group col-2 col-lg-2">
-                            <label for="txtPriceEdit">Precio</label>
-                            <input type="number" id="txtPriceEdit" class="form-control" value="0" step="1">
+                            <label for="txtPriceEdit">Precio *</label>
+                            <input type="number" name="txtPriceEdit" id="txtPriceEdit" class="form-control" value="0" step="1">
                         </div>
+                        <p>* Campos requeridos</p>
                     </div>
                 </form>
             </div>
             <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-secondary" onclick="SaveBudgetLine('E')">Guardar</button>
+                <button type="button" class="btn btn-secondary" onclick="SaveBudgetLineEdit('E')">Guardar</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
@@ -192,6 +193,77 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<!-- /.modal -->
+@*Modal Ayuda*@
+<div class="modal" id="ayudaPresupuesto" role="dialog">
+    <div class="modal-dialog" style="overflow-y: initial !important">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-bold text-center">Ayuda completar presupuesto</h4>
+            </div>
+            <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
+                <h4><b>&nbsp;&nbsp;Gu&iacute;a para completar un presupuesto:</b></h4>
+                <p>&nbsp;&nbsp;1- Selecciona el monto del honorario.</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Budget/Budget05.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp;2- En la parte “Materiales”, se selecciona el material que tendr&aacute; el presupuesto, la unidad de medida, cantidad y precio.</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Budget/Budget06.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp;3- Una vez completado ls datos, da clic al bot&oacute;n “Agregar”</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Budget/Budget07.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp;4- Aparecer&aacute;  en el parte de “Presupuesto” los materiales que se van agregando.</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Budget/Budget08.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp;5- Una vez finalizado el presupuesto, da clic en “Guardar Presupuesto” para guardar el mismo, y en el bot&oacute;n “Generar PDF” si se requiere generarlo para enviar.</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Budget/Budget09.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <h4><b>&nbsp;&nbsp;Gu&iacute;a para editar un presupuesto:</b></h4>
+                <p>&nbsp;&nbsp;1- Da clic al icono del + con color verde.</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Budget/Budget10.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp;1- Da clic al icono de l&aacute;piz.</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Budget/Budget11.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Budget/Budget12.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp;2- Edita la información que requiere, y da clic al bot&oacute;n guardar.</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Budget/Budget13.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+
+                <h4><b>&nbsp;&nbsp;Gu&iacute;a para eliminar una l&iacute;nea del presupuesto:</b></h4>
+                <p>&nbsp;&nbsp;1- Da clic al icono de basurero.</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Budget/Budget11.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Budget/Budget12.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp;2- Saldr&aacute; el siguiente mensaje para confirmar la eliminaci&oacute;n</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Budget/Budget14.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp; <b>1:</b>&nbsp;&nbsp;Se confirma la eliminaci&oacute;n de la l&iacute;nea.</p>
+                <p>&nbsp;&nbsp; <b>2:</b>&nbsp;&nbsp;No se confirma la eliminaci&oacute;n de la l&iacute;nea, no se realizan cambios.</p>
+
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*/.modal*@
 
 @section scripts{
 
@@ -258,6 +330,7 @@
             var url = new URL(window.location.href);
             budgetId = url.searchParams.get("Id");
 
+            $("#helpModalNav").attr('data-target', "#ayudaPresupuesto");
             LoadBudgetData(budgetId);
             LoadMaterials();
 
@@ -350,7 +423,11 @@
                         required: true,
                         minlength: 1
                     },
-                    txtQuantity: {
+                    cmbUOM: {
+                        required: true,
+                        minlength: 1
+                    },
+                    cmbMaterials: {
                         required: true,
                         minlength: 1
                     }
@@ -360,9 +437,45 @@
                         required: "Requerido",
                         minlength: "Ingrese un nombre válido."
                     },
-                    txtQuantity: {
+                    cmbUOM: {
                         required: "Requerido",
                         minlength: "Ingrese un apellido válido."
+                    },
+                    cmbMaterials: {
+                        required: "Requerido",
+                        minlength: "Ingrese un apellido válido."
+                    }
+                }
+            });
+
+            // Form validations
+            var validator = $("#frmModal").validate({
+                rules: {
+                    txtMaterialDescriptionEdit: {
+                        required: true,
+                        minlength: 1
+                    },
+                    txtQuantityEdit: {
+                        required: true,
+                        minlength: 1
+                    },
+                    txtPriceEdit: {
+                        required: true,
+                        minlength: 1
+                    }
+                },
+                messages: {
+                    txtMaterialDescriptionEdit: {
+                        required: "Requerido",
+                        minlength: "Ingrese una descripción válida."
+                    },
+                    txtQuantityEdit: {
+                        required: "Requerido",
+                        minlength: "Ingrese una cantidad válida."
+                    },
+                    txtPriceEdit: {
+                        required: "Requerido",
+                        minlength: "Ingrese un precio válido."
                     }
                 }
             });
@@ -398,14 +511,67 @@
         }
 
         function SaveBudgetLine(action) {
-            if($("#FormPresupuesto").valid()) {
+
+                if ($("#FormPresupuesto").valid()) {
+                    var $data = {
+                        oBudgetLine: {
+                            Id: action == 'A' ? 0 : parseInt($("#txtBudgetLineId").val()),
+                            Description: action == 'A' ? $("#txtMaterialDescription").val() : $("#txtMaterialDescriptionEdit").val(),
+                            Quantity: action == 'A' ? parseInt($("#txtQuantity").val()) : parseInt($("#txtQuantityEdit").val()),
+                            Price: action == 'A' ? parseFloat($("#txtPrice").val()) : parseFloat($("#txtPriceEdit").val()),
+                            UOM: action == 'A' ? $("#cmbUOM").val() : $("#cmbUOMEdit").val(),
+                            BudgetId: budgetId
+                        },
+                        oBudget: {
+                            Id: budgetId,
+                            Fee: totalsData.Fee,
+                            Total: preCalcs.PreSubtotal.Value
+                        }
+                    }
+
+                    budgetApi.SaveBudgetLine($data).then(response => {
+                        if (response) {
+                            toastr.success('Linea guardada correctamente.');
+                            budget_table.ajax.reload();
+                            CleanBudgetOption();
+                            if (action == 'E')
+                                $('#FormModal').modal('hide');
+                            else {
+                                $("#txtMaterialDescription").val('');
+                                $("#txtQuantity").val('0');
+                                $("#txtPrice").val('0');
+                                $("#cmbMaterials").val(0);
+                                $("#cmbUOM").val(0);
+                                $("#txtTotalLine").val(`₡0`);
+                                $("#txtPreSubtotal").val(`₡0`);
+                            }
+
+                            LoadTotalCard();
+                        } else {
+                            toastr.error(response.result);
+                        }
+
+                    }).catch(err => {
+
+                        toastr.error("Ocurrió un error guardando los datos del Proyecto.");
+                    })
+                } else {
+                    toastr.error('Por favor valide los datos ingresados.')
+                }
+            
+
+        }
+
+        function SaveBudgetLineEdit(action) {
+
+            if ($("#frmModal").valid()) {
                 var $data = {
                     oBudgetLine: {
                         Id: action == 'A' ? 0 : parseInt($("#txtBudgetLineId").val()),
                         Description: action == 'A' ? $("#txtMaterialDescription").val() : $("#txtMaterialDescriptionEdit").val(),
                         Quantity: action == 'A' ? parseInt($("#txtQuantity").val()) : parseInt($("#txtQuantityEdit").val()),
                         Price: action == 'A' ? parseFloat($("#txtPrice").val()) : parseFloat($("#txtPriceEdit").val()),
-                        UOM: 'kg',
+                        UOM: action == 'A' ? $("#cmbUOM").val() : $("#cmbUOMEdit").val(),
                         BudgetId: budgetId
                     },
                     oBudget: {
@@ -419,7 +585,7 @@
                     if (response) {
                         toastr.success('Linea guardada correctamente.');
                         budget_table.ajax.reload();
-
+                        CleanModalEdit();
                         if (action == 'E')
                             $('#FormModal').modal('hide');
                         else {
@@ -427,7 +593,7 @@
                             $("#txtQuantity").val('0');
                             $("#txtPrice").val('0');
                             $("#cmbMaterials").val();
-                            $("#cmbUOM").val(0);
+                            $("#cmbUOM").val('');
                             $("#txtTotalLine").val(`₡0`);
                             $("#txtPreSubtotal").val(`₡0`);
                         }
@@ -441,11 +607,11 @@
 
                     toastr.error("Ocurrió un error guardando los datos del Proyecto.");
                 })
-            } else{
+            } else {
                 toastr.error('Por favor valide los datos ingresados.')
             }
 
-           
+
         }
 
         function DeleteBudgetLine($budgetLineId) {
@@ -475,6 +641,7 @@
 
         function OpenEditModal($budgetLineId) {
 
+            CleanModalEdit();
             if ($budgetLineId != 0) {
 
                 try {
@@ -490,7 +657,7 @@
 
                 } catch (err) {
                     console.log(err);
-                    toastr.error("Ocurrió un error cargando los datos de usuario seleccionado.");
+                    toastr.error("Ocurrió un error cargando los datos de la linea del presupuesto seleccionado.");
                 }
             }
             $('#FormModal').modal('show');
@@ -523,7 +690,7 @@
             if (action == 'N') {
 
 
-                
+
                 $("#txtTotalLine").val(preCalcs.TotalLine.DisplayValue);
                 $("#txtPreSubtotal").val(preCalcs.PreSubtotal.DisplayValue);
             }
@@ -586,6 +753,47 @@
             LoadPreCalc('E');
         });
 
+        function CleanBudgetOption() {
+
+            $("#txtMaterialDescription").removeClass("is-invalid");
+            $("#txtMaterialDescription").removeClass("is-valid");
+            $("#txtQuantity").removeClass("is-invalid");
+            $("#txtQuantity").removeClass("is-valid");
+            $("#cmbMaterials").removeClass("is-invalid");
+            $("#cmbMaterials").removeClass("is-valid");
+            $("#cmbUOM").removeClass("is-invalid");
+            $("#cmbUOM").removeClass("is-valid");
+            $("#txtPrice").removeClass("is-invalid");
+            $("#txtPrice").removeClass("is-valid");
+            $("#txtFees").removeClass("is-invalid");
+            $("#txtFees").removeClass("is-valid");
+            $('.validation-error').remove();
+
+
+            $("#txtMaterialDescription").val('');
+            $("#txtQuantity").val('0');
+            $("#txtPrice").val('0');
+            $("#cmbMaterials").val();
+            $("#cmbUOM").val(0);
+    
+        }
+
+        function CleanModalEdit() {
+
+            $("#txtMaterialDescriptionEdit").removeClass("is-invalid");
+            $("#txtMaterialDescriptionEdit").removeClass("is-valid");
+            $("#txtQuantityEdit").removeClass("is-invalid");
+            $("#txtQuantityEdit").removeClass("is-valid");
+            $("#txtPriceEdit").removeClass("is-invalid");
+            $("#txtPriceEdit").removeClass("is-valid");
+            $('.validation-error').remove();
+
+
+            $("#txtMaterialDescriptionEdit").val('');
+            $("#txtQuantityEdit").val('0');
+            $("#txtPriceEdit").val('0');
+
+        }
 
     </script>
 

@@ -120,16 +120,16 @@
                     messages: {
                         txtCurrentPassword: {
                             required: "Requerido",
-                            passwordRegex: "La contraseña debe cumplir con: mínimo 8 caracteres, al menos una letra mayúscula, una letra minúscula y un número."
+                            passwordRegex: "La contraseña debe cumplir con: mínimo 9 caracteres, al menos una letra mayúscula, una letra minúscula, un número (No puede tener números seguidos), un cáracter especial ."
                         },
                         txtNewPassword: {
                             required: "Requerido",
-                            passwordRegex: "La contraseña debe cumplir con: mínimo 8 caracteres, al menos una letra mayúscula, una letra minúscula y un número.",
+                            passwordRegex: "La contraseña debe cumplir con: mínimo 9 caracteres, al menos una letra mayúscula, una letra minúscula, un número (No puede tener números seguidos) y un cáracter especial.",
                             confirmPasswordNewOld: "La contraseña actual y la nueva no pueden ser la misma"
                         },
                         txtConfirmPassword: {
                             required: "Requerido",
-                            passwordRegex: "La contraseña debe cumplir con: mínimo 9 caracteres, al menos una letra mayúscula, una letra minúscula, un número y un cáracter especial.",
+                            passwordRegex: "La contraseña debe cumplir con: mínimo 9 caracteres, al menos una letra mayúscula, una letra minúscula, un número (No puede tener números seguidos) y un cáracter especial.",
                             confirmPassword: "Las contraseñas no coinciden.",
                             confirmPasswordNewOld: "La contraseña actual y la nueva no pueden ser la misma"
                         },
@@ -219,7 +219,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <label class="text-sm text-gray">Nota: Cuando se reestablezca la contraseña será dirigido a la pantalla de Login y deberá iniciar sesión nuevamente.<a class="text-gray" id="helpModalNav" data-toggle="modal" href="#changepassword" role="button" data-target=""><i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Ingrese a la ayuda de cambio de contraseña"></i></a></label>
+                            <label class="text-sm text-gray">Nota: Cuando se restablezca la contraseña, será dirigido a la pantalla de inicio de sesión y deberá ingresar nuevamente con su contraseña nueva.<a class="text-gray" id="helpModalNav" data-toggle="modal" href="#changepassword" role="button" data-target=""><i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Ingrese a la ayuda de cambio de contraseña"></i></a></label>
                             <label class="text-sm text-gray">* Campos requeridos</label>
                         </div>
                         <div class="modal-footer justify-content-between">
@@ -246,9 +246,9 @@
                 </div>
                 <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
                     <h4 align="center"><b></b></h4>
-                    <p>&nbsp;&nbsp;Este m&oacute;dulo esta desarrollado para que cada  uno de los usuarios se auto gestione el cambio de contraseña en el sistema.</p>
+                    <p>&nbsp;&nbsp;Este m&oacute;dulo está desarrollado para que cada  uno de los usuarios se autogestione el cambio de contraseña en el sistema.</p>
 
-                    <p>&nbsp;&nbsp;En esta pantalla se completa los campos solicitados</p>
+                    <p>&nbsp;&nbsp;En esta pantalla debe completar los campos solicitados</p>
                     <div class="modal-body" align="left">
                         <img src="~/Content/img/Help/User_profile/userProfile02.jpg" class="img-rounded" alt="Cinque Terre" />
                         <p>&nbsp;&nbsp;Se debe colocar la contraseña actual, seguidamente de la contraseña nueva y la confirmaci&oacute;n de la misma.</p>
@@ -322,26 +322,7 @@
                     <div class="modal-body" align="left">
                         <img src="~/Content/img/Help/Budget/Budget04.JPG" class="img-rounded" alt="Cinque Terre" />
                     </div>
-                    <p>&nbsp;&nbsp;5- Selecciona el monto del honorario.</p>
-                    <div class="modal-body" align="left">
-                        <img src="~/Content/img/Help/Budget/Budget05.JPG" class="img-rounded" alt="Cinque Terre" />
-                    </div>
-                    <p>&nbsp;&nbsp;6- En la parte “Materiales”, se selecciona el material que tendr&aacute; el presupuesto, la unidad de medida, cantidad y precio.</p>
-                    <div class="modal-body" align="left">
-                        <img src="~/Content/img/Help/Budget/Budget06.JPG" class="img-rounded" alt="Cinque Terre" />
-                    </div>
-                    <p>&nbsp;&nbsp;7- Una vez completo lo datos, da clic al bot&oacute;n “Agregar”</p>
-                    <div class="modal-body" align="left">
-                        <img src="~/Content/img/Help/Budget/Budget07.JPG" class="img-rounded" alt="Cinque Terre" />
-                    </div>
-                    <p>&nbsp;&nbsp;8- Aparecer&aacute;  en el parte de “Presupuesto” los materiales que se van agregando.</p>
-                    <div class="modal-body" align="left">
-                        <img src="~/Content/img/Help/Budget/Budget08.JPG" class="img-rounded" alt="Cinque Terre" />
-                    </div>
-                    <p>&nbsp;&nbsp;9- Una vez finalizado el presupuesto, da clic en “Guardar Presupuesto” para guardar el mismo, y en el bot&oacute;n “Generar PDF” si se requiere generarlo para enviar.</p>
-                    <div class="modal-body" align="left">
-                        <img src="~/Content/img/Help/Budget/Budget09.JPG" class="img-rounded" alt="Cinque Terre" />
-                    </div>
+
                     <br />
                     @*Ayuda agregar adjuntos*@
                     <h4 align="center"><b></b></h4>
@@ -390,6 +371,28 @@
     </div>
     @*/.modal*@
 
+
+    <!-- Modal -->
+    <div class="modal" id="acercaDe" role="dialog">
+        <div class="modal-dialog" style="overflow-y: initial !important">
+            <div class="modal-content">
+                <div class="modal-header" align="center">
+                    <h3 class="text-bold text-center">Acerca de</h3>
+                </div>
+                <div class="modal-body" align="center" style="height: 40vh; overflow-y: auto;">
+                    <img src="~/Content/img/Acerca_De/Acerca01.JPG" class="img-rounded" alt="Cinque Terre" />
+                    <h4 aling="center"><b>&nbsp;&nbsp;Versi&oacute;n: 1.0</b></h4>
+                    <p>Programa de Gesti&oacute;n de Proyectos de Arquitectura</p>
+                    <p>Steven Gonzalez Berrios & Jean Carlo Salazar Arias</p>
+                    <p>Copyright &#169 2021</p>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+        </div><!-- /.modal-dialog -->
+    </div>
 
 </body>
 </html>
