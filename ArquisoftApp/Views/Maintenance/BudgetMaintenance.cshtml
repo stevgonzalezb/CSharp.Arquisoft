@@ -132,7 +132,7 @@
                                 @*<hr />*@
                                 <div class="row">
                                     <div class="form-group col-12 align-self-end">
-                                        <button type="button" onclick="" class="btn btn-secondary">Guardar Presupuesto</button>
+                                        @*<button type="button" onclick="" class="btn btn-secondary">Guardar Presupuesto</button>*@
                                         <button type="button" onclick="CreateReport()" class="btn btn-secondary">Generar PDF</button>
                                     </div>
                                 </div>
@@ -357,7 +357,11 @@
                                 if (obj.Id) {
                                     obj.totalLine = parseFloat(obj.Price) * parseInt(obj.Quantity);
                                     obj.totalLine = `${formatter.format(obj.totalLine).replace('CRC', '₡')}`;
-                                    obj.Price = `${formatter.format(obj.Price).replace('CRC', '₡')}`;
+                                    //obj.Price = `${formatter.format(obj.Price).replace('CRC', '₡')}`;
+                                    obj.Price = {
+                                        Value: obj.Price,
+                                        DisplayValue: `${formatter.format(obj.Price).replace('CRC', '₡')}`
+                                    }
                                 }
                             });
                         }
@@ -374,7 +378,7 @@
                      { "data": "Description" },
                      { "data": "UOM" },
                      { "data": "Quantity" },
-                     { "data": "Price" },
+                     { "data": "Price.DisplayValue" },
                      { "data": "totalLine" },
                      {
                          "data": "Id", "render": function (data) {
@@ -652,9 +656,8 @@
                             $("#txtMaterialDescriptionEdit").val(line.Description);
                             $("#cmbUOMEdit").val(line.UOM);
                             $("#txtQuantityEdit").val(line.Quantity);
-                            $("#txtPriceEdit").val(parseFloat(line.Price.replace('₡', '')));
+                            $("#txtPriceEdit").val(parseFloat(line.Price.Value));
                             /*$("#txtPriceEdit").val(line.Price.replace('₡', ''));*/
-                            console.log(parseInt(line.Price.replace('₡', '')));
                         }
                     })
 

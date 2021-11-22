@@ -49,9 +49,9 @@ namespace ArquisoftApp.Controllers
 
         public ActionResult _UsedMaterials(string dates)
         {
-
-            var startDate = Convert.ToDateTime(dates.Split('-')[0]).ToString("yyyy-MM-dd");
-            var endDate = Convert.ToDateTime(dates.Split('-')[1]).ToString("yyyy-MM-dd");
+            DateTimeFormatInfo crDtfi = new CultureInfo("es-CR", false).DateTimeFormat;
+            var startDate = Convert.ToDateTime(dates.Split('-')[0], crDtfi).ToString("yyyy-MM-dd");
+            var endDate = Convert.ToDateTime(dates.Split('-')[1], crDtfi).ToString("yyyy-MM-dd");
 
             var queryString = string.Format(@"SELECT [Description], COUNT(BudgetId) 'Cantidad'
                                                 FROM BudgetLines A 
@@ -61,6 +61,7 @@ namespace ArquisoftApp.Controllers
 
             Settings CompanyData = null;
             UsedMaterials oReport = new UsedMaterials();
+            oReport.Materials = new List<string>();
             oReport.CurrentUser = AppController.GetSessionUser();
 
             using (ArquisoftEntities db = new ArquisoftEntities())
@@ -84,8 +85,6 @@ namespace ArquisoftApp.Controllers
 
                     if (reader.HasRows)
                     {
-                        oReport.Materials = new List<string>();
-
                         while (reader.Read())
                         {
                             var val = string.Format(@"{0}|{1}", reader.GetValue(0).ToString(), reader.GetValue(1).ToString());
@@ -100,9 +99,9 @@ namespace ArquisoftApp.Controllers
 
         public ActionResult _BudgetsCreated(string dates)
         {
-
-            var startDate = Convert.ToDateTime(dates.Split('-')[0]);
-            var endDate = Convert.ToDateTime(dates.Split('-')[1]);
+            DateTimeFormatInfo crDtfi = new CultureInfo("es-CR", false).DateTimeFormat;
+            var startDate = Convert.ToDateTime(dates.Split('-')[0], crDtfi);
+            var endDate = Convert.ToDateTime(dates.Split('-')[1], crDtfi);
 
             Settings CompanyData = null;
             BudgetsCreated oReport = new BudgetsCreated();

@@ -88,8 +88,8 @@
                                 <td>@oReportLines.Description</td>
                                 <td>@oReportLines.Quantity</td>
                                 <td>@oReportLines.UOM</td>
-                                <td>@Decimal.Parse(oReportLines.Price.ToString()).ToString("C")</td>
-                                <td>@Decimal.Parse(totalLine.ToString()).ToString("C") </td>
+                                <td>@Decimal.Parse(oReportLines.Price.ToString()).ToString("C", System.Globalization.CultureInfo.GetCultureInfo("es-CR"))</td>
+                                <td>@Decimal.Parse(totalLine.ToString()).ToString("C", System.Globalization.CultureInfo.GetCultureInfo("es-CR")) </td>
                             </tr>
                              }
 
@@ -125,7 +125,7 @@
                         <table class="table">
                             <tr>
                                 <th style="width:50%">Subtotal:</th>
-                                <td>@Decimal.Parse(Model.Budget.Total.ToString()).ToString("C")</td>
+                                <td>@Decimal.Parse(Model.Budget.Total.ToString()).ToString("C", System.Globalization.CultureInfo.GetCultureInfo("es-CR"))</td>
                             </tr>
                             <tr>
                                 <th>Honorarios(%)</th>
@@ -133,7 +133,7 @@
                             </tr>
                             <tr>
                                 <th>Total:</th>
-                                <td>@Decimal.Parse(finalTotal.ToString()).ToString("C")</td>
+                                <td>@Decimal.Parse(finalTotal.ToString()).ToString("C", System.Globalization.CultureInfo.GetCultureInfo("es-CR"))</td>
                             </tr>
                         </table>
                     </div>

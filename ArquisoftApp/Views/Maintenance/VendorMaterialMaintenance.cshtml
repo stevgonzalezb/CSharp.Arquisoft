@@ -209,7 +209,7 @@
 
                         $("#txtVendor").val("EPA Costa Rica");
                         $("#txtDescription").val(material.Description);
-                        $("#txtPrice").val(`₡${material.Price}`);
+                        $("#txtPrice").val(`${formatter.format(material.Price).replace('CRC', '₡')}`);
                         $("#imgUrl").attr('src', material.ImgURL);
                         $("#openSite").attr('href', material.SiteURL);
 

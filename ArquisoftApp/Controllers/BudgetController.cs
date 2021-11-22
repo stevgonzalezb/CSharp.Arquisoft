@@ -103,11 +103,19 @@ namespace ArquisoftApp.Controllers
 
             var data = "[]";
             var ArquisoftConnection = AppController.GetConnectionString();
-            var queryString = string.Format(@"SELECT A.Id [Budget], A.Fee, A.Total Subtotal, CONVERT(DECIMAL(18,1), ((A.Total*(CONVERT(decimal(10,2),A.Fee)/100))+A.Total)) Total, Lines.*
-                                                FROM Budgets A 
-	                                                LEFT JOIN BudgetLines Lines ON A.Id = Lines.BudgetId
-                                                WHERE A.Id = {0} 
-                                                FOR JSON AUTO", budgetId);
+            //var queryString = string.Format(@"SELECT A.Id [Budget], A.Fee, A.Total Subtotal, CONVERT(DECIMAL(18,1), ((A.Total*(CONVERT(decimal(10,2),A.Fee)/100))+A.Total)) Total, Lines.*
+            //                                    FROM Budgets A 
+	           //                                     LEFT JOIN BudgetLines Lines ON A.Id = Lines.BudgetId
+            //                                    WHERE A.Id = {0} 
+            //                                    FOR JSON AUTO", budgetId);
+
+            var queryString = string.Format(@"DECLARE @result NVARCHAR(max);
+                                            SET @result = (SELECT A.Id [Budget], A.Fee, A.Total Subtotal, CONVERT(DECIMAL(18,1), ((A.Total*(CONVERT(decimal(10,2),A.Fee)/100))+A.Total)) Total, Lines.*
+                                                           FROM Budgets A 
+	                                                       LEFT JOIN BudgetLines Lines ON A.Id = Lines.BudgetId
+                                                           WHERE A.Id = {0} 
+                                                           FOR JSON AUTO)
+                                            SELECT @result;", budgetId);
 
             using (SqlConnection conn = new SqlConnection(ArquisoftConnection))
             {
