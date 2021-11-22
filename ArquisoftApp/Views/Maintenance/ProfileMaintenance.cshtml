@@ -38,8 +38,11 @@
                                     <b>Rol del Sistema</b> <a class="float-right" id="lblRole">Editor</a>
                                 </li>
                             </ul>
+                            @if (!ArquisoftApp.Controllers.AppController.isAdmin())
+                            {
+                                <a data-target="#passwordModal" data-toggle="modal" href="#passwordModal" class="btn btn-outline-secondary btn-block"><b data-toggle="tooltip" data-placement="top" title="Da clic para realizar el cambio de su contraseña">Cambiar contraseña</b></a>
+                            }
 
-                            <a data-target="#passwordModal" data-toggle="modal" href="#passwordModal" class="btn btn-outline-secondary btn-block"><b data-toggle="tooltip" data-placement="top" title="Da clic para realizar el cambio de su contraseña">Cambiar contraseña</b></a>
                         </div>
                         <!-- /.card-body -->
                     </div>

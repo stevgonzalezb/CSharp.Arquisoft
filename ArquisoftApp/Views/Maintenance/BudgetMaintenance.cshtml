@@ -165,7 +165,7 @@
                         </div>
                         <div class="form-group col-3 col-lg-2">
                             <label for="cmbUOM">Unidad Medida</label>
-                            <select id="cmbUOMEdit" name="cmbUOMEdit" class="form-control select2bs4">
+                            <select id="cmbUOMEdit" name="cmbUOMEdit" class="form-control">
                                 <option>Kg</option>
                                 <option>Unidad</option>
                                 <option>Metro</option>
@@ -423,10 +423,6 @@
                         required: true,
                         minlength: 1
                     },
-                    cmbUOM: {
-                        required: true,
-                        minlength: 1
-                    },
                     cmbMaterials: {
                         required: true,
                         minlength: 1
@@ -436,10 +432,6 @@
                     txtMaterialDescription: {
                         required: "Requerido",
                         minlength: "Ingrese un nombre válido."
-                    },
-                    cmbUOM: {
-                        required: "Requerido",
-                        minlength: "Ingrese un apellido válido."
                     },
                     cmbMaterials: {
                         required: "Requerido",
@@ -512,7 +504,15 @@
 
         function SaveBudgetLine(action) {
 
+            var contenedor = document.getElementById("cmbUOM");
+            var indiceCombo = contenedor.value;
+
+            if (indiceCombo == 0) {
+                toastr.error("No ha seleccionado un unidad adecuada.");
+            } else {
+
                 if ($("#FormPresupuesto").valid()) {
+
                     var $data = {
                         oBudgetLine: {
                             Id: action == 'A' ? 0 : parseInt($("#txtBudgetLineId").val()),
@@ -558,6 +558,9 @@
                 } else {
                     toastr.error('Por favor valide los datos ingresados.')
                 }
+            }
+
+
             
 
         }
@@ -640,17 +643,18 @@
         }
 
         function OpenEditModal($budgetLineId) {
-
             CleanModalEdit();
             if ($budgetLineId != 0) {
-
                 try {
                     $.each(budgetData, function (key, line) {
                         if (line.Id == $budgetLineId) {
                             $("#txtBudgetLineId").val(line.Id);
                             $("#txtMaterialDescriptionEdit").val(line.Description);
+                            $("#cmbUOMEdit").val(line.UOM);
                             $("#txtQuantityEdit").val(line.Quantity);
-                            $("#txtPriceEdit").val(line.Price.replace('₡', ''));
+                            $("#txtPriceEdit").val(parseFloat(line.Price.replace('₡', '')));
+                            /*$("#txtPriceEdit").val(line.Price.replace('₡', ''));*/
+                            console.log(parseInt(line.Price.replace('₡', '')));
                         }
                     })
 
@@ -786,6 +790,8 @@
             $("#txtQuantityEdit").removeClass("is-valid");
             $("#txtPriceEdit").removeClass("is-invalid");
             $("#txtPriceEdit").removeClass("is-valid");
+            $("#cmbUOMEdit").removeClass("is-invalid");
+            $("#cmbUOMEdit").removeClass("is-valid");
             $('.validation-error').remove();
 
 

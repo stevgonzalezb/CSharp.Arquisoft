@@ -498,7 +498,7 @@
                          "data": "Id", "render": function (data) {
                              var buttons = "";
                              buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos del presupuesto' class='btn btn-outline-secondary btn-sm' type='button' onclick='OpenBudget(" + data + ")'>Editar <i class='fas fa-pen'></i></button>"
-                                buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para descargar este presupuesto' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='openModal(" + data + ")'>Descargar <i class='fas fa-download'></i></button>"
+                             buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para descargar este presupuesto' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='CreateReport(" + data + ")'>Imprimir <i class='fas fa-download'></i></button>"
                              buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de presupuestos' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='DeleteBudget(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
 
                              return buttons;
@@ -672,6 +672,13 @@
                 })
             }
 
+        }
+
+        function CreateReport($budgetId) {
+
+            window.open(`/ArquisoftApp/Budget/Report?Id=${$budgetId}`, '_blank').focus();
+
+            //window.location.href = `/ArquisoftApp/Budget/Report?Id=9`;
         }
 
         function validarCampos() {

@@ -83,13 +83,17 @@
                 <!-- Seguridad -->
                 <li class="nav-header">Seguridad</li>
 
-                <!-- Cambiar contraseña -->
-                <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Puede realizar la gestión de cambio de su contraseña">
-                    <a data-target="#passwordModal" data-toggle="modal" href="#passwordModal" class="nav-link">
-                        <i class="nav-icon fas fa-user-shield"></i>
-                        <p>Cambiar contraseña</p>
-                    </a>
-                </li>
+                @if (!ArquisoftApp.Controllers.AppController.isAdmin())
+                {
+                    <!-- Cambiar contraseña -->
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Puede realizar la gestión de cambio de su contraseña">
+                        <a data-target="#passwordModal" data-toggle="modal" href="#passwordModal" class="nav-link">
+                            <i class="nav-icon fas fa-user-shield"></i>
+                            <p>Cambiar contraseña</p>
+                        </a>
+                    </li>
+
+                }
 
                 @if (ArquisoftApp.Controllers.AppController.isAdmin())
                 {
