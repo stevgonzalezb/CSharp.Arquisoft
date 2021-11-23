@@ -73,6 +73,7 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
+                                <th>No. Línea</th>
                                 <th>Descripción</th>
                                 <th>Cantidad</th>
                                 <th>Unidad Medida</th>
@@ -81,17 +82,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach(var oReportLines in Model.BudgetLines)
+                            @*@foreach (var oReportLines in Model.BudgetLines)*@
+                            @for(int i = 0; i < Model.BudgetLines.Count; i++ )
                             {
+                                var oReportLines = Model.BudgetLines[i];
                                 var totalLine = oReportLines.Quantity * oReportLines.Price;
-                            <tr>
-                                <td>@oReportLines.Description</td>
-                                <td>@oReportLines.Quantity</td>
-                                <td>@oReportLines.UOM</td>
-                                <td>@Decimal.Parse(oReportLines.Price.ToString()).ToString("C", System.Globalization.CultureInfo.GetCultureInfo("es-CR"))</td>
-                                <td>@Decimal.Parse(totalLine.ToString()).ToString("C", System.Globalization.CultureInfo.GetCultureInfo("es-CR")) </td>
-                            </tr>
-                             }
+                                var noLinea = i + 1;
+                                <tr>
+                                    <td>@noLinea</td>
+                                    <td>@oReportLines.Description</td>
+                                    <td>@oReportLines.Quantity</td>
+                                    <td>@oReportLines.UOM</td>
+                                    <td>@Decimal.Parse(oReportLines.Price.ToString()).ToString("C", System.Globalization.CultureInfo.GetCultureInfo("es-CR"))</td>
+                                    <td>@Decimal.Parse(totalLine.ToString()).ToString("C", System.Globalization.CultureInfo.GetCultureInfo("es-CR")) </td>
+                                </tr>
+                            }
 
                         </tbody>
                     </table>

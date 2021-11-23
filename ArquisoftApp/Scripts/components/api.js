@@ -291,7 +291,7 @@ class ProjectApi {
     };
 }
 
-/**  Projects Maintenance API  **/
+/**  Budget Maintenance API  **/
 class BudgetApi {
     // List all clients
     ListBudgets = async function (projectId) {
@@ -349,6 +349,29 @@ class BudgetApi {
     DeleteBudgetLine = async function (data) {
         return $.ajax({
             url: `/ArquisoftApp/Budget/DeleteBudgetLine`,
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
+}
+
+/** Settings API **/
+class SettingsApi {
+    // List all settings
+    GetSettings = async function () {
+        return $.ajax({
+            url: `/ArquisoftApp/Setting/GetSettings`,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        })
+    }
+
+    SaveSettings = async function (data) {
+        return $.ajax({
+            url: `/ArquisoftApp/Setting/SaveSettings`,
             type: "POST",
             data: JSON.stringify(data),
             dataType: "json",

@@ -161,6 +161,7 @@
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\SettingController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\VerifyRole.cs" />
     <Compile Include="Filters\VerifySession.cs" />
@@ -320,6 +321,7 @@
     <Content Include="Content\img\Help\User_profile\userProfile01.JPG" />
     <Content Include="Content\img\Help\User_profile\userProfile02.JPG" />
     <Content Include="Content\img\login-bg.jpg" />
+    <Content Include="Content\img\logo-inverted-main.png" />
     <Content Include="Content\img\logo.png" />
     <Content Include="Content\img\profile_avatar.png" />
     <Content Include="Context\dbModel.Context.tt">
@@ -2375,6 +2377,7 @@
     <Content Include="Views\Reports\_ProjectsByCustomer.cshtml" />
     <Content Include="Views\Reports\_UsedMaterials.cshtml" />
     <Content Include="Views\Reports\_BudgetsCreated.cshtml" />
+    <Content Include="Views\Maintenance\SettingMaintenance.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -64,17 +64,33 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
+                                <th>No. Línea</th>
                                 <th>Presupuesto</th>
                                 <th>Fecha Creacion</th>
+                                <th>Tipo</th>
+                                <th>% Honorarios</th>
+                                <th>Subtotal</th>
+                                <th>Total</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var oReportLines in Model.Budgets)
+                            @* @foreach (var oReportLines in Model.Budgets)*@
+                            @for (int i = 0; i < Model.Budgets.Count; i++)
                             {
-                                <tr>
-                                    <td>@oReportLines.Name</td>
-                                    <td>@oReportLines.CreationDate</td>
-                                </tr>
+                                var oReportLines = Model.Budgets[i];
+                                var noLinea = i + 1;
+                                decimal fee = Decimal.Parse(oReportLines.Fee.ToString()) / 100;
+                                var finalTotal = (oReportLines.Total * fee) + oReportLines.Total;
+                            <tr>
+                                <td>@noLinea</td>
+                                <td>@oReportLines.Name</td>
+                                <td>@oReportLines.CreationDate</td>
+                                <td>@oReportLines.Type</td>
+                                <td>@oReportLines.Fee%</td>
+                                <td>@Decimal.Parse(oReportLines.Total.ToString()).ToString("C", System.Globalization.CultureInfo.GetCultureInfo("es-CR"))</td>
+                                <td>@Decimal.Parse(finalTotal.ToString()).ToString("C", System.Globalization.CultureInfo.GetCultureInfo("es-CR"))</td>
+
+                            </tr>
                             }
                         </tbody>
                     </table>

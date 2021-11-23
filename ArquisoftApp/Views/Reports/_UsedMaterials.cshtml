@@ -64,18 +64,22 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
+                                <th>No. Línea</th>
                                 <th>Material</th>
                                 <th>Cantidad veces usado</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var oReportLines in Model.Materials)
+                            @*@foreach (var oReportLines in Model.Materials)*@
+                            @for (int i = 0; i < Model.Materials.Count; i++)
                             {
-
-                                <tr>
-                                    <td>@oReportLines.Split('|')[0]</td>
-                                    <td>@oReportLines.Split('|')[1]</td>
-                                </tr>
+                                var oReportLines = Model.Materials[i];
+                                var noLinea = i + 1;
+                            <tr>
+                                <td>@noLinea</td>
+                                <td>@oReportLines.Split('|')[0]</td>
+                                <td>@oReportLines.Split('|')[1]</td>
+                            </tr>
                             }
 
                         </tbody>

@@ -27,6 +27,7 @@
                                 <table class="display responsive nowrap table-head-fixed text-nowrap" id="myTable" style="width:100%" data-page-length='10'>
                                     <thead>
                                         <tr>
+                                            <th>No. Linea</th>
                                             <th>Material</th>
                                             <th>Unidad</th>
                                             <th>Cantidad</th>
@@ -355,6 +356,7 @@
                         if (JsonBudgetData.Lines[0].Id) {
                             $.each(JsonBudgetData.Lines, function (key, obj) {
                                 if (obj.Id) {
+                                    obj.NoLinea = key + 1;
                                     obj.totalLine = parseFloat(obj.Price) * parseInt(obj.Quantity);
                                     obj.totalLine = `${formatter.format(obj.totalLine).replace('CRC', '₡')}`;
                                     //obj.Price = `${formatter.format(obj.Price).replace('CRC', '₡')}`;
@@ -375,6 +377,7 @@
                     }
                  },
                  "columns": [
+                     { "data": "NoLinea" },
                      { "data": "Description" },
                      { "data": "UOM" },
                      { "data": "Quantity" },

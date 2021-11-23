@@ -68,6 +68,7 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
+                                <th>No. Línea</th>
                                 <th>Proyecto</th>
                                 <th>Área de Terreno</th>
                                 <th>Ára de Construcción</th>
@@ -78,11 +79,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var oReportLines in Model.Projects)
+                            @*@foreach (var oReportLines in Model.Projects)*@
+                            @for (int i = 0; i < Model.Projects.Count; i++)
                             {
+                                var oReportLines = Model.Projects[i];
+                                var noLinea = i + 1;
                                 var status = "";
 
-                                switch(oReportLines.Status)
+                                switch (oReportLines.Status)
                                 {
                                     case "E":
                                         status = "Ejecución";
@@ -95,15 +99,16 @@
                                         break;
                                 }
 
-                                <tr>
-                                    <td>@oReportLines.Name</td>
-                                    <td>@oReportLines.SiteArea m<sup>2</sup></td>
-                                    <td>@oReportLines.ConstructionArea m<sup>2</sup></td>
-                                    <td>@oReportLines.Levels</td>
-                                    <td>@oReportLines.MasterBuilder</td>
-                                    <td>@status</td>
-                                    <td>@oReportLines.Comments</td>
-                                </tr>
+                            <tr>
+                                <td>@noLinea</td>
+                                <td>@oReportLines.Name</td>
+                                <td>@oReportLines.SiteArea m<sup>2</sup></td>
+                                <td>@oReportLines.ConstructionArea m<sup>2</sup></td>
+                                <td>@oReportLines.Levels</td>
+                                <td>@oReportLines.MasterBuilder</td>
+                                <td>@status</td>
+                                <td>@oReportLines.Comments</td>
+                            </tr>
                             }
 
                         </tbody>
