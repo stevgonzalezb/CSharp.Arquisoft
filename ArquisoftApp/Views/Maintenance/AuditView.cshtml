@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewBag.Title = "Bitácora";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Main content -->
+    <!-- Usuarios -->
+    <section class="content">
+        <div class="card-body p-2" style="background-color:whitesmoke">
+            <table class="display responsive nowrap" id="myTable" style="width:100%" data-page-length='10'>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Módulo</th>
+                        <th>Acción</th>
+                        <th>Id Usuario</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </section>
+
+</div>
+<!-- /.content-wrapper -->
+
+@*Modal Ayuda*@
+<div class="modal" id="materialesFerreModalAyuda" role="dialog">
+    <div class="modal-dialog" style="overflow-y: initial !important">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-bold text-center">Ayuda M&oacute;dulo Materiales Proveedor</h4>
+            </div>
+            <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
+                <h4 align="center"><b></b></h4>
+                <p>&nbsp;&nbsp;Este módulo está desarrollado para visualizar materiales de una ferretería.</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Material_Proveedor/Menu.jpg" class="img-rounded" alt="Cinque Terre" />
+                </div>
+
+                @*Ayuda Materiales Proveedor*@
+
+                <h4><b>&nbsp;&nbsp;Gu&iacute;a para actualizar lista de materiales</b></h4>
+                <p>&nbsp;&nbsp;1- Se da clic al bot&oacute;n “Importar desde EPA.com”</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Material_Proveedor/Importar.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <h4><b>&nbsp;&nbsp;Gu&iacute;a para ver el detalle de un material</b></h4>
+                <p>&nbsp;&nbsp;1- Se da clic al bot&oacute;n “Ver Ficha”</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Material_Proveedor/Ver_Ficha.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp;2- Da clic al bot&oacute;n “Ver en sitio” para observar m&aacute;s detalles del material.</p>
+                <br />
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Material_Proveedor/Ficha_Producto.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp; <b>1:</b>&nbsp;&nbsp;Visitar el sitio web de la ferretería</p>
+                <p>&nbsp;&nbsp; <b>2:</b>&nbsp;&nbsp;Cerrar</p>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*/.modal*@
+
+
+@section scripts{
+    <script>
+        var audit_table;
+
+         $(document).ready( function () {
+             $("#helpModalNav").attr('data-target', "#materialesFerreModalAyuda");
+             LoadTable();
+         });
+
+        function LoadTable() {
+            audit_table = $('#myTable').DataTable({
+                 "ajax": {
+                    "url": "@Url.Action("ListAudit", "App")",
+                    "dataSrc": function (json) {
+
+                        $.each(json.data, function (key, obj) {
+                            val = obj.Date;
+                            obj.Date = (new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10))).toLocaleDateString('es-CR');;
+                        });
+
+                        return json.data;
+                    }
+                 },
+                 "columns": [
+                     { "data": "Id" },
+                     { "data": "Module" },
+                     { "data": "Action" },
+                     { "data": "User" },
+                     { "data": "Date"},
+                    ],
+                "order": [[0, "desc"]],
+                 dom: 'Bfrtip',
+                 buttons: [],
+                 "language": {
+                     "url": "@Url.Content("~/Content/datatable/idioma/datatable.es-ES.json")"
+                 }
+
+            });
+        }
+    </script>
+}
+

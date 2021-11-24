@@ -14,7 +14,6 @@ namespace ArquisoftApp.Controllers
 {
     public class AppController : Controller
     {
-
         public static string Encrypt(string str)
         {
             string encryptStr = string.Empty;
@@ -137,6 +136,12 @@ namespace ArquisoftApp.Controllers
             return ConfigurationManager.ConnectionStrings["ArquisoftSQL"].ConnectionString;
         }
 
+        [Filters.VerifyRole(Permission = 0)]
+        public ActionResult Audit()
+        {
+            SetSessionData();
+            return View("~/Views/Maintenance/AuditView.cshtml");
+        }
         public static void AuditAction(Audit record)
         {
             record.User = ((Models.Users)System.Web.HttpContext.Current.Session["user"]).Id.ToString();
@@ -145,6 +150,28 @@ namespace ArquisoftApp.Controllers
                 db.Audit.Add(record);
                 db.SaveChanges();
             }
+        }
+
+        [Filters.VerifyRole(Permission = 0)]
+        public JsonResult ListAudit()
+        {
+
+            List<Audit> auditList = new List<Audit>();
+
+            using (ArquisoftEntities db = new ArquisoftEntities())
+            {
+
+                auditList = (from c in db.Audit
+                                select c).ToList();
+            }
+            return Json(new { data = auditList }, JsonRequestBehavior.AllowGet);
+        }
+
+        private void SetSessionData()
+        {
+            var oUser = (Models.Users)System.Web.HttpContext.Current.Session["user"];
+            ViewBag.UserId = oUser.Id;
+            ViewBag.UserName = oUser.Name + " " + oUser.Last_Name;
         }
     }
 }

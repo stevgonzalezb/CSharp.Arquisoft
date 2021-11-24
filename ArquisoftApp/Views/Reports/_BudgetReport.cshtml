@@ -25,15 +25,21 @@
         <section class="invoice">
             <!-- title row -->
             <div class="row">
-                <div class="col-12">
-                    <h2 class="page-header">
+                <div class="col-md-12">
+                    <h4 class="page-header">
                         @*<i class="fas fa-globe"></i> AdminLTE, Inc.*@
-                        <img src="~/Content/img/logo-inverted.png" alt="Arquisoft Logo" class="brand-image-xl " style="opacity: .8">
-                        @*<small class="float-right">@DateTime.Now</small>*@
-                    </h2>
+                        <img src="~/Content/img/logo-inverted.png" alt="Arquisoft Logo" class="brand-image-xl " style="opacity: .8" />
+                        <small class="float-right">@DateTime.Now</small>
+                    </h4>
                 </div>
                 <!-- /.col -->
             </div>
+            <div class="row">
+                <div class="col-md-8 offset-md-4">
+                    <h4 class="page-header">Presupuesto de Materiales</h4>
+                </div>
+            </div>
+            <hr />
             <!-- info row -->
             <div class="row invoice-info">
                 <div class="col-sm-4 invoice-col">
@@ -52,9 +58,6 @@
                         Cliente: @Model.Customer.Name @Model.Customer.Last_Name<br>
                         Área Terreno: @Model.Project.SiteArea m<sup>2</sup><br>
                         Área contrucción: @Model.Project.ConstructionArea m<sup>2</sup><br>
-
-                        @*Phone: (555) 539-1037<br>
-                        Email: john.doe@example.com*@
                     </div>
                 </div>
                 <!-- /.col -->
@@ -63,7 +66,6 @@
                     <b>@Model.Budget.Name</b><br>
                     <b>Generado por:</b> @Model.CurrentUser.Name @Model.CurrentUser.Last_Name<br>
                     <b>Fecha:</b> @DateTime.Now<br>
-                    @*<b>Account:</b> 968-34567*@
                 </div>
                 <!-- /.col -->
             </div>
@@ -85,7 +87,7 @@
                         </thead>
                         <tbody>
                             @*@foreach (var oReportLines in Model.BudgetLines)*@
-                            @for(int i = 0; i < Model.BudgetLines.Count; i++ )
+                            @for (int i = 0; i < Model.BudgetLines.Count; i++)
                             {
                                 var oReportLines = Model.BudgetLines[i];
                                 var totalLine = oReportLines.Quantity * oReportLines.Price;
@@ -111,23 +113,16 @@
                 <!-- accepted payments column -->
                 <div class="col-6">
                     <p class="lead">Comentarios:</p>
-                    @*<img src="~/Scripts/AdminLTE/dist/img/credit/visa.png" alt="Visa">
-                    <img src="~/Scripts/AdminLTE/dist/img/credit/mastercard.png" alt="Mastercard">
-                    <img src="~/Scripts/AdminLTE/dist/img/credit/american-express.png" alt="American Express">
-                    <img src="~/Scripts/AdminLTE/dist/img/credit/paypal2.png" alt="Paypal">*@
-
                     <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
                         @Model.Project.Comments
                     </p>
                 </div>
                 <!-- /.col -->
                 <div class="col-6">
-                    @*<p class="lead">Amount Due 2/22/2014</p>*@
-
                     <div class="table-responsive">
                         @{ decimal fee = Decimal.Parse(Model.Budget.Fee.ToString()) / 100;
-                            var finalTotal = (Model.Budget.Total * fee) + Model.Budget.Total;  
-                         }
+                            var finalTotal = (Model.Budget.Total * fee) + Model.Budget.Total;
+                        }
 
                         <table class="table">
                             <tr>

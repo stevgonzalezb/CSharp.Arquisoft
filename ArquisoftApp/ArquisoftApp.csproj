@@ -335,6 +335,7 @@
       <LastGenOutput>dbModel.cs</LastGenOutput>
     </Content>
     <Content Include="DB\Arquisoft_v1.sql" />
+    <Content Include="DB\BackUp_Job.sql" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -2378,6 +2379,7 @@
     <Content Include="Views\Reports\_UsedMaterials.cshtml" />
     <Content Include="Views\Reports\_BudgetsCreated.cshtml" />
     <Content Include="Views\Maintenance\SettingMaintenance.cshtml" />
+    <Content Include="Views\Maintenance\AuditView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
