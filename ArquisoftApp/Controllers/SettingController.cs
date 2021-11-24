@@ -45,11 +45,19 @@ namespace ArquisoftApp.Controllers
                     Settings tempSettings = (from p in db.Settings
                                       select p).FirstOrDefault();
 
+                    //Company Settings
                     tempSettings.CompanyName = oSetting.CompanyName ?? tempSettings.CompanyName;
                     //tempSettings.CompanyId = oSetting.CompanyId ?? tempSettings.CompanyId;
                     tempSettings.CompanyEmail = oSetting.CompanyEmail ?? tempSettings.CompanyEmail;
                     tempSettings.CompanyPhone = oSetting.CompanyPhone ?? tempSettings.CompanyPhone;
                     tempSettings.CompanyAddress = oSetting.CompanyAddress ?? tempSettings.CompanyAddress;
+
+                    // SMTP Settings
+                    tempSettings.SMTP_Email = oSetting.SMTP_Email ?? tempSettings.SMTP_Email;
+                    tempSettings.SMTP_Password = oSetting.SMTP_Password ?? tempSettings.SMTP_Password;
+                    tempSettings.SMTP_Port = oSetting.SMTP_Port ?? tempSettings.SMTP_Port;
+                    tempSettings.SMTP_Server = oSetting.SMTP_Server ?? tempSettings.SMTP_Server;
+                    //tempSettings.SMTP_SSL = oSetting.SMTP_SSL == null ? tempSettings.SMTP_SSL : oSetting.SMTP_SSL;
 
                     db.SaveChanges();
                 }
