@@ -26,28 +26,41 @@ namespace ArquisoftApp.Controllers
             return View("~/Views/Reports/_BudgetReport.cshtml", oReport);
         }
 
-        public void SendReportToEmail()
+        public void SendReportToEmail(int BudgedId)
         {
-            System.Diagnostics.Debugger.Launch();
-            System.Diagnostics.Debugger.Break();
+
+            Settings settings = null;
+            var email = "";
+
+
+            using (ArquisoftEntities db = new ArquisoftEntities())
+            {
+                settings = (from p in db.Settings select p).FirstOrDefault();
+
+                email = (from b in db.Budgets
+                         join p in db.Projects on b.ProjectId equals p.Id
+                         join c in db.Clients on p.IdClient equals c.IdClient
+                         where b.Id == BudgedId
+                         select c.Email).FirstOrDefault();
+            }
 
             BudgetReport oReport = BuildReportModel(1);
             string HTMLStringWithModel = ArquisoftApp.Common.RazorViewToStringHelper.RenderViewToString(this, "~/Views/Reports/_BudgetReport.cshtml", oReport);
 
             MailMessage Msg = new MailMessage();
-            Msg.From = new MailAddress("arquisoft@drys.tech", "Arquisoft");// replace with valid value
-            Msg.Subject = "Contact";
-            Msg.To.Add("stevengonzalez957@gmail.com"); //replace with correct values
+            Msg.From = new MailAddress(settings.SMTP_Email, "Arquisoft");// replace with valid value
+            Msg.Subject = "Presupuesto #" + BudgedId.ToString();
+            Msg.To.Add(email); //replace with correct values
 
             Msg.Body = HTMLStringWithModel; //here is the razor view body
 
             Msg.IsBodyHtml = true;
             Msg.Priority = MailPriority.High;
             SmtpClient smtp = new SmtpClient();
-            smtp.Host = "mail.drys.tech";
-            smtp.Port = 26;
-            smtp.Credentials = new System.Net.NetworkCredential("arquisoft@drys.tech", "Noviembre2021");// replace with valid value
-            smtp.EnableSsl = true;
+            smtp.Host = settings.SMTP_Server;
+            smtp.Port = Int32.Parse(settings.SMTP_Port);
+            smtp.Credentials = new System.Net.NetworkCredential(settings.SMTP_Email, settings.SMTP_Password);// replace with valid value
+            smtp.EnableSsl = settings.SMTP_SSL;
             smtp.Timeout = 50000;
 
             smtp.Send(Msg);
@@ -70,6 +83,26 @@ namespace ArquisoftApp.Controllers
                             db.SaveChanges();
                         }
                         AppController.AuditAction(new Audit { Module = "Presupuestos", Action = "Crear", Date = DateTime.Now });
+                        response = oBudget.Id.ToString();
+
+                    }
+                    else
+                        Redirect("~/Views/Error/NotAuthorized.cshtml");
+                } 
+                else
+                {
+                    if (AppController.IsAuthorized(Common.AppEnums.Permissions.PROJECT_EDIT))
+                    {
+                        using (ArquisoftEntities db = new ArquisoftEntities())
+                        {
+
+                            Budgets tempBudget = (from c in db.Budgets.Where(x => x.Id == oBudget.Id)
+                                                  select c).FirstOrDefault();
+
+                            tempBudget.Fee = oBudget.Fee;
+                            db.SaveChanges();
+                        }
+                        AppController.AuditAction(new Audit { Module = "Presupuestos", Action = "Editar Honorario", Date = DateTime.Now });
                         response = oBudget.Id.ToString();
 
                     }

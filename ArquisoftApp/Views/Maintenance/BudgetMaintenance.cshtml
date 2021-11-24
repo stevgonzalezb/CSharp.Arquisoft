@@ -133,7 +133,7 @@
                                 @*<hr />*@
                                 <div class="row">
                                     <div class="form-group col-12 align-self-end">
-                                        @*<button type="button" onclick="" class="btn btn-secondary">Guardar Presupuesto</button>*@
+                                        <button type="button" onclick="SendReportToEmail()" class="btn btn-secondary">Enviar Email</button>
                                         <button type="button" onclick="CreateReport()" class="btn btn-secondary">Generar PDF</button>
                                     </div>
                                 </div>
@@ -276,8 +276,6 @@
     <script src="~/Scripts/AdminLTE/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="~/Scripts/AdminLTE/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="~/Scripts/AdminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-
-
 
     <script>
 
@@ -713,6 +711,16 @@
             //window.location.href = `/ArquisoftApp/Budget/Report?Id=9`;
         }
 
+        function SendReportToEmail() {
+
+            budgetApi.SendReportToEmail(budgetId).then(response => {
+                toastr.success('Correo enviado correctamente.');
+            }).catch(err => {
+                toastr.error("Ocurrió un error enviado el correo.");
+            })
+
+        }
+
         // Events
         $('#cmbMaterials').on('change', function (e) {
             var valueSelected = this.value.split('|')[0]
@@ -742,6 +750,19 @@
             var currentSubtotal = totalsData.Subtotal.Value;
             var fee = parseInt($("#txtFees").val());
             totalsData.Fee = fee;
+
+            var $data = {
+                oBudget: {
+                    Id: budgetId,
+                    Fee: fee
+                }
+            }
+
+            budgetApi.SaveBudget($data).then(response => {
+                if (response) {
+                    //toastr.success('Honorario actualizado correctamente.');
+                }
+            })
 
             $("#txtFinalTotal").val(`₡${(currentSubtotal * (fee / 100)) + currentSubtotal}`);
         });

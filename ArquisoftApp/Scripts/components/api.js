@@ -355,6 +355,16 @@ class BudgetApi {
             contentType: "application/json; charset=utf-8",
         });
     }
+
+    // Send budget to email
+    SendReportToEmail = async function (budgetId) {
+        return $.ajax({
+            url: `/ArquisoftApp/Budget/SendReportToEmail?BudgedId=${budgetId}`,
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+        });
+    }
 }
 
 /** Settings API **/
