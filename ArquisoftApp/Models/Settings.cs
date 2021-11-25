@@ -19,5 +19,10 @@ namespace ArquisoftApp.Models
         public string CompanyAddress { get; set; }
         public string CompanyEmail { get; set; }
         public string CompanyPhone { get; set; }
+        public string SMTP_Email { get; set; }
+        public string SMTP_Password { get; set; }
+        public string SMTP_Server { get; set; }
+        public string SMTP_Port { get; set; }
+        public Nullable<bool> SMTP_SSL { get; set; }
     }
 }

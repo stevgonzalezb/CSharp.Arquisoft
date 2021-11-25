@@ -2330,6 +2330,7 @@
     <Content Include="Content\datatable\idioma\datatable.es-ES.json" />
     <Content Include="Content\datatable\images\Sorting icons.psd" />
     <Content Include="DB\Arquisoft.bak" />
+    <None Include="App.config" />
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\components\api.js" />
