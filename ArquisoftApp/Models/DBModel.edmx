@@ -119,13 +119,19 @@
         </EntityType>
         <EntityType Name="Settings">
           <Key>
-            <PropertyRef Name="CompanyId" />
+            <PropertyRef Name="Id" />
           </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CompanyName" Type="varchar" MaxLength="100" />
           <Property Name="CompanyId" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="CompanyAddress" Type="varchar" MaxLength="100" />
           <Property Name="CompanyEmail" Type="varchar" MaxLength="100" />
           <Property Name="CompanyPhone" Type="varchar" MaxLength="100" />
+          <Property Name="SMTP_Email" Type="varchar" MaxLength="100" />
+          <Property Name="SMTP_Password" Type="varchar" MaxLength="100" />
+          <Property Name="SMTP_Server" Type="varchar" MaxLength="100" />
+          <Property Name="SMTP_Port" Type="varchar" MaxLength="100" />
+          <Property Name="SMTP_SSL" Type="bit" />
         </EntityType>
         <EntityType Name="State">
           <Key>
@@ -133,16 +139,6 @@
           </Key>
           <Property Name="idState" Type="int" Nullable="false" />
           <Property Name="description" Type="varchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -325,7 +321,6 @@
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Settings" EntityType="Self.Settings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VendorMaterials" EntityType="Self.VendorMaterials" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Attachments_Project" Association="Self.FK_Attachments_Project">
@@ -390,6 +385,7 @@
           </AssociationSet>
           <EntitySet Name="Attachments" EntityType="ArquisoftModel1.Attachments" />
           <EntitySet Name="Audit" EntityType="ArquisoftModel1.Audit" />
+          <EntitySet Name="BudgetLines" EntityType="ArquisoftModel1.BudgetLines" />
           <EntitySet Name="Budgets" EntityType="ArquisoftModel1.Budgets" />
           <EntitySet Name="Clients" EntityType="ArquisoftModel1.Clients" />
           <EntitySet Name="Materials" EntityType="ArquisoftModel1.Materials" />
@@ -398,11 +394,14 @@
           <EntitySet Name="Projects" EntityType="ArquisoftModel1.Projects" />
           <EntitySet Name="RoleOperations" EntityType="ArquisoftModel1.RoleOperations" />
           <EntitySet Name="Roles" EntityType="ArquisoftModel1.Roles" />
-          <EntitySet Name="sysdiagrams" EntityType="ArquisoftModel1.sysdiagrams" />
           <EntitySet Name="VendorMaterials" EntityType="ArquisoftModel1.VendorMaterials" />
           <AssociationSet Name="FK_Attachments_Project" Association="ArquisoftModel1.FK_Attachments_Project">
             <End Role="Projects" EntitySet="Projects" />
             <End Role="Attachments" EntitySet="Attachments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BudgetLines_Budget" Association="ArquisoftModel1.FK_BudgetLines_Budget">
+            <End Role="Budgets" EntitySet="Budgets" />
+            <End Role="BudgetLines" EntitySet="BudgetLines" />
           </AssociationSet>
           <AssociationSet Name="FK_Budgets_Projects" Association="ArquisoftModel1.FK_Budgets_Projects">
             <End Role="Projects" EntitySet="Projects" />
@@ -440,11 +439,6 @@
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <EntitySet Name="BudgetLines" EntityType="ArquisoftModel1.BudgetLines" />
-          <AssociationSet Name="FK_BudgetLines_Budget" Association="ArquisoftModel1.FK_BudgetLines_Budget">
-            <End Role="Budgets" EntitySet="Budgets" />
-            <End Role="BudgetLines" EntitySet="BudgetLines" />
-          </AssociationSet>
           <EntitySet Name="Settings" EntityType="ArquisoftModel1.Settings" />
           </EntityContainer>
         <EntityType Name="State">
@@ -457,7 +451,7 @@
           <NavigationProperty Name="Budgets" Relationship="ArquisoftModel1.FK_Budgets_State" FromRole="State" ToRole="Budgets" />
           <NavigationProperty Name="Materials" Relationship="ArquisoftModel1.FK_Materials_State" FromRole="State" ToRole="Materials" />
           <NavigationProperty Name="Projects" Relationship="ArquisoftModel1.FK_Projects_State" FromRole="State" ToRole="Projects" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Id" />
@@ -505,6 +499,18 @@
           <Property Name="User" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Date" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="BudgetLines">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="UOM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BudgetId" Type="Int32" />
+          <NavigationProperty Name="Budgets" Relationship="ArquisoftModel1.FK_BudgetLines_Budget" FromRole="BudgetLines" ToRole="Budgets" />
+        </EntityType>
         <EntityType Name="Budgets">
           <Key>
             <PropertyRef Name="Id" />
@@ -516,11 +522,11 @@
           <Property Name="Comments" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
           <Property Name="ProjectId" Type="Int32" />
           <Property Name="IdState" Type="Int32" />
-          <NavigationProperty Name="Projects" Relationship="ArquisoftModel1.FK_Budgets_Projects" FromRole="Budgets" ToRole="Projects" />
-          <NavigationProperty Name="State" Relationship="ArquisoftModel1.FK_Budgets_State" FromRole="Budgets" ToRole="State" />
-          <NavigationProperty Name="BudgetLines" Relationship="ArquisoftModel1.FK_BudgetLines_Budget" FromRole="Budgets" ToRole="BudgetLines" />
           <Property Name="Fee" Type="Int32" />
           <Property Name="Total" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="BudgetLines" Relationship="ArquisoftModel1.FK_BudgetLines_Budget" FromRole="Budgets" ToRole="BudgetLines" />
+          <NavigationProperty Name="Projects" Relationship="ArquisoftModel1.FK_Budgets_Projects" FromRole="Budgets" ToRole="Projects" />
+          <NavigationProperty Name="State" Relationship="ArquisoftModel1.FK_Budgets_State" FromRole="Budgets" ToRole="State" />
         </EntityType>
         <EntityType Name="Clients">
           <Key>
@@ -603,16 +609,6 @@
           <NavigationProperty Name="RoleOperations" Relationship="ArquisoftModel1.FK_RoleOperations_Roles" FromRole="Roles" ToRole="RoleOperations" />
           <NavigationProperty Name="Users" Relationship="ArquisoftModel1.FK_UserRole" FromRole="Roles" ToRole="Users" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
         <EntityType Name="VendorMaterials">
           <Key>
             <PropertyRef Name="Id" />
@@ -632,6 +628,18 @@
             </Principal>
             <Dependent Role="Attachments">
               <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BudgetLines_Budget">
+          <End Type="ArquisoftModel1.Budgets" Role="Budgets" Multiplicity="0..1" />
+          <End Type="ArquisoftModel1.BudgetLines" Role="BudgetLines" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Budgets">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BudgetLines">
+              <PropertyRef Name="BudgetId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -743,39 +751,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="BudgetLines">
+        <EntityType Name="Settings">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="Quantity" Type="Int32" />
-          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="UOM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="BudgetId" Type="Int32" />
-          <NavigationProperty Name="Budgets" Relationship="ArquisoftModel1.FK_BudgetLines_Budget" FromRole="BudgetLines" ToRole="Budgets" />
-        </EntityType>
-        <Association Name="FK_BudgetLines_Budget">
-          <End Type="ArquisoftModel1.Budgets" Role="Budgets" Multiplicity="0..1" />
-          <End Type="ArquisoftModel1.BudgetLines" Role="BudgetLines" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Budgets">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="BudgetLines">
-              <PropertyRef Name="BudgetId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Settings">
-          <Key>
-            <PropertyRef Name="CompanyId" />
-          </Key>
           <Property Name="CompanyName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CompanyId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CompanyAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CompanyEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="CompanyPhone" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SMTP_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SMTP_Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SMTP_Server" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SMTP_Port" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SMTP_SSL" Type="Boolean" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -822,6 +812,18 @@
                 <ScalarProperty Name="User" ColumnName="User" />
                 <ScalarProperty Name="Action" ColumnName="Action" />
                 <ScalarProperty Name="Module" ColumnName="Module" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BudgetLines">
+            <EntityTypeMapping TypeName="ArquisoftModel1.BudgetLines">
+              <MappingFragment StoreEntitySet="BudgetLines">
+                <ScalarProperty Name="BudgetId" ColumnName="BudgetId" />
+                <ScalarProperty Name="UOM" ColumnName="UOM" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -916,17 +918,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="ArquisoftModel1.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="VendorMaterials">
             <EntityTypeMapping TypeName="ArquisoftModel1.VendorMaterials">
               <MappingFragment StoreEntitySet="VendorMaterials">
@@ -938,26 +929,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BudgetLines">
-            <EntityTypeMapping TypeName="ArquisoftModel1.BudgetLines">
-              <MappingFragment StoreEntitySet="BudgetLines">
-                <ScalarProperty Name="BudgetId" ColumnName="BudgetId" />
-                <ScalarProperty Name="UOM" ColumnName="UOM" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Settings">
             <EntityTypeMapping TypeName="ArquisoftModel1.Settings">
               <MappingFragment StoreEntitySet="Settings">
+                <ScalarProperty Name="SMTP_SSL" ColumnName="SMTP_SSL" />
+                <ScalarProperty Name="SMTP_Port" ColumnName="SMTP_Port" />
+                <ScalarProperty Name="SMTP_Server" ColumnName="SMTP_Server" />
+                <ScalarProperty Name="SMTP_Password" ColumnName="SMTP_Password" />
+                <ScalarProperty Name="SMTP_Email" ColumnName="SMTP_Email" />
                 <ScalarProperty Name="CompanyPhone" ColumnName="CompanyPhone" />
                 <ScalarProperty Name="CompanyEmail" ColumnName="CompanyEmail" />
                 <ScalarProperty Name="CompanyAddress" ColumnName="CompanyAddress" />
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

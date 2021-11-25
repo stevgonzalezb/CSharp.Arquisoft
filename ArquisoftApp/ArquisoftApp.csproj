@@ -225,9 +225,6 @@
     <Compile Include="Models\State.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Users.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>

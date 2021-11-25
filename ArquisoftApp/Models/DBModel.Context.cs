@@ -30,6 +30,7 @@ namespace ArquisoftApp.Models
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<Attachments> Attachments { get; set; }
         public virtual DbSet<Audit> Audit { get; set; }
+        public virtual DbSet<BudgetLines> BudgetLines { get; set; }
         public virtual DbSet<Budgets> Budgets { get; set; }
         public virtual DbSet<Clients> Clients { get; set; }
         public virtual DbSet<Materials> Materials { get; set; }
@@ -38,9 +39,7 @@ namespace ArquisoftApp.Models
         public virtual DbSet<Projects> Projects { get; set; }
         public virtual DbSet<RoleOperations> RoleOperations { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<VendorMaterials> VendorMaterials { get; set; }
-        public virtual DbSet<BudgetLines> BudgetLines { get; set; }
         public virtual DbSet<Settings> Settings { get; set; }
     }
 }
