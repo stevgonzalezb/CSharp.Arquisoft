@@ -607,6 +607,7 @@
             apiBudget.SendReportToEmail($budgetId).then(response => {
                 toastr.success('Correo enviado correctamente.');
             }).catch(err => {
+                console.log(err);
                 toastr.error("Ocurrió un error enviado el correo.");
             })
         }

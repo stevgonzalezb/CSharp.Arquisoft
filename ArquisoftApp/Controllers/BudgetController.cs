@@ -26,44 +26,53 @@ namespace ArquisoftApp.Controllers
             return View("~/Views/Reports/_BudgetReport.cshtml", oReport);
         }
 
-        public void SendReportToEmail(int BudgedId)
+        public JsonResult SendReportToEmail(int BudgedId)
         {
 
             Settings settings = null;
             var email = "";
+            var response = "OK";
 
-
-            using (ArquisoftEntities db = new ArquisoftEntities())
+            try
             {
-                settings = (from p in db.Settings select p).FirstOrDefault();
+                using (ArquisoftEntities db = new ArquisoftEntities())
+                {
+                    settings = (from p in db.Settings select p).FirstOrDefault();
 
-                email = (from b in db.Budgets
-                         join p in db.Projects on b.ProjectId equals p.Id
-                         join c in db.Clients on p.IdClient equals c.IdClient
-                         where b.Id == BudgedId
-                         select c.Email).FirstOrDefault();
+                    email = (from b in db.Budgets
+                             join p in db.Projects on b.ProjectId equals p.Id
+                             join c in db.Clients on p.IdClient equals c.IdClient
+                             where b.Id == BudgedId
+                             select c.Email).FirstOrDefault();
+                }
+
+                BudgetReport oReport = BuildReportModel(1);
+                string HTMLStringWithModel = ArquisoftApp.Common.RazorViewToStringHelper.RenderViewToString(this, "~/Views/Reports/_BudgetReport.cshtml", oReport);
+
+                MailMessage Msg = new MailMessage();
+                Msg.From = new MailAddress(settings.SMTP_Email, "Arquisoft");// replace with valid value
+                Msg.Subject = "Presupuesto #" + BudgedId.ToString();
+                Msg.To.Add(email); //replace with correct values
+
+                Msg.Body = HTMLStringWithModel; //here is the razor view body
+
+                Msg.IsBodyHtml = true;
+                Msg.Priority = MailPriority.High;
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = settings.SMTP_Server;
+                smtp.Port = Int32.Parse(settings.SMTP_Port);
+                smtp.Credentials = new System.Net.NetworkCredential(settings.SMTP_Email, settings.SMTP_Password);// replace with valid value
+                smtp.EnableSsl = (bool)settings.SMTP_SSL;
+                smtp.Timeout = 50000;
+
+                smtp.Send(Msg);
+            }
+            catch (Exception e)
+            {
+                response = e.Message;
             }
 
-            BudgetReport oReport = BuildReportModel(1);
-            string HTMLStringWithModel = ArquisoftApp.Common.RazorViewToStringHelper.RenderViewToString(this, "~/Views/Reports/_BudgetReport.cshtml", oReport);
-
-            MailMessage Msg = new MailMessage();
-            Msg.From = new MailAddress(settings.SMTP_Email, "Arquisoft");// replace with valid value
-            Msg.Subject = "Presupuesto #" + BudgedId.ToString();
-            Msg.To.Add(email); //replace with correct values
-
-            Msg.Body = HTMLStringWithModel; //here is the razor view body
-
-            Msg.IsBodyHtml = true;
-            Msg.Priority = MailPriority.High;
-            SmtpClient smtp = new SmtpClient();
-            smtp.Host = settings.SMTP_Server;
-            smtp.Port = Int32.Parse(settings.SMTP_Port);
-            smtp.Credentials = new System.Net.NetworkCredential(settings.SMTP_Email, settings.SMTP_Password);// replace with valid value
-            smtp.EnableSsl = settings.SMTP_SSL;
-            smtp.Timeout = 50000;
-
-            smtp.Send(Msg);
+            return Json(new { data = attList }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult SaveBudget(Budgets oBudget)

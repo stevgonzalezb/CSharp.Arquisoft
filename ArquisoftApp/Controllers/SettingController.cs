@@ -47,7 +47,7 @@ namespace ArquisoftApp.Controllers
 
                     //Company Settings
                     tempSettings.CompanyName = oSetting.CompanyName ?? tempSettings.CompanyName;
-                    //tempSettings.CompanyId = oSetting.CompanyId ?? tempSettings.CompanyId;
+                    tempSettings.CompanyId = oSetting.CompanyId ?? tempSettings.CompanyId;
                     tempSettings.CompanyEmail = oSetting.CompanyEmail ?? tempSettings.CompanyEmail;
                     tempSettings.CompanyPhone = oSetting.CompanyPhone ?? tempSettings.CompanyPhone;
                     tempSettings.CompanyAddress = oSetting.CompanyAddress ?? tempSettings.CompanyAddress;
