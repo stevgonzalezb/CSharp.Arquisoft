@@ -1,0 +1,306 @@
+﻿
+@{
+    ViewBag.Title = "Configuraciones";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!--<section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+            </div>
+        </div>--><!-- /.container-fluid -->
+    <!--</section>-->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- /.col -->
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header p-2">
+                            <ul class="nav nav-pills">
+                                <li class="nav-item"><a class="nav-link active" href="#companyData" data-toggle="tab">Información Empresa</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#smtpData" data-toggle="tab">Servidor SMTP</a></li>
+                            </ul>
+                        </div><!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="active tab-pane" id="companyData">
+                                    <form class="form-horizontal" role="form" id="companyForm">
+                                        <div class="form-group row">
+                                            <label for="txtCompanyName" class="col-sm-2 col-form-label">Nombre Empresa: *</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="txtCompanyName" name="txtCompanyName" placeholder="Nombre Empresa">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="txtId" class="col-sm-2 col-form-label">Número de Cédula: *</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="txtId" name="txtId" placeholder="Número de Cédula">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="txtAddress" class="col-sm-2 col-form-label">Dirección: *</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="txtAddress" name="txtAddress" placeholder="Dirección">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="txtPhoneNumber" class="col-sm-2 col-form-label">Número de Teléfono: *</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="txtPhoneNumber" name="txtPhoneNumber" placeholder="Número de Teléfono">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="txtEmail" class="col-sm-2 col-form-label">Correo Electrónico: *</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" id="txtEmail" name="txtEmail" placeholder="Correo Electrónico">
+                                                <p>* Campos requeridos</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-10">
+                                                <button type="button" onclick="SaveSettings('Company')" class="btn btn-outline-secondary">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="tab-pane" id="smtpData">
+                                    <form class="form-horizontal" role="form" id="userForm">
+                                        <div class="form-group row">
+                                            <div class="col-6">
+                                                <label for="txtSMTPEmail">Email: *</label>
+                                                <input type="text" class="form-control" id="txtSMTPEmail" name="txtSMTPEmail" placeholder="Email">
+                                            </div>
+                                            <div class="col-6">
+                                                <label for="txtSMTPPassword">Contraseña: *</label>
+                                                <input type="password" class="form-control" id="txtSMTPPassword" name="txtSMTPPassword" placeholder="Contraseña">
+                                                <div class="col-sm-10">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-6">
+                                                <label for="txtSMTPServer">Servidor SMTP: *</label>
+                                                <input type="text" class="form-control" id="txtSMTPServer" name="txtSMTPServer" placeholder="Servidor SMTP">
+                                            </div>
+                                            <div class="col-6">
+                                                <label for="txtSMTPPort">Puerto: *</label>
+                                                <input type="text" class="form-control" id="txtSMTPPort" name="txtSMTPPort" placeholder="Puerto">
+                                            </div>
+                                        </div>
+                                        <p>* Campos requeridos</p>
+
+                                        <div class="form-group row">
+                                            <div class="col-2">
+                                                <input type="checkbox" class="form-check-input m-0" id="chkSMTPSsl" checked>
+                                                <label class="form-check" for="chkSMTPSsl">SSL</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class=" col-sm-10">
+                                                <button type="button" onclick="SaveSettings('SMTP')" class="btn btn-outline-secondary">Guardar datos</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- /.tab-pane -->
+                            </div>
+                            <!-- /.tab-content -->
+                        </div><!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+
+@*Modal Ayuda*@
+<div class="modal" id="userProfileHelp" role="dialog">
+    <div class="modal-dialog" style="overflow-y: initial !important">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-bold text-center">Ayuda M&oacute;dulo Perfil de Usuario</h4>
+            </div>
+            <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
+                <h4 align="center"><b></b></h4>
+                <p>&nbsp;&nbsp;Este m&oacute;dulo está desarrollado para que el usuario realice el cambio de su nombre, apellidos o cambio de contraseña.</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/User_profile/userProfile01.jpg" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>
+                    Una vez efectuado los cambios necesarios se da al bot&oacute;n guardar
+                </p>
+
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*/.modal*@
+
+@section scripts{
+    <script>
+
+        const api = new SettingsApi();
+        const emailRegex = app.enums.Regex.Email;
+
+        // On load event - Initial event
+        $("#helpModalNav").attr('data-target', "#userProfileHelp");
+        $(document).ready(function () {
+
+
+
+            // Methods who add or remove de styled classes
+            $.validator.setDefaults({
+                //Add Error Class To Fieldset if field invalid
+                highlight: function (element) {
+                    $(element).addClass('is-invalid').removeClass('is-valid');
+                },
+                //Add Valid Class To Fieldset if field valid
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid').addClass('is-valid');
+                },
+                errorPlacement: function (error, element) {
+                    error.addClass('validation-error text-red small').insertAfter(element);
+                }
+            });
+
+            // Custom methods for validations
+            $.validator.addMethod('emailRegex', function (value, element, parameter) {
+                return value.match(emailRegex);
+            }, '');
+
+            // Form validations
+            var validator = $("#companyForm").validate({
+                rules: {
+                    txtCompanyName: {
+                        required: true,
+                        minlength: 1
+                    },
+                    txtId: {
+                        required: true,
+                        minlength: 1
+                    },
+                    txtAddress: {
+                        required: true,
+                        minlength: 2
+                    },
+                    txtEmail: {
+                        required: true,
+                        emailRegex: true
+                    },
+                    txtPhoneNumber: {
+                        required: true,
+                        minlength: 2
+                    }
+                },
+                messages: {
+                    txtCompanyName: {
+                        required: "Requerido",
+                        minlength: "Ingrese un nombre válido."
+                    },
+                    txtId: {
+                        required: "Requerido",
+                        minlength: "Ingrese una cédula válida."
+                    },
+                    txtAddress: {
+                        required: "Requerido",
+                        minlength: "Ingrese una dirección válida"
+                    },
+                    txtEmail: {
+                        required: "Requerido",
+                        emailRegex: "Ingrese un correo válido"
+                    },
+                    txtPhoneNumber: {
+                        required: "Requerido",
+                        minlength: "Ingrese un número válido."
+                    }
+                }
+            });
+
+            LoadSettingsData();
+
+        });
+
+        function LoadSettingsData() {
+            api.GetSettings().then(data => {
+                if (data) {
+                    $("#txtCompanyName").val(data.CompanyName);
+                    $("#txtId").val(data.CompanyId);
+                    $("#txtAddress").val(data.CompanyAddress);
+                    $("#txtEmail").val(data.CompanyEmail);
+                    $("#txtPhoneNumber").val(data.CompanyPhone);
+                    $("#txtSMTPEmail").val(data.SMTP_Email);
+                    $("#txtSMTPPassword").val(data.SMTP_Password);
+                    $("#txtSMTPServer").val(data.SMTP_Server);
+                    $("#txtSMTPPort").val(data.SMTP_Port);
+                    $("#chkSMTPSsl").prop('checked', data.SMTP_SSL);
+                }
+            });
+        }
+
+        function SaveSettings(module) {
+            if ($("#companyForm").valid()) {
+                var $data;
+                if (module == 'Company') {
+                    $data = {
+                        oSetting: {
+                            CompanyName: $("#txtCompanyName").val(),
+                            CompanyId: $("#txtId").val(),
+                            CompanyAddress: $("#txtAddress").val(),
+                            CompanyEmail: $("#txtEmail").val(),
+                            CompanyPhone: $("#txtPhoneNumber").val(),
+                        }
+                    }
+                } else {
+                    $data = {
+                        oSetting: {
+                            SMTP_Email: $("#txtSMTPEmail").val(),
+                            SMTP_Password: $("#txtSMTPPassword").val(),
+                            SMTP_Server: $("#txtSMTPServer").val(),
+                            SMTP_Port: $("#txtSMTPPort").val(),
+                            SMTP_SSL: $("#chkSMTPSsl").prop('checked'),
+                        }
+                    }
+                }
+
+                api.SaveSettings($data).then(response => {
+                    if (response.result === 'OK') {
+                        toastr.success('Usuario guardado correctamente.');
+                        CleanValidators();
+                    } else {
+                        toastr.error(response.result);
+                    }
+
+                }).catch(err => {
+
+                    toastr.error("Ocurrió un error guardando los datos de configuración.");
+                })
+            }
+            else
+                toastr.error('Por favor valide los datos ingresados.');
+        }
+
+        function CleanValidators() {
+            $('.is-valid').removeClass('is-valid');
+            $('.is-invalid').removeClass('is-invalid');
+        }
+
+    </script>
+}
+

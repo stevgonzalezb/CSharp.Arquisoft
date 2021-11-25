@@ -13,6 +13,7 @@
             <table class="display responsive nowrap" id="myTable" style="width:100%" data-page-length='10'>
                 <thead>
                     <tr>
+                        <th>Id</th>
                         <th>Material</th>
                         <th>Precio(₡)</th>
                         <th></th>
@@ -158,6 +159,7 @@
                      //"datatype": "json"
                  },
                  "columns": [
+                     { "data": "Id" },
                      { "data": "Description" },
                      { "data": "Price", className: "text-right"},
                      {
@@ -181,7 +183,7 @@
                                 text: 'Importar desde EPA.com',
                                 attr: { class: 'btn btn-secondary btn-sm' },
                                 action: function (e, dt, node, config) {
-                                    null
+                                    RunScript()
                                 }
 
                             }
@@ -249,6 +251,15 @@
             }
         }
 
+        function RunScript() {
+            $.ajax({
+                type: "POST",
+                url: "E:/Code/Steven/Arquisoft/Arquisoft/ArquisoftApp/Scripts/src/scrappers/app.py",
+                data: null
+            }).done(function (o) {
+                console.log(o)
+            });
+        }
     </script>
 }
 

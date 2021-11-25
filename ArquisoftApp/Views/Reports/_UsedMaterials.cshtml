@@ -3,8 +3,6 @@
     Layout = null;
 }
 
-
-
 <!DOCTYPE html>
 
 <html>
@@ -29,11 +27,17 @@
                     <h2 class="page-header">
                         @*<i class="fas fa-globe"></i> AdminLTE, Inc.*@
                         <img src="~/Content/img/logo-inverted.png" alt="Arquisoft Logo" class="brand-image-xl " style="opacity: .8">
-                        @*<small class="float-right">@DateTime.Now</small>*@
+                        <small class="float-right">@DateTime.Now</small>
                     </h2>
                 </div>
                 <!-- /.col -->
             </div>
+            <div class="row">
+                <div class="col-md-8 offset-md-4">
+                    <h4 class="page-header">Materiales usados entre fechas</h4>
+                </div>
+            </div>
+            <hr />
             <!-- info row -->
             <div class="row invoice-info">
                 <div class="col-sm-4 invoice-col">
@@ -64,15 +68,19 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
+                                <th>No. Línea</th>
                                 <th>Material</th>
                                 <th>Cantidad veces usado</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var oReportLines in Model.Materials)
+                            @*@foreach (var oReportLines in Model.Materials)*@
+                            @for (int i = 0; i < Model.Materials.Count; i++)
                             {
-
+                                var oReportLines = Model.Materials[i];
+                                var noLinea = i + 1;
                                 <tr>
+                                    <td>@noLinea</td>
                                     <td>@oReportLines.Split('|')[0]</td>
                                     <td>@oReportLines.Split('|')[1]</td>
                                 </tr>

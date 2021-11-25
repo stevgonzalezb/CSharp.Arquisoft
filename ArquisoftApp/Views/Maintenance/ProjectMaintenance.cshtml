@@ -130,6 +130,7 @@
                                             <table class="display nowrap col-12" id="myTable" style="width:100%" data-page-length='10'>
                                                 <thead>
                                                     <tr>
+                                                        <th>Id</th>
                                                         <th>Nombre Presupuesto</th>
                                                         <th>Tipo</th>
                                                         <th>Fecha creación</th>
@@ -482,7 +483,7 @@
 
                         $.each(json.data, function (key, obj) {
                             val = obj.CreationDate;
-                            obj.CreationDate = (new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10))).toLocaleDateString('en-US');;
+                            obj.CreationDate = (new Date(parseInt(val.replace("/Date(", "").replace(")/", ""), 10))).toLocaleDateString('es-CR');;
                         });
 
                         return json.data;
@@ -491,6 +492,7 @@
                      //"datatype": "json"
                  },
                  "columns": [
+                     { "data": "Id" },
                      { "data": "Name" },
                      { "data": "Type" },
                      { "data": "CreationDate" },
@@ -499,6 +501,7 @@
                              var buttons = "";
                              buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos del presupuesto' class='btn btn-outline-secondary btn-sm' type='button' onclick='OpenBudget(" + data + ")'>Editar <i class='fas fa-pen'></i></button>"
                              buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para descargar este presupuesto' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='CreateReport(" + data + ")'>Imprimir <i class='fas fa-download'></i></button>"
+                             buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para enviar por email este presupuesto' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='SendEmail(" + data + ")'>Enviar <i class='fas fa-envelope'></i></button>"
                              buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de presupuestos' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='DeleteBudget(" + data + ")'>Eliminar &nbsp;<i class='fa fa-trash'></i></button>"
 
                              return buttons;
@@ -593,6 +596,21 @@
             
         }
 
+        function CreateReport($budgetId) {
+
+            window.open(`/ArquisoftApp/Budget/Report?Id=${$budgetId}`, '_blank').focus();
+
+            //window.location.href = `/ArquisoftApp/Budget/Report?Id=9`;
+        }
+
+        function SendEmail($budgetId) {
+            apiBudget.SendReportToEmail($budgetId).then(response => {
+                toastr.success('Correo enviado correctamente.');
+            }).catch(err => {
+                toastr.error("Ocurrió un error enviado el correo.");
+            })
+        }
+
 
         // Attachments Tab
         function LoadAttachmentList(projectId) {
@@ -672,13 +690,6 @@
                 })
             }
 
-        }
-
-        function CreateReport($budgetId) {
-
-            window.open(`/ArquisoftApp/Budget/Report?Id=${$budgetId}`, '_blank').focus();
-
-            //window.location.href = `/ArquisoftApp/Budget/Report?Id=9`;
         }
 
         function validarCampos() {
