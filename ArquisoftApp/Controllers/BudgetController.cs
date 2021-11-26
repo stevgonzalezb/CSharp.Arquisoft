@@ -72,7 +72,7 @@ namespace ArquisoftApp.Controllers
                 response = e.Message;
             }
 
-            return Json(new { data = attList }, JsonRequestBehavior.AllowGet);
+            return Json(new { data = response }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult SaveBudget(Budgets oBudget)
