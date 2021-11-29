@@ -11,9 +11,9 @@
         <div class="container-fluid">
             <div class="row mb-2">
             </div>
-        </div>--><!-- /.container-fluid -->
+        </div>-->
+    <!-- /.container-fluid -->
     <!--</section>-->
-
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
@@ -153,6 +153,42 @@
 </div>
 @*/.modal*@
 
+@*Modal Ayuda*@
+<div class="modal" id="settingModalAyuda" role="dialog">
+    <div class="modal-dialog" style="overflow-y: initial !important">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-bold text-center">Ayuda M&oacute;dulo Configuraci&oacute;n</h4>
+            </div>
+            <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
+                <h4 align="center"><b></b></h4>
+                <p>&nbsp;&nbsp;Este m&oacute;dulo est&aacute; desarrollado para configurar la informaci&oacute;n sobre la empresa o arquitecto que utiliza el sistema.</p>
+
+                @*Ayuda reportes*@
+
+                <p>&nbsp;&nbsp;1- Ingresa la informaci&oacute;n sobre la empresa o arquitecto que usar&aacute; el sistema, esto para utilizar la informaci&oacute;n en los reportes.</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Setting/Setting01.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p>&nbsp;&nbsp;2-En la pestaña “Servidor SMTP” debe colocar la informaci&oacute;n necesaria para poder realizar el env&iacute;o de correos electr&oacute;nicos desde el sistema.</p>
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Setting/Setting02.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <p><b>Email:</b> Correo por donde enviará los presupuestos generados.</p>
+                <p><b>Contraseña:</b> Contraseña del correo.</p>
+                <p><b>Servidor:</b> Servidor SMTP.</p>
+                <p><b>Puerto:</b> Puerto de transmisión.</p>
+                <br />
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*/.modal*@
+
+
 @section scripts{
     <script>
 
@@ -160,7 +196,7 @@
         const emailRegex = app.enums.Regex.Email;
 
         // On load event - Initial event
-        $("#helpModalNav").attr('data-target', "#userProfileHelp");
+        $("#helpModalNav").attr('data-target', "#settingModalAyuda");
         $(document).ready(function () {
 
 

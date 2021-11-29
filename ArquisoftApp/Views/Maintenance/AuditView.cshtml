@@ -26,7 +26,6 @@
 
 </div>
 <!-- /.content-wrapper -->
-
 @*Modal Ayuda*@
 <div class="modal" id="materialesFerreModalAyuda" role="dialog">
     <div class="modal-dialog" style="overflow-y: initial !important">
@@ -69,13 +68,39 @@
 </div>
 @*/.modal*@
 
+@*Modal Ayuda*@
+<div class="modal" id="auditModalAyuda" role="dialog">
+    <div class="modal-dialog" style="overflow-y: initial !important">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-bold text-center">Ayuda M&oacute;dulo Bit&aacute;cora</h4>
+            </div>
+            <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
+                <h4 align="center"><b></b></h4>
+                <p>&nbsp;&nbsp;Este módulo está desarrollado para llevar un control de los cambios realizados en el sistema, sirve para auditoría.</p>
+
+                @*Ayuda reportes*@
+                <div class="modal-body" align="left">
+                    <img src="~/Content/img/Help/Audit/Audit01.JPG" class="img-rounded" alt="Cinque Terre" />
+                </div>
+                <br />
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*/.modal*@
+
+
 
 @section scripts{
     <script>
         var audit_table;
 
          $(document).ready( function () {
-             $("#helpModalNav").attr('data-target', "#materialesFerreModalAyuda");
+             $("#helpModalNav").attr('data-target', "#auditModalAyuda");
              LoadTable();
          });
 
