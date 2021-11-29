@@ -27,11 +27,11 @@
                                 <table class="display responsive nowrap table-head-fixed text-nowrap" id="myTable" style="width:100%" data-page-length='10'>
                                     <thead>
                                         <tr>
-                                            <th>No. Linea</th>
+                                            <th>No. L&iacute;nea </th>
                                             <th>Material</th>
                                             <th>Unidad</th>
                                             <th>Cantidad</th>
-                                            <th>Precio</th>
+                                            <th>Precio Unitario</th>
                                             <th>Total</th>
                                             <th></th>
                                         </tr>
@@ -384,7 +384,7 @@
                      {
                          "data": "Id", "render": function (data) {
                              var buttons = "";
-                             buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en los datos de los materiales' class='btn btn-outline-secondary btn-sm' type='button' onclick='OpenEditModal(" + data + ")'><i class='fas fa-pen'></i></button>"
+                             buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar cambios en el dats del materiale' class='btn btn-outline-secondary btn-sm' type='button' onclick='OpenEditModal(" + data + ")'><i class='fas fa-pen'></i></button>"
                              buttons += "<button data-toggle='tooltip' data-placement='top' title='Acción para realizar el eliminado de materiales' class='btn btn-outline-secondary btn-sm ml-2' type='button' onclick='DeleteBudgetLine(" + data + ")'><i class='fa fa-trash'></i></button>"
 
                              return buttons;

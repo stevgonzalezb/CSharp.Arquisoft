@@ -72,7 +72,7 @@
                                 </div>
 
                                 <div class="tab-pane" id="smtpData">
-                                    <form class="form-horizontal" role="form" id="userForm">
+                                    <form class="form-horizontal" role="form" id="SMTPForm">
                                         <div class="form-group row">
                                             <div class="col-6">
                                                 <label for="txtSMTPEmail">Email: *</label>
@@ -126,32 +126,6 @@
     </section>
     <!-- /.content -->
 </div>
-
-@*Modal Ayuda*@
-<div class="modal" id="userProfileHelp" role="dialog">
-    <div class="modal-dialog" style="overflow-y: initial !important">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="text-bold text-center">Ayuda M&oacute;dulo Perfil de Usuario</h4>
-            </div>
-            <div class="modal-body" align="center" style="height: 80vh; overflow-y: auto;">
-                <h4 align="center"><b></b></h4>
-                <p>&nbsp;&nbsp;Este m&oacute;dulo está desarrollado para que el usuario realice el cambio de su nombre, apellidos o cambio de contraseña.</p>
-                <div class="modal-body" align="left">
-                    <img src="~/Content/img/Help/User_profile/userProfile01.jpg" class="img-rounded" alt="Cinque Terre" />
-                </div>
-                <p>
-                    Una vez efectuado los cambios necesarios se da al bot&oacute;n guardar
-                </p>
-
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@*/.modal*@
 
 @*Modal Ayuda*@
 <div class="modal" id="settingModalAyuda" role="dialog">
@@ -269,6 +243,46 @@
                 }
             });
 
+            // Form validations
+            var validator = $("#SMTPForm").validate({
+                rules: {
+                    txtSMTPPassword: {
+                        required: true,
+                        minlength: 1
+                    },
+                    txtSMTPServer: {
+                        required: true,
+                        minlength: 1
+                    },
+                    txtSMTPPort: {
+                        required: true,
+                        minlength: 2
+                    },
+                    txtSMTPEmail: {
+                        required: true,
+                        emailRegex: true
+                    }
+                },
+                messages: {
+                    txtSMTPPassword: {
+                        required: "Requerido",
+                        minlength: "Ingrese una contraseña válida."
+                    },
+                    txtSMTPServer: {
+                        required: "Requerido",
+                        minlength: "Ingrese un servidor válido."
+                    },
+                    txtSMTPPort: {
+                        required: "Requerido",
+                        minlength: "Ingrese una puesto válido"
+                    },
+                    txtSMTPEmail: {
+                        required: "Requerido",
+                        emailRegex: "Ingrese una correo válido"
+                    }
+                }
+            });
+
             LoadSettingsData();
 
         });
@@ -304,15 +318,21 @@
                         }
                     }
                 } else {
-                    $data = {
-                        oSetting: {
-                            SMTP_Email: $("#txtSMTPEmail").val(),
-                            SMTP_Password: $("#txtSMTPPassword").val(),
-                            SMTP_Server: $("#txtSMTPServer").val(),
-                            SMTP_Port: $("#txtSMTPPort").val(),
-                            SMTP_SSL: $("#chkSMTPSsl").prop('checked'),
+
+                    if ($("#SMTPForm").valid()) {
+                        $data = {
+                            oSetting: {
+                                SMTP_Email: $("#txtSMTPEmail").val(),
+                                SMTP_Password: $("#txtSMTPPassword").val(),
+                                SMTP_Server: $("#txtSMTPServer").val(),
+                                SMTP_Port: $("#txtSMTPPort").val(),
+                                SMTP_SSL: $("#chkSMTPSsl").prop('checked'),
+                            }
                         }
+                    } else {
+                        toastr.error("Ocurrió un error guardando los datos SMTP Relay.");
                     }
+
                 }
 
                 api.SaveSettings($data).then(response => {
