@@ -28,7 +28,7 @@
                 @if (ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.CLIENT_READ))
                 {
                     <!-- Clientes -->
-                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Puede realiza acciones como: Registrar, editar y eliminar clientes">
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Puede realizar acciones como: Registrar, editar y eliminar clientes">
                         <a href="@Url.Action("Index", "Client")" class="nav-link">
                             <i class="nav-icon fas fa-users"></i>
                             <p>Clientes</p>
@@ -39,7 +39,7 @@
                 @if (ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.MATERIAL_READ))
                 {
                     <!-- Materiales-->
-                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Puede visualizar la lista de materiales">
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Puede realizar acciones como: Registrar, editar y eliminar materiales">
                         <a href="@Url.Action("Index", "Material")" class="nav-link">
                             <i class="nav-icon fas fa-hammer"></i>
                             <p>Materiales</p>
@@ -64,7 +64,7 @@
                 @if (ArquisoftApp.Controllers.AppController.IsAuthorized(ArquisoftApp.Common.AppEnums.Permissions.PROJECT_READ))
                 {
                     <!-- Proyectos -->
-                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Puede realiza acciones como Registrar, editar y eliminar proyectos">
+                    <li class="nav-item" data-toggle="tooltip" data-placement="top" title="Puede realizar acciones como Registrar, editar y eliminar proyectos">
                         <a href="@Url.Action("Index", "Project")" class="nav-link">
                             <i class="nav-icon fas fa-toolbox"></i>
                             <p>Proyectos</p>
