@@ -274,11 +274,11 @@
                     },
                     txtSMTPPort: {
                         required: "Requerido",
-                        minlength: "Ingrese una puesto válido"
+                        minlength: "Ingrese un puerto válido"
                     },
                     txtSMTPEmail: {
                         required: "Requerido",
-                        emailRegex: "Ingrese una correo válido"
+                        emailRegex: "Ingrese un correo válido"
                     }
                 }
             });
@@ -305,39 +305,38 @@
         }
 
         function SaveSettings(module) {
-            if ($("#companyForm").valid()) {
-                var $data;
-                if (module == 'Company') {
-                    $data = {
-                        oSetting: {
-                            CompanyName: $("#txtCompanyName").val(),
-                            CompanyId: $("#txtId").val(),
-                            CompanyAddress: $("#txtAddress").val(),
-                            CompanyEmail: $("#txtEmail").val(),
-                            CompanyPhone: $("#txtPhoneNumber").val(),
-                        }
-                    }
-                } else {
 
-                    if ($("#SMTPForm").valid()) {
-                        $data = {
-                            oSetting: {
-                                SMTP_Email: $("#txtSMTPEmail").val(),
-                                SMTP_Password: $("#txtSMTPPassword").val(),
-                                SMTP_Server: $("#txtSMTPServer").val(),
-                                SMTP_Port: $("#txtSMTPPort").val(),
-                                SMTP_SSL: $("#chkSMTPSsl").prop('checked'),
-                            }
-                        }
-                    } else {
-                        toastr.error("Ocurrió un error guardando los datos SMTP Relay.");
+            var $data;
+            if (module == 'Company' && $("#companyForm").valid()) {
+                $data = {
+                    oSetting: {
+                        CompanyName: $("#txtCompanyName").val(),
+                        CompanyId: $("#txtId").val(),
+                        CompanyAddress: $("#txtAddress").val(),
+                        CompanyEmail: $("#txtEmail").val(),
+                        CompanyPhone: $("#txtPhoneNumber").val(),
                     }
-
                 }
-
+            }
+            else if (module == 'SMTP' && $("#SMTPForm").valid()) {
+                $data = {
+                    oSetting: {
+                        SMTP_Email: $("#txtSMTPEmail").val(),
+                        SMTP_Password: $("#txtSMTPPassword").val(),
+                        SMTP_Server: $("#txtSMTPServer").val(),
+                        SMTP_Port: $("#txtSMTPPort").val(),
+                        SMTP_SSL: $("#chkSMTPSsl").prop('checked'),
+                    }
+                }
+            }
+            else {
+                toastr.error('Por favor valide los datos ingresados.');
+            }
+                    
+            if ($data) {
                 api.SaveSettings($data).then(response => {
                     if (response.result === 'OK') {
-                        toastr.success('Usuario guardado correctamente.');
+                        toastr.success('Configuración guardada correctamente.');
                         CleanValidators();
                     } else {
                         toastr.error(response.result);
@@ -348,8 +347,6 @@
                     toastr.error("Ocurrió un error guardando los datos de configuración.");
                 })
             }
-            else
-                toastr.error('Por favor valide los datos ingresados.');
         }
 
         function CleanValidators() {

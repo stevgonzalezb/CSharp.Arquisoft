@@ -13,6 +13,7 @@ namespace ArquisoftApp.Models.ReportsModel
         public string CompanyId { get; set; }
         public string CompanyEmail { get; set; }
         public string CompanyPhone { get; set; }
+        public string SelectedDates { get; set; }
         public List<string> Materials { get; set; }
     }
 }

@@ -69,7 +69,7 @@ namespace ArquisoftApp.Controllers
                 CompanyData = (from p in db.Settings
                                select p).FirstOrDefault();
             }
-
+            oReport.SelectedDates = dates;
             oReport.CompanyName = CompanyData.CompanyName;
             oReport.CompanyEmail = CompanyData.CompanyEmail;
             oReport.CompanyAddress = CompanyData.CompanyAddress;
@@ -117,6 +117,7 @@ namespace ArquisoftApp.Controllers
                                select p).FirstOrDefault();
             }
 
+            oReport.SelectedDates = dates;
             oReport.CompanyName = CompanyData.CompanyName;
             oReport.CompanyEmail = CompanyData.CompanyEmail;
             oReport.CompanyAddress = CompanyData.CompanyAddress;
