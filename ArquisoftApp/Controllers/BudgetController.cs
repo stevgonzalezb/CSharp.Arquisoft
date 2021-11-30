@@ -46,7 +46,7 @@ namespace ArquisoftApp.Controllers
                              select c.Email).FirstOrDefault();
                 }
 
-                BudgetReport oReport = BuildReportModel(1);
+                BudgetReport oReport = BuildReportModel(BudgedId);
                 string HTMLStringWithModel = ArquisoftApp.Common.RazorViewToStringHelper.RenderViewToString(this, "~/Views/Reports/_BudgetReport.cshtml", oReport);
 
                 MailMessage Msg = new MailMessage();
