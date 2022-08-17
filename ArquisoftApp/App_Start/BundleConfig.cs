@@ -8,38 +8,44 @@ namespace ArquisoftApp
         // Para obtener más información sobre las uniones, visite https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            // JQuery
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
-            // Utilice la versión de desarrollo de Modernizr para desarrollar y obtener información. De este modo, estará
-            // para la producción, use la herramienta de compilación disponible en https://modernizr.com para seleccionar solo las pruebas que necesite.
+            // Modernizr
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+            //Bootstrap
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
-
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
             //Plugins
 
+            //CSS Files
             bundles.Add(new ScriptBundle("~/bundles/Plugins/css").Include(
-            "~/Content/datatable/css/jquery.dataTables.min.css",
-            "~/Content/datatable/css/responsive.dataTables.min.css",
-            "~/Content/datatable/css/buttons.dataTables.min.css"
-            ));
-            bundles.Add(new ScriptBundle("~/bundles/Plugins/js").Include(
-            "~/Content/datatable/js/jquery.dataTables.min.js",
-            "~/Content/datatable/js/dataTables.responsive.min.js",
-            "~/Content/datatable/js/dataTables.buttons.min.js"
+            "~/Content/Plugins/datatable/css/jquery.dataTables.min.css",
+            "~/Content/Plugins/datatable/css/responsive.dataTables.min.css",
+            "~/Content/Plugins/datatable/css/buttons.dataTables.min.css",
+            "~/Content/Plugins/fontawesome-free/css/all.min.css",
+            "~/Content/Plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css",
+            "~/Content/Plugins/toastr/toastr.min.css",
+            "~/Content/Plugins/admin-lte-theme/css/adminlte.css"
             ));
 
-            // Arquisoft files 
+            // JS Files
+            bundles.Add(new ScriptBundle("~/bundles/Plugins/js").Include(
+            "~/Content/Plugins/datatable/js/jquery.dataTables.min.js",
+            "~/Content/Plugins/datatable/js/dataTables.responsive.min.js",
+            "~/Content/Plugins/datatable/js/dataTables.buttons.min.js"
+            ));
+
+            // Arquisoft Files 
             bundles.Add(new ScriptBundle("~/bundles/App/js").Include(
             "~/Scripts/components/app.js",
             "~/Scripts/components/api.js"
