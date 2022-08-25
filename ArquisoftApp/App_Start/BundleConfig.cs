@@ -26,23 +26,24 @@ namespace ArquisoftApp
                       "~/Content/site.css"));
 
             //Plugins
-
-            //CSS Files
-            bundles.Add(new ScriptBundle("~/bundles/Plugins/css").Include(
-            "~/Content/Plugins/datatable/css/jquery.dataTables.min.css",
-            "~/Content/Plugins/datatable/css/responsive.dataTables.min.css",
-            "~/Content/Plugins/datatable/css/buttons.dataTables.min.css",
-            "~/Content/Plugins/fontawesome-free/css/all.min.css",
-            "~/Content/Plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css",
-            "~/Content/Plugins/toastr/toastr.min.css",
-            "~/Content/Plugins/admin-lte-theme/css/adminlte.css"
+            bundles.Add(new StyleBundle("~/bundles/Plugins/css").Include(
+            "~/Scripts/plugins/datatable/css/jquery.dataTables.min.css",
+            "~/Scripts/plugins/datatable/css/responsive.dataTables.min.css",
+            "~/Scripts/plugins/datatable/css/buttons.dataTables.min.css",
+            //"~/Scripts/plugins/fontawesome-free/css/all.min.css",
+            "~/Scripts/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css",
+            "~/Scripts/plugins/toastr/toastr.min.css",
+            "~/Scripts/plugins/admin-lte-theme/css/adminlte.css"
             ));
+            //).Include("~/Scripts/plugins/fontawesome-free/css/all.min.css", new CssRewriteUrlTransform()));
 
-            // JS Files
             bundles.Add(new ScriptBundle("~/bundles/Plugins/js").Include(
-            "~/Content/Plugins/datatable/js/jquery.dataTables.min.js",
-            "~/Content/Plugins/datatable/js/dataTables.responsive.min.js",
-            "~/Content/Plugins/datatable/js/dataTables.buttons.min.js"
+            "~/Scripts/plugins/datatable/js/jquery.dataTables.min.js",
+            "~/Scripts/plugins/datatable/js/dataTables.responsive.min.js",
+            "~/Scripts/plugins/datatable/js/dataTables.buttons.min.js",
+            "~/Scripts/plugins/admin-lte-theme/js/adminlte.min.js",
+            "~/Scripts/plugins/toastr/toastr.min.js",
+            "~/Scripts/plugins/sweetalert2/sweetalert2.min.js"
             ));
 
             // Arquisoft Files 
