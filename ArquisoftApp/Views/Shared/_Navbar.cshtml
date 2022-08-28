@@ -3,7 +3,7 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
         <li class="nav-item">
-                <ol class="breadcrumb float-sm-right m-xl-0">
+                <ol class="breadcrumb float-sm-right m-0">
                     <li class="breadcrumb-item" data-toggle="tooltip" data-placement="top" title="Da clic para ir al inicio del sistema"><a href="@Url.Action("Index", "Home")">Inicio</a></li>
                     <li class="breadcrumb-item active">@ViewBag.Title <a class="text-gray" id="helpModalNav" data-toggle="modal" href="#" role="button" data-target=""><i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="Ingrese a la ayuda del sistema"></i></a></li> 
                 </ol>
@@ -15,10 +15,10 @@
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i> 
-                    @*<div class="t-3 pb-3 mb-3 d-flex">*@
+                    <div class="t-3 pb-3 mb-3 d-flex">
                         <img src="~/Content/img/profile_avatar.png" class="img-circle img-bordered img-size-32" alt="User Image" data-toggle="tooltip" data-placement="top" title="Ingrese para ver su perfil de usuario">
                         <b>&nbsp;@ViewBag.UserName</b>
-                    @*</div>*@
+                    </div>
                 </i>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">

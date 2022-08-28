@@ -18,7 +18,7 @@ namespace ArquisoftApp
             "~/Scripts/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css", // Sweetalert
             "~/Scripts/plugins/toastr/toastr.min.css", // Toastr
             "~/Scripts/plugins/admin-lte-theme/css/adminlte.css", // Admin LTE Theme
-            "~/Scripts/plugins/bootstrap/bootstrap.css", // Bootstrap
+            //"~/Scripts/plugins/bootstrap/bootstrap.css", // Bootstrap
             "~/Scripts/plugins/ion-rangeslider/ion.rangeSlider.min.css", //Ion Range Slider
             "~/Scripts/plugins/bootstrap-slider/bootstrap-slider.min.css", // Bootstrap Slider
             "~/Scripts/plugins/select2/select2-bootstrap4.css", // Select2

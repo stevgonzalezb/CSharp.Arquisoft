@@ -45,6 +45,9 @@ namespace ArquisoftApp.Controllers
                     Settings tempSettings = (from p in db.Settings
                                       select p).FirstOrDefault();
 
+                    if(tempSettings == null)
+                        tempSettings = new Settings();
+
                     //Company Settings
                     tempSettings.CompanyName = oSetting.CompanyName ?? tempSettings.CompanyName;
                     tempSettings.CompanyId = oSetting.CompanyId ?? tempSettings.CompanyId;
