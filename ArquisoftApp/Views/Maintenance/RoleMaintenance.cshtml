@@ -64,7 +64,7 @@
                     <div class="row permissions-boxes">
                         <div class="form-group col-3">
                             <button class="btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseClient" aria-expanded="false" aria-controls="multiCollapseExample2">Clientes</button>
-                            <div class="collapse multi-collapse" id="collapseClient">
+                            <div class="multi-collapse" id="collapseClient">
                                 <div class="card card-body" id="collapseClientCard">
                                     <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                                         <input class="custom-control-input" type="checkbox" id="1">
@@ -88,7 +88,7 @@
 
                         <div class="form-group col-3">
                             <button class="btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseProject" aria-expanded="false" aria-controls="multiCollapseExample2">Proyectos</button>
-                            <div class="collapse multi-collapse" id="collapseProject">
+                            <div class="multi-collapse" id="collapseProject">
                                 <div class="card card-body">
                                     <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                                         <input class="custom-control-input" type="checkbox" id="9">
@@ -112,7 +112,7 @@
 
                         <div class="form-group col-3">
                             <button class="btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseMaterial" aria-expanded="false" aria-controls="multiCollapseExample2">Materiales</button>
-                            <div class="collapse multi-collapse" id="collapseMaterial">
+                            <div class="multi-collapse" id="collapseMaterial">
                                 <div class="card card-body">
                                     <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                                         <input class="custom-control-input" type="checkbox" id="5">
@@ -136,7 +136,7 @@
 
                         <div class="form-group col-3 center-block">
                             <button class="btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseVendorMaterial" aria-expanded="false" aria-controls="multiCollapseExample2">M. Proveedores</button>
-                            <div class="collapse multi-collapse" id="collapseVendorMaterial">
+                            <div class="multi-collapse" id="collapseVendorMaterial">
                                 <div class="card card-body">
                                     <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
                                         <input class="custom-control-input" type="checkbox" id="13">
@@ -222,8 +222,6 @@
 @*/.modal*@
 
 
-
-
 @section scripts{
     <script>
         const api = new RoleApi();
@@ -266,7 +264,7 @@
                     }
                  ],
                  "language": {
-                     "url": "@Url.Content("~/Content/datatable/idioma/datatable.es-ES.json")"
+                     "url": "@Url.Content("~/Scripts/plugins/datatable/idioma/datatable.es-ES.json")"
                  }
 
             });

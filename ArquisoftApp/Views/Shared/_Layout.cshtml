@@ -9,58 +9,18 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="~/Scripts/AdminLTE/plugins/fontawesome-free/css/all.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="~/Scripts/AdminLTE/dist/css/adminlte.css">
-    <!-- Toastr -->
-    <link rel="stylesheet" href="~/Scripts/AdminLTE/plugins/toastr/toastr.min.css">
-    <!-- Ion Slider -->
-    <link rel="stylesheet" href="~/Scripts/AdminLTE/plugins/ion-rangeslider/css/ion.rangeSlider.min.css">
-    <!-- bootstrap slider -->
-    <link rel="stylesheet" href="~/Scripts/AdminLTE/plugins/bootstrap-slider/css/bootstrap-slider.min.css">
-    <!-- Select2 -->
-    <link rel="stylesheet" href="~/Scripts/AdminLTE/plugins/select2/css/select2.min.css">
-    <link rel="stylesheet" href="~/Scripts/AdminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.css">
-    <!-- dropzonejs -->
-    <link rel="stylesheet" href="~/Scripts/AdminLTE/plugins/dropzone/min/dropzone.min.css">
-    <!-- daterange picker -->
-    <link rel="stylesheet" href="~/Scripts/AdminLTE/plugins/daterangepicker/daterangepicker.css">
 
-    @Styles.Render("~/bundles/Plugins/css")
-    @Scripts.Render("~/bundles/modernizr")
-    @RenderSection("Styles", required: false)
+    @Styles.Render("~/bundles/plugins/css")
 </head>
 <body>
     @Html.Partial("_Navbar")
     @Html.Partial("_Sidebar")
 
-    @RenderBody()
+    @RenderBody();
 
     @Html.Partial("_Footer")
 
-    <!-- jQuery -->
-    <script src="~/Scripts/AdminLTE/plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="~/Scripts/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="~/Scripts/AdminLTE/dist/js/adminlte.min.js"></script>
-    <!-- Toastr -->
-    <script src="~/Scripts/AdminLTE/plugins/toastr/toastr.min.js"></script>
-    <!-- Bootstrap Switch -->
-    <script src="~/Scripts/AdminLTE/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-
-
-    <!-- OPTIONAL SCRIPTS -->
-    <script src="~/Scripts/AdminLTE/plugins/chart.js/Chart.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="~/Scripts/AdminLTE/dist/js/demo.js"></script>
-    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-    <script src="~/Scripts/AdminLTE/dist/js/pages/dashboard3.js"></script>
-
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/Plugins/js")
+    @Scripts.Render("~/bundles/plugins/js")
     @Scripts.Render("~/bundles/App/js")
 
 
@@ -191,7 +151,7 @@
     </script>
 
 
-    @RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", required: true)
 
     <!-- Modal -->
     <div class="modal" id="passwordModal" role="dialog">

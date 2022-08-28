@@ -159,9 +159,6 @@
 </div>
 @*/.modal*@
 
-
-
-
 @section scripts{
     <script>
         const api = new ClientApi();
@@ -227,7 +224,7 @@
 
                  ],
                  "language": {
-                     "url": "@Url.Content("~/Content/datatable/idioma/datatable.es-ES.json")"
+                     "url": "@Url.Content("~/Scripts/plugins/datatable/idioma/datatable.es-ES.json")"
                  }
 
             });
@@ -424,5 +421,5 @@
 
     </script>
 
-    @Scripts.Render("~/Scripts/components/Validations.js")
+    @*@Scripts.Render("~/Scripts/components/Validations.js")*@
 }
