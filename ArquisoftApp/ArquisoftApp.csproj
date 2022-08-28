@@ -2220,8 +2220,6 @@
     <Content Include="Scripts\AdminLTE\plugins\uplot\uPlot.iife.js" />
     <Content Include="Scripts\AdminLTE\plugins\uplot\uPlot.iife.min.js" />
     <Content Include="Scripts\AdminLTE\plugins\uplot\uPlot.min.css" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <EntityDeploy Include="Context\dbModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>dbModel.Designer.cs</LastGenOutput>
@@ -2316,29 +2314,55 @@
     </Content>
     <Content Include="DB\Arquisoft.bak" />
     <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
-    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\components\api.js" />
     <Content Include="Scripts\components\app.js" />
-    <Content Include="Scripts\jquery-3.4.1.js" />
-    <Content Include="Scripts\jquery-3.4.1.min.js" />
-    <Content Include="Scripts\jquery-3.4.1.slim.js" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\plugins\admin-lte-theme\css\adminlte.css" />
     <Content Include="Scripts\plugins\admin-lte-theme\js\adminlte.js" />
     <Content Include="Scripts\plugins\admin-lte-theme\js\adminlte.min.js" />
+    <Content Include="Scripts\plugins\bootstrap-slider\bootstrap-slider.min.css" />
+    <Content Include="Scripts\plugins\bootstrap-slider\bootstrap-slider.min.js" />
+    <Content Include="Scripts\plugins\bootstrap-switch\bootstrap-switch.min.js" />
+    <Content Include="Scripts\plugins\bootstrap\bootstrap.css" />
+    <Content Include="Scripts\plugins\bootstrap\bootstrap.js" />
+    <Content Include="Scripts\plugins\bootstrap\bootstrap.min.js" />
     <Content Include="Scripts\plugins\datatable\css\buttons.dataTables.min.css" />
     <Content Include="Scripts\plugins\datatable\css\jquery.dataTables.min.css" />
     <Content Include="Scripts\plugins\datatable\css\responsive.dataTables.min.css" />
+    <Content Include="Scripts\plugins\datatable\images\favicon.ico" />
+    <Content Include="Scripts\plugins\datatable\images\sort_asc.png" />
+    <Content Include="Scripts\plugins\datatable\images\sort_asc_disabled.png" />
+    <Content Include="Scripts\plugins\datatable\images\sort_both.png" />
+    <Content Include="Scripts\plugins\datatable\images\sort_desc.png" />
+    <Content Include="Scripts\plugins\datatable\images\sort_desc_disabled.png" />
     <Content Include="Scripts\plugins\datatable\js\dataTables.buttons.min.js" />
     <Content Include="Scripts\plugins\datatable\js\dataTables.responsive.min.js" />
     <Content Include="Scripts\plugins\datatable\js\jquery.dataTables.min.js" />
+    <Content Include="Scripts\plugins\daterangepicker\daterangepicker.css" />
+    <Content Include="Scripts\plugins\daterangepicker\daterangepicker.js" />
+    <Content Include="Scripts\plugins\dropzone\basic.min.css" />
+    <Content Include="Scripts\plugins\dropzone\dropzone.min.js" />
     <Content Include="Scripts\plugins\fontawesome-free\css\all.min.css" />
+    <Content Include="Scripts\plugins\admin-lte-theme\js\adminlte.min.js.map" />
+    <Content Include="Scripts\plugins\bootstrap\bootstrap.css.map" />
+    <Content Include="Scripts\plugins\admin-lte-theme\css\adminlte.css.map" />
+    <Content Include="Scripts\plugins\datatable\idioma\datatable.es-ES.json" />
+    <Content Include="Scripts\plugins\datatable\images\Sorting icons.psd" />
+    <None Include="Scripts\plugins\jquery\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\plugins\ion-rangeslider\ion.rangeSlider.min.css" />
+    <Content Include="Scripts\plugins\ion-rangeslider\ion.rangeSlider.min.js" />
+    <Content Include="Scripts\plugins\jquery\jquery-3.4.1.js" />
+    <Content Include="Scripts\plugins\jquery\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\plugins\jquery\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\plugins\jquery\jquery-3.4.1.slim.min.js" />
+    <None Include="Scripts\plugins\jquery\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\plugins\jquery\jquery.validate.js" />
+    <Content Include="Scripts\plugins\jquery\jquery.validate.min.js" />
+    <Content Include="Scripts\plugins\jquery\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\plugins\jquery\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\plugins\modernizr\modernizr-2.8.3.js" />
+    <Content Include="Scripts\plugins\select2\select2-bootstrap4.css" />
+    <Content Include="Scripts\plugins\select2\select2.min.css" />
+    <Content Include="Scripts\plugins\select2\select2.min.js" />
     <Content Include="Scripts\plugins\sweetalert2-theme-bootstrap-4\bootstrap-4.min.css" />
     <Content Include="Scripts\plugins\sweetalert2\sweetalert2.js" />
     <Content Include="Scripts\plugins\sweetalert2\sweetalert2.min.js" />
@@ -2379,6 +2403,8 @@
     <Content Include="Views\Reports\_BudgetsCreated.cshtml" />
     <Content Include="Views\Maintenance\SettingMaintenance.cshtml" />
     <Content Include="Views\Maintenance\AuditView.cshtml" />
+    <Content Include="Scripts\plugins\jquery\jquery-3.4.1.min.map" />
+    <Content Include="Scripts\plugins\jquery\jquery-3.4.1.slim.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2394,8 +2420,6 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -2418,7 +2442,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>65374</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:60496/</IISUrl>
+          <IISUrl>http://localhost:60496/ArquisoftApp</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
